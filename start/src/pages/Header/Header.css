@@ -1,0 +1,45 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 50px;
+  background-color: #262626;
+  color: #fff;
+}
+
+header .logo {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+header ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+header ul li {
+  cursor: pointer;
+}
+
+header .cta {
+  display: flex;
+  gap: 10px;
+}
+
+header .cta button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+header .cta button:nth-child(1) {
+  background-color: #f2a900;
+  color: #262626;
+}
+
+header .cta button:nth-child(2) {
+  background-color: transparent;
+  border: 1px solid #f2a900;
+  color: #f2a900;
+}

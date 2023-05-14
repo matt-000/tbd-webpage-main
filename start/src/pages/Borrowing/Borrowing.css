@@ -1,24 +1,47 @@
-nav {
-  background-color: #333;
-  color: white;
+/* App.css */
+.app {
+  background-color: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: #fff;
+}
+
+/* LendingBorrowing.css and MintBurn.css */
+.box {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  width: 200px;
+  margin-bottom: 20px;
+  border: 1px solid #fff;
+  border-radius: 5px;
 }
 
-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+.box-item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* ConversionBox.css */
+.conversion-box {
   display: flex;
+  justify-content: space-between;
+  width: 200px;
+  border: 1px solid #fff;
+  border-radius: 5px;
 }
 
-nav ul li a {
-  color: white;
-  text-decoration: none;
+.conversion-box input {
+  width: 50%;
   padding: 10px;
+  color: #000;
 }
 
-nav ul li a.active {
-  font-weight: bold;
+.converted-value {
+  width: 50%;
+  padding: 10px;
+  color: #fff;
+  background-color: #444;
 }

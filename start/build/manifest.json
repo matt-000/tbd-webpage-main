@@ -1,0 +1,18 @@
+{
+  "short_name": "TBD",
+  "name": "God's Sexual Blessing to the Earth - Mashallah",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "web_accessible_resources": [
+    "fonts/open-sans-v23-latin-regular.woff"
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

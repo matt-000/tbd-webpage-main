@@ -1,5 +1,5 @@
 {
-  "name": "metamask-simple-dapp",
+  "name": "liquifi",
   "version": "1.0.0",
   "description": "Building a simple dapp used in MetaMask e2e tests.",
   "main": "index.js",
@@ -10,8 +10,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "./deploy.sh",
-    "lint": "eslint . --ext js,json",
-    "lint:fix": "eslint . --fix --ext js,json",
+    "lint": "eslint . --ext js,json,tsx,ts",
+    "lint:fix": "eslint . --fix --ext js,json,tsx,ts",
     "serve": "static-server . --port 3000"
   },
   "repository": {
@@ -19,7 +19,7 @@
     "url": ""
   },
   "files": [
-    "index.js",
+    "index.tsx",
     "index.html",
     "index.css"
   ],
@@ -31,8 +31,6 @@
   "homepage": "",
   "dependencies": {
     "@metamask/onboarding": "^1.0.1",
-    "esm": "^3.2.25",
-    "path": "^0.12.7",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -43,10 +41,12 @@
     "antd": "^4.23.6",
     "axios": "^1.1.3",
     "chart.js": "^4.2.1",
+    "esm": "^3.2.25",
+    "path": "^0.12.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
-    "react-router-dom": "^6.4.2",
+    "react-router-dom": "^6.11.1",
     "react-scripts": "5.0.1",
     "sinon": "^14.0.2",
     "web-vitals": "^2.1.4"
@@ -57,7 +57,12 @@
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-json": "^2.0.1",
     "express": "^4.18.2",
-    "static-server": "^2.2.1"
+    "static-server": "^2.2.1",
+    "chai": "^4.3.6",
+    "mocha": "^10.1.0",
+    "nyc": "^15.1.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
   },
   "browserslist": {
     "production": [
