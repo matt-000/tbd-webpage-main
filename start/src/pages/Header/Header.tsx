@@ -1,10 +1,12 @@
 import React from 'react'
+import Connect from './ConnectWallet'
 
 const Header = () => {
   return (
     <header>
       <nav>
         <div className="logo">Liquifi</div>
+        <Connect />
         <ul>
           <li>About </li>
           <li>Features </li>
