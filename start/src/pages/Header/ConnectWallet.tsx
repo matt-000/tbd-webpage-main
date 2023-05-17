@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import './Header.css';
 
 const App: React.FC = () => {
-  const logo = require("./../../components/metamask-fox.svg") as string;
- const [isMetamaskInstalled, setIsMetamaskInstalled] = useState<boolean>(false);
+const [isMetamaskInstalled, setIsMetamaskInstalled] = useState<boolean>(false);
  const [ethereumAccount, setEthereumAccount] = useState<string | null>(null);
  
  useEffect(() => {
@@ -12,6 +11,8 @@ const App: React.FC = () => {
      setIsMetamaskInstalled(true);
    }
  },[]);
+
+ 
  
  //Does the User have an Ethereum wallet/account?
  async function connectMetamaskWallet(): Promise<void> {
@@ -30,12 +31,14 @@ const App: React.FC = () => {
  
  if (ethereumAccount === null) {
    return (
-     <div className="App App-header">
+     <div className="header">
        {
          isMetamaskInstalled ? (
            <div>
-             <img src={logo} alt="logo" />
-             <button onClick={connectMetamaskWallet}>Connect Your Metamask Wallet</button>
+             <div className="cta-image-container">
+              <img className="cta-image" src="https://studybreaks.com/wp-content/uploads/2016/01/Fetty-Wap.png" alt="fet" />
+              <button onClick={connectMetamaskWallet}>Connect Your Metamask Wallet</button>
+            </div>
            </div>
          ) : (
            <p>Install Your Metamask wallet</p>
@@ -48,13 +51,13 @@ const App: React.FC = () => {
  
  
  return (
-   <div className="App">
-     <header className="App-header">
-       <img src={logo} className="App-logo" alt="logo" />
-       <p>
+   <div className="wallet-header">
+      <div className="cta-image-container">
+        <img className="cta-image" src="https://studybreaks.com/wp-content/uploads/2016/01/Fetty-Wap.png" alt="fet" />
+        <p>
          ETH wallet connected as: {ethereumAccount}
        </p>
-     </header>
+       </div>
    </div>
  );
 }

@@ -58,6 +58,8 @@ module.exports={
     "no-alert": "off",
     '@typescript-eslint/no-unused-vars':'off',
     "import/no-useless-path-segments":'off',
+    "no-multi-spaces":'off',
+    "no-multiple-empty-lines":'off',
     'import/extensions':['error', 'ignorePackages',{
       'js':'never',
       'jsx':'never',

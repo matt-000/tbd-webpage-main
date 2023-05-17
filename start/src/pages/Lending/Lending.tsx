@@ -6,6 +6,7 @@ import MintBurn from './MintBurn';
 import ConversionBox from './MintBox';
 import CurrencySwap from './CurrencyMint';
 import Header from './../Header/Header';
+import "./Lending.css"
 
 const App = () => {
   return (

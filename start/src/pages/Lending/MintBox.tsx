@@ -1,4 +1,5 @@
 import React, { useState, ChangeEvent } from 'react'
+import "./Lending.css"
 
 const ConversionBox = () => {
   const [inputValue, setInputValue] = useState("");

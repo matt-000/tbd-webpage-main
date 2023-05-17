@@ -1,18 +1,26 @@
 import React from 'react';
-import './../Borrowing/Borrowing.css';
-import { Link } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
+import "./Lending.css"
 
-const MintBurn = () => {
+const Box = () => {
+  const location = useLocation();
+
   return (
     <div className="box">
-      <Link to="/">
-        <div className="box-item">Mint</div>
-      </Link>
-      <Link to="/burn">
-        <div className="box-item">Burn</div>
-      </Link>
+      <NavLink
+        to="/"
+        className={`box-item-mint ${location.pathname === '/' ? 'active' : ''}`}
+      >
+        Mint
+      </NavLink>
+      <NavLink
+        to="/burn"
+        className={`box-item-mint ${location.pathname === '/burn' ? 'active' : ''}`}
+      >
+        Burn
+      </NavLink>
     </div>
   );
-}
+};
 
-export default MintBurn
+export default Box;

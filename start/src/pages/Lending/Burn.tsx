@@ -4,6 +4,7 @@ import LendingBorrowing from './LendingBorrowing';
 import MintBurn from './MintBurn';
 import CurrencyBurn from './CurrencyBurn';
 import Header from './../Header/Header';
+import "./Lending.css"
 
 const App = () => {
   return (
