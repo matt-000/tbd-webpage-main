@@ -50,7 +50,7 @@ const InteractionsBurn: React.FC<InteractionsProps> = (props) => {
 		e.preventDefault();
 		//const form = e.currentTarget as HTMLFormElement;
   //const burnInput = (form.elements.namedItem('burnAmount') as HTMLInputElement).value;
-		  const burnInputMain = '0.95'
+		  const burnInputMain = '1'
 		  const burnInput = ethers.parseUnits(burnInputMain, 18)
 		  console.log(burnInput)
 			try{
