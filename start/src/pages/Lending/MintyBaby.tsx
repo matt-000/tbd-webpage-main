@@ -8,11 +8,13 @@ import CurrencyBurn from './CurrencyBurn';
 import Header from './../Header/Header';
 import "./Lending.css"
 import Interactions from './Interactions';
+import InteractionsBurn from './InteractionsBurn';
 import './Wallet.module.css'
 import FettiERC20 from './../../Artifacts/Contracts/FettiERC20.sol/FettiERC20.json'
 
 const App = () => {
   let fetti_address =  '0x3F827541482530549099782C6d53dB5Fa13c6435';
+  let dai_address = '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063';
   let loaner_address = '0xBCe5F6d8e70C7B21C0C9d20E8B1074a1F24D7665';
   let vault_address = '0xE83b0AFec5377e454c1C0b173d71c4fD2DE94BD9';
   let gnsPool_address = '0x427c7D210FD4bc7d028c9c3CC6224875878faEaF';
@@ -37,8 +39,10 @@ const App = () => {
   ]*/
 
   const iface = new ethers.Interface([
-	"function mint(uint256 shares, address receive) view returns (uint256)",
-	"function maxWithdraw(address owner) view returns (uint256)"
+	"function maxWithdraw(address owner) view returns (uint256)",
+	"function maxMint(address owner) returns (uint256)",
+	"function previewMint(uint256 shares) view returns (uint256)",
+	"function mint(uint256, address) returns (uint256)"
   ]);
 
   console.log(iface.fragments);
@@ -117,6 +121,7 @@ const App = () => {
 			</div>
 
 			<Interactions contract={contract} address={defaultAccount}/>
+			<InteractionsBurn contract={contract} address={defaultAccount}/>
 	</div>
   );
 };
