@@ -4,8 +4,6 @@ import {ethers} from 'ethers'
 import './../Borrowing/Borrowing.css';
 import LendingBorrowing from './LendingBorrowing';
 import MintBurn from './MintBurn';
-import ConversionBox from './MintBox';
-import CurrencySwap from './CurrencyMint';
 import Header from './../Header/Header';
 import Minty from './MintyBaby';
 import "./Lending.css"
@@ -29,14 +27,6 @@ const App = () => {
 	const [balance, setBalance] = useState<null | number>(null);
 	const [transferHash, setTransferHash] = useState(null);
 
-  const gnsIFace = new ethers.Interface([
-    "function depositColateral(address, uint256) returns (uint256)",
-    "function addColateral(uint256, uint256) returns (uint256)",
-    "function repayLoan(uint256, uint256) returns (uint256)",
-    "function widthdrawColateral(address, uint256) returns (uint256)"
-  ]);
-
-  console.log(gnsIFace.fragments);
 
   const connectWalletHandler = () => {
 		if (window.ethereum && window.ethereum.isMetaMask) {
@@ -61,6 +51,43 @@ const App = () => {
 		setDefaultAccount(newAddress);
 	}
 
+	const iface = new ethers.Interface([
+		"function maxWithdraw(address) view returns (uint256)",
+		"function maxMint(address owner) returns (uint256)",
+		"function previewMint(uint256 shares) view returns (uint256)",
+		"function deposit(uint256, address) returns (uint256)",
+		"function withdraw(uint256, address, address) returns (uint256)"
+	  ]);
+	
+
+	useEffect(() => {
+		updateBalance();
+		updateTokenName();
+	}, [])
+
+	const updateBalance = async () => {
+		let fettiProvider = new ethers.BrowserProvider(window.ethereum);
+		setProvider(fettiProvider);
+
+		let fettiSigner = await fettiProvider.getSigner();
+		setSigner(fettiSigner);
+
+		let fettiContract = new ethers.Contract(fetti_address, iface.fragments, fettiSigner);
+		setContract(fettiContract);
+
+		//let balanceBigN = await contract!.maxWithdraw(props.address);
+		let balanceNumber = 0;
+
+		let tokenBalance = Number(balanceNumber);
+
+		setBalance(tokenBalance);
+		console.log(tokenBalance);
+	}
+
+  const updateTokenName = async () => {
+		setTokenName("FET");
+	}
+
   return (
     <div className="app">
       <h2> {tokenName + " ERC-20 Wallet"} </h2>
@@ -68,8 +95,7 @@ const App = () => {
       <Header address={defaultAccount}/>
       <LendingBorrowing />
       <MintBurn />
-      <CurrencySwap />
-      <Minty address={defaultAccount}/>
+      <Minty user_address={defaultAccount} fetti_address={fetti_address} provider={provider} signer={signer} contract={contract} tokenName={tokenName} balance={balance}/>
     </div>
   );
 };

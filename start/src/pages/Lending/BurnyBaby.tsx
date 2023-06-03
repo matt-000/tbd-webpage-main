@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react'
 import {ethers} from 'ethers'
 import './../Borrowing/Borrowing.css';
 import "./Lending.css"
-import InteractionsMint from './InteractionsMint';
+import InteractionsBurn from './InteractionsBurn';
 import './Wallet.module.css'
 
 interface AddressProps {
@@ -27,7 +27,7 @@ const App: React.FC<AddressProps> = (props) => {
 				<h3>{props.tokenName} Balance: {props.balance}</h3>
 			</div>
 		</div>
-		<InteractionsMint contract={props.contract} user_address={props.user_address} provider={props.provider} signer={props.signer} fetti_address={props.fetti_address}/>
+		<InteractionsBurn contract={props.contract} user_address={props.user_address} provider={props.provider} signer={props.signer} fetti_address={props.fetti_address}/>
 	</div>
   );
 };
