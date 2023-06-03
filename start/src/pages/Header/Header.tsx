@@ -2,7 +2,11 @@ import React from 'react';
 import Connect from './ConnectWallet';
 import './Header.css';
 
-const Header = () => {
+interface AddressProps {
+	address: null | String;
+}
+
+const Header: React.FC<AddressProps> = (props) => {
   return (
     <header className="header">
       <div className="logo">Liquifi</div>
@@ -15,7 +19,7 @@ const Header = () => {
         <div className="cta">
           <button className="cta-button">Sign Up</button>
           <button className="cta-button">Log In</button>
-          <Connect />
+          <Connect address={props.address}/>
         </div>
       </nav>
     </header>

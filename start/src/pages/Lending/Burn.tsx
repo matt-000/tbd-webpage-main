@@ -10,7 +10,6 @@ import "./Lending.css"
 const App = () => {
   return (
     <div className="app">
-      <Header />
       <LendingBorrowing />
       <MintBurn />
       <CurrencyBurn />

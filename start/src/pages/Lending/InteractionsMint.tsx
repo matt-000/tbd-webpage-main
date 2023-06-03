@@ -4,29 +4,22 @@ import {ethers} from 'ethers'
 import './Wallet.module.css';
 
 interface InteractionsProps {
-	// Define the prop types for your component
-	// For example:
+	provider: null | ethers.BrowserProvider;
+	signer: null | ethers.JsonRpcSigner;
 	contract: null | ethers.Contract;
-	address: null | String;
+	user_address: null | String;
+	fetti_address: null | String;
 }
-  
-const iface = new ethers.Interface([
-	"function maxWithdraw(address owner) view returns (uint256)",
-	"function maxMint(address owner) returns (uint256)",
-	"function previewMint(uint256 shares) view returns (uint256)",
-	"function deposit(uint256, address) returns (uint256)"
-  ]);
 
-  let fetti_address =  '0x3F827541482530549099782C6d53dB5Fa13c6435';
-
-const Interactions: React.FC<InteractionsProps> = (props) => {
+const InteractionsMint: React.FC<InteractionsProps> = (props) => {
 
 	const [transferHash, setTransferHash] = useState<null | String>(null);
 
 
 	const transferHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+		//Prevent Refresh
 		e.preventDefault(); 
-		console.log("help me")
+
 		// DAI contract address on Mainnet
 		const daiAddress = '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063';
   
@@ -34,17 +27,8 @@ const Interactions: React.FC<InteractionsProps> = (props) => {
 		  "function approve(address spender, uint amount)",
 		  "function allowance(address owner, address spender) view returns (uint)"
 		];
-
-		if (window.ethereum && window.ethereum.selectedAddress) {
-			console.log("were okay")
-		  } else {
-			console.log("were fucked")
-		  }
-
-		let approveProvider = new ethers.BrowserProvider(window.ethereum);
-		let approveSigner = await approveProvider.getSigner();
 	  
-		const daiContract = new ethers.Contract(daiAddress, daiAbi, approveSigner);
+		const daiContract = new ethers.Contract(daiAddress, daiAbi, props.signer);
 
 		e.preventDefault();
 		//let sendAmountInput = e.currentTarget.elements.namedItem('sendAmount') as HTMLInputElement;
@@ -54,22 +38,20 @@ const Interactions: React.FC<InteractionsProps> = (props) => {
 				const tokenAmountInEther = ethers.parseUnits(transferAmount, 18);
 
 				// Approve the contract to spend the DAI
-				const approvalTx = await daiContract.approve(fetti_address, tokenAmountInEther);
-				await approveProvider.waitForTransaction(approvalTx.hash);
+				const approvalTx = await daiContract.approve(props.fetti_address, tokenAmountInEther);
+				await props.provider!.waitForTransaction(approvalTx.hash);
     			console.log('Approval confirmed');	
 
-				let fettiContract = new ethers.Contract(fetti_address, iface.fragments, approveSigner)
+				console.log('Fetti address:', props.fetti_address);
+				console.log('Props address:', props.user_address);
 
-				console.log('Fetti address:', fetti_address);
-				console.log('Props address:', props.address);
-
-				const allowance = await daiContract.allowance(props.address, fetti_address);
+				const allowance = await daiContract.allowance(props.user_address, props.fetti_address);
 				console.log(`Allowance: ${ethers.formatUnits(allowance, 18)} DAI`);
 				console.log(`Allowance: ${allowance}`);
 
-				let txt = await fettiContract.deposit(tokenAmountInEther, props.address);
+				let txt = await props.contract!.deposit(tokenAmountInEther, props.user_address);
 				console.log(txt);
-				await approveProvider.waitForTransaction(txt.hash);
+				await props.provider!.waitForTransaction(txt.hash);
     			console.log('Exchange confirmed');
 
 				setTransferHash("Transfer confirmation hash: " + txt.hash);
@@ -95,4 +77,4 @@ const Interactions: React.FC<InteractionsProps> = (props) => {
 	
 }
 
-export default Interactions;
+export default InteractionsMint;
