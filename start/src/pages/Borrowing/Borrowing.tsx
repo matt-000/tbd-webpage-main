@@ -5,7 +5,11 @@ import './Borrowing.css';
 import LendingBorrowing from './../Lending/LendingBorrowing';
 import BorrowingPage from './BorrowingPage';
 import Header from './../Header/Header';
+import InteractionsDepositCollateral from './InteractionsDepositCollateral';
+import InteractionsAddCollateral from './InteractionsAddCollateral';
 import InteractionsBorrow from './InteractionsBorrow';
+import InteractionsRepayDebt from './InteractionsRepayDebt';
+import InteractionsWithdraw from './InteractionsWithdraw';
 
 const App = () => {
   let fetti_address =  '0x3F827541482530549099782C6d53dB5Fa13c6435';
@@ -30,7 +34,9 @@ const App = () => {
     "function depositColateral(address, uint256) returns (uint256)",
     "function addColateral(uint256, uint256) returns (uint256)",
     "function repayLoan(uint256, uint256) returns (uint256)",
-    "function widthdrawColateral(address, uint256) returns (uint256)"
+    "function widthdrawColateral(address, uint256) returns (uint256)",
+    "function borrow(uint256, uint256, address) returns(uint256)",
+    "function balanceOf(address) returns(uint256)"
   ]);
 
   console.log(gnsIFace.fragments);
@@ -76,9 +82,12 @@ const App = () => {
       <Header address={defaultAccount}/>
       <h2> {tokenName + " ERC-20 Wallet"} </h2>
 		  <button className="button6" onClick={connectWalletHandler}>{connButtonText}</button>
-      <InteractionsBorrow contract={contract} user_address={defaultAccount} provider={provider} signer={signer} gns_address={gnsPool_address}/>
       <LendingBorrowing />
-      <BorrowingPage />
+      <InteractionsDepositCollateral contract={contract} user_address={defaultAccount} provider={provider} signer={signer} gns_address={gnsPool_address}/>
+      <InteractionsBorrow contract={contract} user_address={defaultAccount} provider={provider} signer={signer} gns_address={gnsPool_address}/>
+      <InteractionsAddCollateral contract={contract} user_address={defaultAccount} provider={provider} signer={signer} gns_address={gnsPool_address}/>
+      <InteractionsRepayDebt contract={contract} user_address={defaultAccount} provider={provider} signer={signer} gns_address={gnsPool_address}/>
+      <InteractionsWithdraw contract={contract} user_address={defaultAccount} provider={provider} signer={signer} gns_address={gnsPool_address}/>
     </div>
   );
 };
