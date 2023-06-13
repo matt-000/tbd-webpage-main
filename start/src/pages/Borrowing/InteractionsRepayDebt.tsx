@@ -8,6 +8,8 @@ interface InteractionsProps {
 	contract: null | ethers.Contract;
 	user_address: null | String;
 	gns_address: null | String;
+	nftID: null | bigint;
+	borrowedUSDC: null | String;
 }
 
 const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
@@ -28,10 +30,8 @@ const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
 
 		  const burnInputMain = '0.03'
 		  const burnInput = ethers.parseUnits(burnInputMain, 18)
-		  const nftID = '3'
-		  const nftIDInput = ethers.parseUnits(nftID, 0)
 		  console.log(burnInput)
-		  console.log(nftIDInput)
+		  console.log(props.nftID)
 			try{
 				const approvalTx = await daiContract.approve(props.gns_address, burnInput);
 				await props.provider!.waitForTransaction(approvalTx.hash);
@@ -44,7 +44,7 @@ const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
 				console.log(`Allowance: ${ethers.formatUnits(allowance, 18)} DAI`);
 				console.log(`Allowance: ${allowance}`);
 
-				let txt = await props.contract!.repayLoan(nftID, burnInput);
+				let txt = await props.contract!.repayLoan(props.nftID, burnInput);
 				console.log(txt);
 				await props.provider!.waitForTransaction(txt.hash);
     			console.log('Debts Paid');
@@ -60,7 +60,7 @@ const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
 				<form onSubmit={borrowHandler}>
 					<h3> Repay Debt </h3>
 						<input type='number' name='collateralAmount'/>
-
+						<p>Amount Borrowed(Debt Outstanding): {props.borrowedUSDC}</p>
 						<button type='submit' className="button6">Repay Debt</button>
 						<div>
 							{transferHash}

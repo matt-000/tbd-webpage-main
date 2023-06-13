@@ -9,11 +9,11 @@ import './../Borrowing/Borrowing.css';
 import "./Lending.css"
 
 const App = () => {
-  let fetti_address =  '0x3F827541482530549099782C6d53dB5Fa13c6435';
+  let fetti_address =  '0x64648c7199658dB6D5fF1903b608fFfa015A81aa';
   let dai_address = '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063';
-  let loaner_address = '0xBCe5F6d8e70C7B21C0C9d20E8B1074a1F24D7665';
-  let vault_address = '0xE83b0AFec5377e454c1C0b173d71c4fD2DE94BD9';
-  let gnsPool_address = '0x427c7D210FD4bc7d028c9c3CC6224875878faEaF';
+  let loaner_address = '0xb2534c942459C842EdC3b6B130ab2dE491ce5bf3';
+  let vault_address = '0x201E0AF71f7b3D72208D94832339a7Fe01Be24e0';
+  let gnsPool_address = '0xA1c88cf230A71031E853F63eab98EDeD7c42D344';
 
   const [errorMessage, setErrorMessage] = useState<null | String>(null);
 	const [defaultAccount, setDefaultAccount] = useState<null | String>(null);

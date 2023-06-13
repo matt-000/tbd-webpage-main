@@ -8,6 +8,7 @@ interface InteractionsProps {
 	contract: null | ethers.Contract;
 	user_address: null | String;
 	gns_address: null | String;
+	nftID: null | bigint;
 }
 
 const InteractionsAddCollateral: React.FC<InteractionsProps> = (props) => {
@@ -33,12 +34,10 @@ const InteractionsAddCollateral: React.FC<InteractionsProps> = (props) => {
 	  
 		const gnsContract = new ethers.Contract(gnsAddress, gnsAbi, props.signer);
 
-		  const burnInputMain = '0.03'
+		  const burnInputMain = '0.02'
 		  const burnInput = ethers.parseUnits(burnInputMain, 18)
-		  const nftID = '3'
-		  const nftIDInput = ethers.parseUnits(nftID, 0)
 		  console.log(burnInput)
-		  console.log(nftIDInput)
+		  console.log(props.nftID)
 			try{
 				const approvalTx = await gnsContract.approve(props.gns_address, burnInput);
 				await props.provider!.waitForTransaction(approvalTx.hash);
@@ -51,7 +50,7 @@ const InteractionsAddCollateral: React.FC<InteractionsProps> = (props) => {
 				console.log(`Allowance: ${ethers.formatUnits(allowance, 18)} GNS`);
 				console.log(`Allowance: ${allowance}`);
 
-				let txt = await props.contract!.addColateral(nftIDInput, burnInput);
+				let txt = await props.contract!.addColateral(props.nftID, burnInput);
 				console.log(txt);
 				await props.provider!.waitForTransaction(txt.hash);
     			console.log('Added Collateral');
