@@ -13,24 +13,43 @@ const App = () => {
 	const iface = new ethers.Interface([
 		"function maxWithdraw(address) view returns (uint256)",
 		"function maxMint(address owner) returns (uint256)",
+		"function balanceOf(address owner) view returns (uint256)",
 		"function previewMint(uint256 shares) view returns (uint256)",
 		"function deposit(uint256, address) returns (uint256)",
 		"function withdraw(uint256, address, address) returns (uint256)"
 	]);
+
+	const stringVal = (num: bigint | null) => {
+		if (num ==  null){
+		  return ""
+		}
+		const denominator = BigInt("1000000000000000000"); // 10^18 for 18 decimals
+		const quotient = num / denominator;
+		const remainder = num % denominator;
+	
+		const value = quotient.toString() + "." + remainder.toString().padStart(18, '0');
+	
+		return value
+	}
 
 	const [provider, setProvider] = useState<null | ethers.BrowserProvider>(null); 
 	const [signer, setSigner] = useState<null | ethers.JsonRpcSigner>(null);
 	const [contract, setContract] = useState<null | ethers.Contract>(null);
 
 	const [tokenName, setTokenName] = useState("Token");
-	const [balance, setBalance] = useState<null | number>(null);
+	const [balance, setBalance] = useState<null | String>(null);
 
 	const context = useContext(UserAddressContext);
 	useEffect(() => {
 		context?.updateUserAddress();
-		updateBalance();
-		updateTokenName();
 	}, [context]);
+
+	useEffect(() => {
+		if(context?.userAddress) {
+		  updateBalance();
+		  updateTokenName();
+		}
+	}, [context?.userAddress]);
 	
 	const updateBalance = async () => {
 		let fettiProvider = new ethers.BrowserProvider(window.ethereum);
@@ -42,13 +61,7 @@ const App = () => {
 		let fettiContract = new ethers.Contract(context!.fetti_address, iface.fragments, fettiSigner);
 		setContract(fettiContract);
 
-		//let balanceBigN = await contract!.maxWithdraw(props.address);
-		let balanceNumber = 0;
-
-		let tokenBalance = Number(balanceNumber);
-
-		setBalance(tokenBalance);
-		console.log(tokenBalance);
+		setBalance(stringVal(await fettiContract.balanceOf(context!.userAddress)));
 	}
 
   const updateTokenName = async () => {

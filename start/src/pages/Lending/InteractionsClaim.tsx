@@ -43,7 +43,7 @@ const InteractionsBurn: React.FC<InteractionsProps> = (props) => {
 			<div className="container">
 				<div className="swap-container">
 					<div className="form-container">
-						<h2>Swap</h2>
+						<h2>Claim</h2>
 						<div className="input-group">
 							<input
 							type="text"
@@ -58,21 +58,8 @@ const InteractionsBurn: React.FC<InteractionsProps> = (props) => {
 							</select>
 						</div>
 						<button className="swap-button" value={inputValue} onClick={transferHandler}>
-							Swap
+							Claim
 						</button>
-						<div className="input-group">
-							<input
-							type="text"
-							placeholder="0"
-							className="input-field"
-							value={outputValue}
-							readOnly
-							/>
-							<select className="select-field">
-							<option value="dai">DAI</option>
-							{/* Add more options here */}
-							</select>
-						</div>
 					</div>
 						<div className="rate-container">
 							<h3>Exchange Rate</h3>

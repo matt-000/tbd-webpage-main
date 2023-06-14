@@ -13,7 +13,7 @@ interface AddressProps {
 	user_address: null | String;
 	fetti_address: null | String;
 	tokenName: null | String;
-	balance: null | number;
+	balance: null | String;
 }
 
 const App: React.FC<AddressProps> = (props) => {

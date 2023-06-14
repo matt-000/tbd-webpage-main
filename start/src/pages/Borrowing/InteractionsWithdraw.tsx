@@ -30,8 +30,8 @@ const InteractionsWithdraw: React.FC<InteractionsProps> = (props) => {
 			} catch (error) {
 				console.error(`Error in exchange: ${error}`);
 			}
-	  };
-	  console.log(props.unlockTime)
+	};
+	
 	return (
 			<div className="interactionsCard">
 				<form onSubmit={borrowHandler}>

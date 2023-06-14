@@ -30,12 +30,29 @@ const App = () => {
   const [stringUnlockTime, setStringUnlockTime] = useState<null | String>(null);
   const [stringMaxBorrowedUsdc, setStringMaxBorrowedUsdc] = useState<null | String>(null);
 
-
   const context = useContext(UserAddressContext);
+	useEffect(() => {
+		context?.updateUserAddress();
+	}, [context]);
+
+	/*useEffect(() => {
+		if(context?.userAddress) {
+		  getNFTID();
+		}
+	}, [context?.userAddress]);*/
+
   useEffect(() => {
-    context?.updateUserAddress();
-    updateEthers();
-  }, [context]);
+    if (context?.userAddress) {
+      updateEthers();
+    }
+  }, [context?.userAddress]);
+/*
+  useEffect(() => {
+    if (contract) {
+      updateNFTInfo();
+      console.log("balls")
+    }
+  }, [contract]);*/
 
   const stringVal = (num: bigint | null) => {
     if (num ==  null){
@@ -56,21 +73,46 @@ const App = () => {
     "function repayLoan(uint256, uint256) returns (uint256)",
     "function widthdrawColateral(address, uint256) returns (uint256)",
     "function borrow(uint256, uint256, address) returns(uint256)",
-    "function balanceOf(address) returns(uint256)",
     "function _outstandingLoans(uint256) view returns (uint256, uint256, uint256, uint256, uint256, uint256, uint256, uint256, uint256, uint256, uint256)",
     "function balanceOf(address owner) view returns (uint256)",
-    "function tokenOfOwnerByIndex(address owner, uint256 index) view returns (uint256)"
+    "function totalSupply() view returns (uint256)"
   ]);
 
   console.log(gnsIFace.fragments);
 
-  const updateNFTInfo = async() => {
-	  let loanData = await contract!._outstandingLoans(nftID);
+  /*const getNFTID = async () => {
+    let gnsProvider = new ethers.BrowserProvider(window.ethereum);
+    let gnsSigner = await gnsProvider.getSigner();
+    let gnsContract = new ethers.Contract(context!.gnsPool_address, gnsIFace.fragments, gnsSigner);
+
+    const tokenBalance = await gnsContract.balanceOf(context!.userAddress);
+    console.log(context!.userAddress)
+    console.log(tokenBalance)
+    let highestTokenId = ethers.parseUnits("0", 0);
+    let loanData;
+    console.log("hi")
+    let totalLoans = await gnsContract.totalSupply();
+    console.log("hi")
+    for(let i = 0; i < totalLoans; i++){
+      let owner = await gnsContract.ownerOf(i);
+      let isOwner = owner === context!.userAddress;
+      if(isOwner) {
+          loanData = await gnsContract._outstandingLoans(i);
+          console.log(loanData)
+      }
+    }
+    setNFTID(ethers.parseUnits("2", 0));
+  }*/
+
+  const updateNFTInfo = async () => {
+    const nftID_ = ethers.parseUnits("2", 0);
+	  let loanData = await contract!._outstandingLoans(nftID_);
     setStakedGns(loanData[1]);
     setBorrowedUsdc(loanData[2]);
     setUnlockTime(loanData[3]);
     setMaxBorrowedUsdc(loanData[4]);
 
+    setNFTID(ethers.parseUnits("2", 0));
     setStringStakedGns(stringVal(stakedGns));
     setStringBorrowedUsdc(stringVal(borrowedUsdc));
     setStringUnlockTime(stringVal(unlockTime));
@@ -80,13 +122,27 @@ const App = () => {
   const updateEthers = async () => {
     let gnsProvider = new ethers.BrowserProvider(window.ethereum);
     let gnsSigner = await gnsProvider.getSigner();
-    let gnsContract = await new ethers.Contract(context!.gnsPool_address, gnsIFace.fragments, gnsSigner);
-  
-    setNFTID(ethers.parseUnits("2", 0));
+    let gnsContract = new ethers.Contract(context!.gnsPool_address, gnsIFace.fragments, gnsSigner);
+
     setProvider(gnsProvider);
     setSigner(gnsSigner);
     setContract(gnsContract);
-  };
+
+    const nftID_ = ethers.parseUnits("2", 0);
+    let loanData = await gnsContract._outstandingLoans(nftID_);
+
+    setStakedGns(loanData[1]);
+    setBorrowedUsdc(loanData[2]);
+    setUnlockTime(loanData[3]);
+    setMaxBorrowedUsdc(loanData[4]);
+
+    setNFTID(ethers.parseUnits("2", 0));
+    setStringStakedGns(stringVal(loanData[1]));
+    setStringBorrowedUsdc(stringVal(loanData[2]));
+    setStringUnlockTime(stringVal(loanData[3]));
+    setStringMaxBorrowedUsdc(stringVal(loanData[4]));
+};
+
 
   return (
     <div className="app">

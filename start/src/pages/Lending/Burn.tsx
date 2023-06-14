@@ -15,7 +15,7 @@ const App = () => {
 	const [contract, setContract] = useState<null | ethers.Contract>(null);
 
 	const [tokenName, setTokenName] = useState("Token");
-	const [balance, setBalance] = useState<null | number>(null);
+	const [balance, setBalance] = useState<null | String>(null);
 
   const context = useContext(UserAddressContext);
 	useEffect(() => {
@@ -29,8 +29,26 @@ const App = () => {
 		"function maxMint(address owner) returns (uint256)",
 		"function previewMint(uint256 shares) view returns (uint256)",
 		"function deposit(uint256, address) returns (uint256)",
-		"function withdraw(uint256, address, address) returns (uint256)"
+    "function balanceOf(address owner) view returns (uint256)",
+		"function withdraw(uint256, address, address) returns (uint256)",
+    "function requestWidthdraw(uint256 amount_, address sendTo_) returns ()",
+    "function approve(address spender, uint amount)",
+		"function allowance(address owner, address spender) view returns (uint)",
+    "function getRequestedWithdraw(address) view returns (uint256, uint256, uint256, address)"
 	]);
+
+  const stringVal = (num: bigint | null) => {
+    if (num ==  null){
+      return ""
+    }
+    const denominator = BigInt("1000000000000000000"); // 10^18 for 18 decimals
+    const quotient = num / denominator;
+    const remainder = num % denominator;
+
+    const value = quotient.toString() + "." + remainder.toString().padStart(18, '0');
+
+    return value
+  }
 	
 	const updateBalance = async () => {
 		let fettiProvider = new ethers.BrowserProvider(window.ethereum);
@@ -42,13 +60,7 @@ const App = () => {
 		let fettiContract = new ethers.Contract(context!.fetti_address, iface.fragments, fettiSigner);
 		setContract(fettiContract);
 
-		//let balanceBigN = await contract!.maxWithdraw(props.address);
-		let balanceNumber = 0;
-
-		let tokenBalance = Number(balanceNumber);
-
-		setBalance(tokenBalance);
-		console.log(tokenBalance);
+		setBalance(stringVal(await fettiContract.balanceOf(context!.userAddress)));
 	}
 
   const updateTokenName = async () => {
