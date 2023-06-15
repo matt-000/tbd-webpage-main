@@ -12,13 +12,17 @@ interface InteractionsProps {
 }
 
 const InteractionsAddCollateral: React.FC<InteractionsProps> = (props) => {
+	const [inputValue, setInputValue] = useState('');
+	const [outputValue, setOutputValue] = useState('');
 
+	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setInputValue(event.target.value);
+		setOutputValue(String(Number(inputValue) * 2));
+	};
 	const [transferHash, setTransferHash] = useState<null | String>(null);
 	
-	const borrowHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault(); 
-		console.log("help me")
-		// DAI contract address on Mainnet
+	const borrowHandler = async () => {
+		// GNS contract address on Mainnet
 		const gnsAddress = '0xE5417Af564e4bFDA1c483642db72007871397896';
   
 		const gnsAbi = [
@@ -34,8 +38,7 @@ const InteractionsAddCollateral: React.FC<InteractionsProps> = (props) => {
 	  
 		const gnsContract = new ethers.Contract(gnsAddress, gnsAbi, props.signer);
 
-		  const burnInputMain = '0.02'
-		  const burnInput = ethers.parseUnits(burnInputMain, 18)
+		  const burnInput = ethers.parseUnits(inputValue, 18)
 		  console.log(burnInput)
 		  console.log(props.nftID)
 			try{
@@ -62,19 +65,30 @@ const InteractionsAddCollateral: React.FC<InteractionsProps> = (props) => {
 	  };
 
 	return (
-			<div className="interactionsCard">
-				<form onSubmit={borrowHandler}>
-					<h3> Add Collateral </h3>
-						<input type='number' name='collateralAmount'/>
-
-						<button type='submit' className="button6">Add Collateral</button>
-						<div>
-							{transferHash}
-						</div>
-			</form>
+		<div className="container">
+			<div className="swap-container">
+				<div className="form-container">
+					<h2>Add Collateral</h2>
+					<div className="input-group">
+						<input
+						type="text"
+						placeholder="0"
+						className="input-field"
+						value={inputValue}
+						onChange={handleInputChange}
+						/>
+						<select className="select-field">
+						<option value="dai">GNS</option>
+						{/* Add more options here */}
+						</select>
+					</div>
+					<button className="swap-button" value={inputValue} onClick={borrowHandler}>
+						Add
+					</button>
+				</div>
 			</div>
+		</div>
 		)
-	
 }
 
 export default InteractionsAddCollateral;

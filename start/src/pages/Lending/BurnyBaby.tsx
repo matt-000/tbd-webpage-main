@@ -15,6 +15,9 @@ interface AddressProps {
 	fetti_address: null | String;
 	tokenName: null | String;
 	balance: null | String;
+	stringEpocPlaced: null | String;
+	stringDaiToSend: null | String;
+	stringLiqToBurn: null | String;
 }
 
 const App: React.FC<AddressProps> = (props) => {
@@ -29,7 +32,7 @@ const App: React.FC<AddressProps> = (props) => {
 			</div>
 		</div>
 		<InteractionsBurnRequest contract={props.contract} user_address={props.user_address} provider={props.provider} signer={props.signer} fetti_address={props.fetti_address}/>
-		<InteractionsClaim contract={props.contract} user_address={props.user_address} provider={props.provider} signer={props.signer} fetti_address={props.fetti_address}/>
+		<InteractionsClaim contract={props.contract} user_address={props.user_address} provider={props.provider} signer={props.signer} fetti_address={props.fetti_address} stringEpocPlaced={props.stringEpocPlaced} stringDaiToSend={props.stringDaiToSend} stringLiqToBurn={props.stringLiqToBurn}/>
 	</div>
   );
 };

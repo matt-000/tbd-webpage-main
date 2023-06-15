@@ -17,12 +17,21 @@ const App = () => {
 	const [tokenName, setTokenName] = useState("Token");
 	const [balance, setBalance] = useState<null | String>(null);
 
+  const [stringEpocPlaced, setStringEpocPlaced] = useState<null | String>(null);
+  const [stringDaiToSend, setStringDaiToSend] = useState<null | String>(null);
+  const [stringLiqToBurn, setStringLiqToBurn] = useState<null | String>(null);
+
   const context = useContext(UserAddressContext);
 	useEffect(() => {
 		context?.updateUserAddress();
-		updateBalance();
-		updateTokenName();
 	}, [context]);
+
+  useEffect(() => {
+    if (context?.userAddress) {
+      updateBalance();
+		  updateTokenName();
+    }
+  }, [context?.userAddress]);
 
 	const iface = new ethers.Interface([
 		"function maxWithdraw(address) view returns (uint256)",
@@ -34,7 +43,7 @@ const App = () => {
     "function requestWidthdraw(uint256 amount_, address sendTo_) returns ()",
     "function approve(address spender, uint amount)",
 		"function allowance(address owner, address spender) view returns (uint)",
-    "function getRequestedWithdraw(address) view returns (uint256, uint256, uint256, address)"
+    "function _requestedWidthdraws(address) view returns (uint256, uint256, uint256, address)"
 	]);
 
   const stringVal = (num: bigint | null) => {
@@ -61,6 +70,11 @@ const App = () => {
 		setContract(fettiContract);
 
 		setBalance(stringVal(await fettiContract.balanceOf(context!.userAddress)));
+
+    let burnData = await fettiContract._requestedWidthdraws(context!.userAddress);
+    setStringEpocPlaced(stringVal(burnData[0]));
+    setStringDaiToSend(stringVal(burnData[1]));
+    setStringLiqToBurn(stringVal(burnData[2]));
 	}
 
   const updateTokenName = async () => {
@@ -74,7 +88,7 @@ const App = () => {
       <Header address={context!.userAddress}/>
       <LendingBorrowing />
       <MintBurn />
-      <Burny user_address={context!.userAddress} fetti_address={context!.fetti_address} provider={provider} signer={signer} contract={contract} tokenName={tokenName} balance={balance}/>
+      <Burny user_address={context!.userAddress} fetti_address={context!.fetti_address} provider={provider} signer={signer} contract={contract} tokenName={tokenName} balance={balance} stringEpocPlaced={stringEpocPlaced} stringDaiToSend={stringDaiToSend} stringLiqToBurn={stringLiqToBurn}/>
     </div>
   );
 };

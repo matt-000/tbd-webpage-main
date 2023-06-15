@@ -13,13 +13,17 @@ interface InteractionsProps {
 }
 
 const InteractionsBorrow: React.FC<InteractionsProps> = (props) => {
+	const [inputValue, setInputValue] = useState('');
+	const [outputValue, setOutputValue] = useState('');
 
+	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setInputValue(event.target.value);
+		setOutputValue(String(Number(inputValue) * 2));
+	};
 	const [transferHash, setTransferHash] = useState<null | String>(null);
 	
-	const borrowHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		  const burnInputMain = '0.03'
-		  const burnInput = ethers.parseUnits(burnInputMain, 18)
+	const borrowHandler = async () => {
+		  const burnInput = ethers.parseUnits(inputValue, 18)
 		  console.log(burnInput)
 		  console.log(props.nftID)
 
@@ -36,19 +40,34 @@ const InteractionsBorrow: React.FC<InteractionsProps> = (props) => {
 	  };
 
 	return (
-			<div className="interactionsCard">
-				<form onSubmit={borrowHandler}>
-					<h3> Borrow </h3>
-						<input type='number' name='borrowAmount'/>
-						<p>Maximum Amount that can be Borrowed(DAI): {props.maxBorrowedUSDC}</p>
-						<button type='submit' className="button6">Borrow</button>
-						<div>
-							{transferHash}
-						</div>
-			</form>
+		<div className="container">
+			<div className="swap-container">
+				<div className="form-container">
+					<h2>Borrow DAI</h2>
+					<div className="input-group">
+						<input
+						type="text"
+						placeholder="0"
+						className="input-field"
+						value={inputValue}
+						onChange={handleInputChange}
+						/>
+						<select className="select-field">
+						<option value="dai">DAI</option>
+						{/* Add more options here */}
+						</select>
+					</div>
+					<button className="swap-button" value={inputValue} onClick={borrowHandler}>
+						Borrow
+					</button>
+				</div>
+				<div className="rate-container">
+					<h3>Maximum amount of DAI to be Borrowed</h3>
+					<div className="rate-value">{props.maxBorrowedUSDC}</div>
+				</div>
 			</div>
+		</div>
 		)
-	
 }
 
 export default InteractionsBorrow;

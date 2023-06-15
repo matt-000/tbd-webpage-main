@@ -105,14 +105,14 @@ const App = () => {
   }*/
 
   const updateNFTInfo = async () => {
-    const nftID_ = ethers.parseUnits("2", 0);
+    const nftID_ = ethers.parseUnits("3", 0);
 	  let loanData = await contract!._outstandingLoans(nftID_);
     setStakedGns(loanData[1]);
     setBorrowedUsdc(loanData[2]);
     setUnlockTime(loanData[3]);
     setMaxBorrowedUsdc(loanData[4]);
 
-    setNFTID(ethers.parseUnits("2", 0));
+    setNFTID(ethers.parseUnits("3", 0));
     setStringStakedGns(stringVal(stakedGns));
     setStringBorrowedUsdc(stringVal(borrowedUsdc));
     setStringUnlockTime(stringVal(unlockTime));
@@ -128,7 +128,7 @@ const App = () => {
     setSigner(gnsSigner);
     setContract(gnsContract);
 
-    const nftID_ = ethers.parseUnits("2", 0);
+    const nftID_ = ethers.parseUnits("3", 0);
     let loanData = await gnsContract._outstandingLoans(nftID_);
 
     setStakedGns(loanData[1]);
@@ -136,7 +136,7 @@ const App = () => {
     setUnlockTime(loanData[3]);
     setMaxBorrowedUsdc(loanData[4]);
 
-    setNFTID(ethers.parseUnits("2", 0));
+    setNFTID(ethers.parseUnits("3", 0));
     setStringStakedGns(stringVal(loanData[1]));
     setStringBorrowedUsdc(stringVal(loanData[2]));
     setStringUnlockTime(stringVal(loanData[3]));

@@ -14,11 +14,9 @@ interface InteractionsProps {
 }
 
 const InteractionsWithdraw: React.FC<InteractionsProps> = (props) => {
-
 	const [transferHash, setTransferHash] = useState<null | String>(null);
 	
-	const borrowHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
+	const borrowHandler = async () => {
 		  console.log(props.nftID)
 			try{
 				let txt = await props.contract!.widthdrawColateral(props.user_address, props.nftID);
@@ -31,19 +29,23 @@ const InteractionsWithdraw: React.FC<InteractionsProps> = (props) => {
 				console.error(`Error in exchange: ${error}`);
 			}
 	};
-	
+
 	return (
-			<div className="interactionsCard">
-				<form onSubmit={borrowHandler}>
-					<h3> Withdraw Collateral </h3>
-						<input type='number' name='collateralAmount'/>
-						<p>Amount Staked(GNS): {props.stakedGNS}</p>
-						<p>Unlock Time: {props.unlockTime}</p>
-						<button type='submit' className="button6">Withdraw</button>
-						<div>
-							{transferHash}
-						</div>
-			</form>
+		<div className="container">
+				<div className="swap-container">
+					<div className="form-container">
+						<h2>Withdraw Collateral</h2>
+						<button className="swap-button" onClick={borrowHandler}>
+							Withdraw
+						</button>
+					</div>
+					<div className="rate-container">
+						<h3>Current amount of staked GNS</h3>
+						<div className="rate-value">{props.stakedGNS}</div>
+						<h3>Time until withdraw</h3>
+						<div className="rate-value">{props.unlockTime}</div>
+					</div>
+				</div>
 			</div>
 		)
 	

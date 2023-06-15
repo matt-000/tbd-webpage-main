@@ -22,3 +22,8 @@ nav ul li a {
 nav ul li a.active {
   font-weight: bold;
 }
+
+.app-root {
+  min-height: 100vh;
+  overflow: auto;
+}

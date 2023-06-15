@@ -13,11 +13,16 @@ interface InteractionsProps {
 }
 
 const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
+	const [inputValue, setInputValue] = useState('');
+	const [outputValue, setOutputValue] = useState('');
 
+	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setInputValue(event.target.value);
+		setOutputValue(String(Number(inputValue) * 2));
+	};
 	const [transferHash, setTransferHash] = useState<null | String>(null);
 	
-	const borrowHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault(); 
+	const borrowHandler = async () => {
 		// DAI contract address on Mainnet
 		const daiAddress = '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063';
   
@@ -28,8 +33,7 @@ const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
 	  
 		const daiContract = new ethers.Contract(daiAddress, daiAbi, props.signer);
 
-		  const burnInputMain = '0.03'
-		  const burnInput = ethers.parseUnits(burnInputMain, 18)
+		  const burnInput = ethers.parseUnits(inputValue, 18)
 		  console.log(burnInput)
 		  console.log(props.nftID)
 			try{
@@ -56,17 +60,33 @@ const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
 	  };
 
 	return (
-			<div className="interactionsCard">
-				<form onSubmit={borrowHandler}>
-					<h3> Repay Debt </h3>
-						<input type='number' name='collateralAmount'/>
-						<p>Amount Borrowed(Debt Outstanding): {props.borrowedUSDC}</p>
-						<button type='submit' className="button6">Repay Debt</button>
-						<div>
-							{transferHash}
-						</div>
-			</form>
+		<div className="container">
+			<div className="swap-container">
+				<div className="form-container">
+					<h2>Repay Debt</h2>
+					<div className="input-group">
+						<input
+						type="text"
+						placeholder="0"
+						className="input-field"
+						value={inputValue}
+						onChange={handleInputChange}
+						/>
+						<select className="select-field">
+						<option value="dai">DAI</option>
+						{/* Add more options here */}
+						</select>
+					</div>
+					<button className="swap-button" value={inputValue} onClick={borrowHandler}>
+						Repay
+					</button>
+				</div>
+				<div className="rate-container">
+					<h3>Outstanding Debt</h3>
+					<div className="rate-value">{props.borrowedUSDC}</div>
+				</div>
 			</div>
+		</div>
 		)
 	
 }

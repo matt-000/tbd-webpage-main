@@ -10,6 +10,9 @@ interface InteractionsProps {
 	contract: null | ethers.Contract;
 	user_address: null | String;
 	fetti_address: null | String;
+	stringEpocPlaced: null | String;
+	stringDaiToSend: null | String;
+	stringLiqToBurn: null | String;
 }
 
 const InteractionsBurn: React.FC<InteractionsProps> = (props) => {
@@ -61,9 +64,13 @@ const InteractionsBurn: React.FC<InteractionsProps> = (props) => {
 							Claim
 						</button>
 					</div>
-						<div className="rate-container">
-							<h3>Exchange Rate</h3>
-						<div className="rate-value">1 FET = 1 DAI</div>
+					<div className="rate-container">
+						<h3>Time until claim</h3>
+						<div className="rate-value">{props.stringEpocPlaced}</div>
+						<h3>Dai to be sent</h3>
+						<div className="rate-value">{props.stringDaiToSend}</div>
+						<h3>Fet to be burned</h3>
+						<div className="rate-value">{props.stringLiqToBurn}</div>
 					</div>
 				</div>
 			</div>
