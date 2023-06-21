@@ -146,16 +146,22 @@ const App = () => {
 
   return (
     <div className="app">
-      <Header address={context!.userAddress}/>
-      <h2> {tokenName + " ERC-20 Wallet"} </h2>
-		  <button className="button6" onClick={context?.updateUserAddress}>{"Refresh Wallet Connection"}</button>
-      <button className="button6" onClick={updateNFTInfo}>{"Refresh NFT Info"}</button>
-      <LendingBorrowing />
-      <InteractionsDepositCollateral contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address}/>
-      <InteractionsBorrow contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} maxBorrowedUSDC={stringMaxBorrowedUsdc}/>
-      <InteractionsAddCollateral contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID}/>
-      <InteractionsRepayDebt contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} borrowedUSDC={stringBorrowedUsdc}/>
-      <InteractionsWithdraw contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} stakedGNS={stringStakedGns} unlockTime={stringUnlockTime}/>
+      <div className="header-div">
+        <Header address={context!.userAddress}/>
+      </div>
+      <div className="lending-box">
+        <LendingBorrowing />
+      </div>
+      <div className="button-box">
+        <button className="nft-button" onClick={updateNFTInfo}>{"Refresh NFT Info"}</button>
+      </div>
+      <div className="main-content">
+        <InteractionsDepositCollateral contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address}/>
+        <InteractionsBorrow contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} maxBorrowedUSDC={stringMaxBorrowedUsdc}/>
+        <InteractionsAddCollateral contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID}/>
+        <InteractionsRepayDebt contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} borrowedUSDC={stringBorrowedUsdc}/>
+        <InteractionsWithdraw contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} stakedGNS={stringStakedGns} unlockTime={stringUnlockTime}/>
+      </div>
     </div>
   );
 };

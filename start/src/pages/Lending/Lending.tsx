@@ -70,10 +70,10 @@ const App = () => {
 
   return (
     <div className="app">
-      <h2> {tokenName + " ERC-20 Wallet"} </h2>
-		<button className="button6" onClick={context?.updateUserAddress}>{"Refresh Wallet Connection"}</button>
       <Header address={context!.userAddress}/>
-      <LendingBorrowing />
+	  <div className="lending-box">
+        <LendingBorrowing />
+      </div>
       <MintBurn />
       <Minty user_address={context!.userAddress} fetti_address={context!.fetti_address} provider={provider} signer={signer} contract={contract} tokenName={tokenName} balance={balance}/>
     </div>

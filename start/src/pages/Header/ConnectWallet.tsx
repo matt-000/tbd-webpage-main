@@ -10,7 +10,7 @@ const App: React.FC<AddressProps> = (props) => {
  return (
    <div className="wallet-header">
       <div className="cta-image-container">
-        <img className="cta-image" src="https://studybreaks.com/wp-content/uploads/2016/01/Fetty-Wap.png" alt="fet" />
+        <img src="/images/logo.png" alt="logo" />
         <p>
          ETH wallet connected as: {props.address}
        </p>

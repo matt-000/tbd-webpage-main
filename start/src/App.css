@@ -23,7 +23,13 @@ nav ul li a.active {
   font-weight: bold;
 }
 
-.app-root {
-  min-height: 100vh;
+.app {
   overflow: auto;
+  height: 100vh;
+  background-color: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
 }

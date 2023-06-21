@@ -1,7 +1,14 @@
 .header {
   background-color: #262626;
   color: #fff;
-  align-items: center;
+  align-items: top;
+  padding: 0;
+  position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 998;
+    margin-top: 20px;
 }
 
 .wallet-header {
@@ -73,4 +80,14 @@
   background-color: transparent;
   border: 1px solid #41f200;
   color: #41f200;
+}
+
+.metamask {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  z-index: 999;
 }

@@ -39,6 +39,10 @@ nav ul li a.active {
   cursor: pointer;
 }
 
+.lending-box{
+  padding-top: 1vh;
+}
+
 /* ConversionBox.css */
 .conversion-box {
   display: flex;
