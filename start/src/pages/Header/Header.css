@@ -3,25 +3,23 @@
   color: #fff;
   align-items: top;
   padding: 0;
-  position: sticky;
+  position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 998;
-    margin-top: 20px;
 }
 
 .wallet-header {
   background-color: #262626;
   color: #fff;
   align-items: center;
-  width: 80%;
+  width: 100%;
 }
 
 .logo {
   text-align: center;
-  padding: 20px 0;
-  font-size: 4em;
+  font-size: 5.2em;
   font-weight: bold;
 }
 
@@ -45,7 +43,7 @@
 .navbar {
   display: flex;
   justify-content: space-between;
-  padding: 20px 50px;
+  padding: 20px 20px;
 }
 
 .nav-links {

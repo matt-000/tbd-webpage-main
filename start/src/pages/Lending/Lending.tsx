@@ -71,9 +71,7 @@ const App = () => {
   return (
     <div className="app">
       <Header address={context!.userAddress}/>
-	  <div className="lending-box">
-        <LendingBorrowing />
-      </div>
+      <LendingBorrowing />
       <MintBurn />
       <Minty user_address={context!.userAddress} fetti_address={context!.fetti_address} provider={provider} signer={signer} contract={contract} tokenName={tokenName} balance={balance}/>
     </div>

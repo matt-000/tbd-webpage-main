@@ -26,8 +26,6 @@ const Header: React.FC<AddressProps> = (props) => {
             <li className="nav-link">White Paper</li>
           </ul>
           <div className="cta">
-            <button className="cta-button">Sign Up</button>
-            <button className="cta-button">Log In</button>
             <Connect address={props.address}/>
           </div>
         </nav>
