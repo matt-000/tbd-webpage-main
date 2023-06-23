@@ -1,34 +1,52 @@
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  .options-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .option {
-    width: 200px;
-    padding: 20px;
-    margin-bottom: 10px;
-    background-color: #f7f7f7;
-    border-radius: 4px;
-    text-align: center;
-  }
-  
-  .option-content {
-    margin-bottom: 10px;
-  }
-  
-  .vote-button {
-    background-color: #007bff;
-    color: #fff;
+
+
+  .manage-button {
+    background-color: #07ff24;
+    color: white;
     border: none;
     padding: 10px 20px;
-    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 0 2px;
+    transition-duration: 0.4s;
     cursor: pointer;
-  }
+}
 
-  
+.manage-button:hover {
+    background-color: white;
+    color: black;
+}
+
+
+.outer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #2f2f2f; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  min-width: 800px; 
+}
+
+
+.card-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin: 10px auto; /* Auto will center the cards horizontally */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: calc(100% - 40px);
+}

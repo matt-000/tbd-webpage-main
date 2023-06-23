@@ -83,8 +83,8 @@ const App = () => {
 
   return (
     <div className="app">
-      <Header address={context!.userAddress}/>
-      <div className="lending-box">
+        <Header address={context!.userAddress}/>
+      <div className="lending-box2">
         <LendingBorrowing />
       </div>
       <MintBurn />

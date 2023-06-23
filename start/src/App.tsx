@@ -2,7 +2,8 @@ import React, { useState, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { UserAddressContext } from './UserAddressContext';
 import "./App.css";
-import Borrow from './pages/Borrowing/Borrowing';
+import BorrowPage from './pages/Borrowing/BorrowingPage';
+import BorrowGNSFET from './pages/Borrowing/Borrowing';
 import Lend from './pages/Lending/Lending';
 import Burn from './pages/Lending/Burn';
 
@@ -55,7 +56,8 @@ function App () {
         <Routes>
           <Route path="/" element={<Lend />} />
           <Route path="/Burn" element={<Burn />} />
-          <Route path="/Borrowing" element={<Borrow />} />
+          <Route path="/Borrowing" element={<BorrowPage />} />
+          <Route path="/Borrowing/GNSFetti" element={<BorrowGNSFET />} />
         </Routes>
       </Router>
     </UserAddressContext.Provider>

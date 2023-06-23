@@ -3,7 +3,6 @@ import {useContext, useState, useEffect} from 'react'
 import {ethers} from 'ethers'
 import './Borrowing.css';
 import LendingBorrowing from './../Lending/LendingBorrowing';
-import BorrowingPage from './BorrowingPage';
 import Header from './../Header/Header';
 import InteractionsDepositCollateral from './InteractionsDepositCollateral';
 import InteractionsAddCollateral from './InteractionsAddCollateral';
@@ -142,7 +141,6 @@ const App = () => {
     setStringUnlockTime(stringVal(loanData[3]));
     setStringMaxBorrowedUsdc(stringVal(loanData[4]));
 };
-
 
   return (
     <div className="app">
