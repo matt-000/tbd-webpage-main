@@ -16,10 +16,6 @@
   align-content: center;
 }
 
-.lending-box{
-  padding-top: 12vh;
-}
-
 .box-item {
   padding: 10px;
   cursor: pointer;
@@ -67,5 +63,24 @@
 }
 
 .nft-button:hover {
+  background-color: #337436;
+}
+
+.back-button {
+  background-color: white; /* Green */
+  border: none;
+  color: #07ff24;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition-duration: 0.4s;
+}
+
+.back-button:hover {
   background-color: #337436;
 }

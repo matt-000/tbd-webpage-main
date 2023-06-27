@@ -10,6 +10,8 @@ import Burn from './pages/Lending/Burn';
 type UserAddressContextType = {
   userAddress: String | null;
   updateUserAddress: () => void;
+  nftIDGNSPool: string | null;
+  updateNFTIDGNSPool: (nft_id: string) => Promise<void>;
   fetti_address: string;
   dai_address: string;
   loaner_address: string;
@@ -35,14 +37,21 @@ function App () {
 		}
 	}
 
-  const [userAddress, setUserAddress] = useState<String | null>(null);
+  const [userAddress, setUserAddress] = useState<string | null>(null);
   const updateUserAddress = useCallback(async () => {
     await connectWalletHandler();
+  }, []);
+
+  const [nftIDGNSPool, setNFTIDGNSPool] = useState<string | null>(null);
+  const updateNFTIDGNSPool = useCallback(async (nft_id: string) => {
+    await setNFTIDGNSPool(nft_id);
   }, []);
 
   const value: UserAddressContextType = {
     userAddress,
     updateUserAddress,
+    nftIDGNSPool,
+    updateNFTIDGNSPool,
     fetti_address : '0x64648c7199658dB6D5fF1903b608fFfa015A81aa',
     dai_address : '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063',
     loaner_address : '0xb2534c942459C842EdC3b6B130ab2dE491ce5bf3',

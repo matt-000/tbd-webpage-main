@@ -39,6 +39,14 @@ const InteractionsBorrow: React.FC<InteractionsProps> = (props) => {
 			}
 	  };
 
+	  function maxBorrowedLoader() {
+		return (
+		  <div className="rate-value">
+			{props.maxBorrowedUSDC === null || props.maxBorrowedUSDC === undefined ? 'Loading...' : props.maxBorrowedUSDC}
+		  </div>
+		);
+	  }
+
 	return (
 		<div className="container">
 			<div className="swap-container">

@@ -1,5 +1,6 @@
 import React from 'react';
 import {useContext, useState, useEffect} from 'react'
+import { Link } from "react-router-dom";
 import {ethers} from 'ethers'
 import './Borrowing.css';
 import LendingBorrowing from './../Lending/LendingBorrowing';
@@ -10,6 +11,7 @@ import InteractionsBorrow from './InteractionsBorrow';
 import InteractionsRepayDebt from './InteractionsRepayDebt';
 import InteractionsWithdraw from './InteractionsWithdraw';
 import { UserAddressContext } from './../../UserAddressContext';
+import InteractionsSetNFTID from './InteractionsSetNFTID';
 
 const App = () => {
   const [provider, setProvider] = useState<null | ethers.BrowserProvider>(null); 
@@ -45,6 +47,12 @@ const App = () => {
       updateEthers();
     }
   }, [context?.userAddress]);
+
+  useEffect(() => {
+    if (context?.nftIDGNSPool) {
+      updateEthers();
+    }
+  }, [context?.nftIDGNSPool]);
 /*
   useEffect(() => {
     if (contract) {
@@ -104,18 +112,23 @@ const App = () => {
   }*/
 
   const updateNFTInfo = async () => {
-    const nftID_ = ethers.parseUnits("3", 0);
-	  let loanData = await contract!._outstandingLoans(nftID_);
-    setStakedGns(loanData[1]);
-    setBorrowedUsdc(loanData[2]);
-    setUnlockTime(loanData[3]);
-    setMaxBorrowedUsdc(loanData[4]);
+    if (context && context.nftIDGNSPool) {
+      let nftID_ = ethers.parseUnits(context.nftIDGNSPool, 0);
 
-    setNFTID(ethers.parseUnits("3", 0));
-    setStringStakedGns(stringVal(stakedGns));
-    setStringBorrowedUsdc(stringVal(borrowedUsdc));
-    setStringUnlockTime(stringVal(unlockTime));
-    setStringMaxBorrowedUsdc(stringVal(maxBorrowedUsdc));
+      let loanData = await contract!._outstandingLoans(nftID_);
+      setStakedGns(loanData[1]);
+      setBorrowedUsdc(loanData[2]);
+      setUnlockTime(loanData[3]);
+      setMaxBorrowedUsdc(loanData[4]);
+
+      setNFTID(nftID_);
+      setStringStakedGns(stringVal(stakedGns));
+      setStringBorrowedUsdc(stringVal(borrowedUsdc));
+      setStringUnlockTime(stringVal(unlockTime));
+      setStringMaxBorrowedUsdc(stringVal(maxBorrowedUsdc));
+    } else {
+      console.log("whoopsy")
+    }
 	}
 
   const updateEthers = async () => {
@@ -127,38 +140,48 @@ const App = () => {
     setSigner(gnsSigner);
     setContract(gnsContract);
 
-    const nftID_ = ethers.parseUnits("3", 0);
-    let loanData = await gnsContract._outstandingLoans(nftID_);
+    if (context && context.nftIDGNSPool) {
+      let loanData = await gnsContract._outstandingLoans(ethers.parseUnits(context.nftIDGNSPool, 0));
+      setStakedGns(loanData[1]);
+      setBorrowedUsdc(loanData[2]);
+      setUnlockTime(loanData[3]);
+      setMaxBorrowedUsdc(loanData[4]);
 
-    setStakedGns(loanData[1]);
-    setBorrowedUsdc(loanData[2]);
-    setUnlockTime(loanData[3]);
-    setMaxBorrowedUsdc(loanData[4]);
-
-    setNFTID(ethers.parseUnits("3", 0));
-    setStringStakedGns(stringVal(loanData[1]));
-    setStringBorrowedUsdc(stringVal(loanData[2]));
-    setStringUnlockTime(stringVal(loanData[3]));
-    setStringMaxBorrowedUsdc(stringVal(loanData[4]));
+      setNFTID(ethers.parseUnits(context.nftIDGNSPool, 0));
+      setStringStakedGns(stringVal(loanData[1]));
+      setStringBorrowedUsdc(stringVal(loanData[2]));
+      setStringUnlockTime(stringVal(loanData[3]));
+      setStringMaxBorrowedUsdc(stringVal(loanData[4]));
+    } else {
+      console.log("whoopsy")
+    }
 };
+
+const zero_val = ethers.parseUnits("0", 0);
 
   return (
     <div className="app">
       <div className="header-div">
         <Header address={context!.userAddress}/>
       </div>
-      <div className="lending-box">
-        <LendingBorrowing />
-      </div>
+      <LendingBorrowing />
       <div className="button-box">
+        <Link to="/Borrowing" className="back-button">Back</Link>
         <button className="nft-button" onClick={updateNFTInfo}>{"Refresh NFT Info"}</button>
       </div>
       <div className="main-content">
-        <InteractionsDepositCollateral contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address}/>
-        <InteractionsBorrow contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} maxBorrowedUSDC={stringMaxBorrowedUsdc}/>
-        <InteractionsAddCollateral contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID}/>
-        <InteractionsRepayDebt contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} borrowedUSDC={stringBorrowedUsdc}/>
-        <InteractionsWithdraw contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} stakedGNS={stringStakedGns} unlockTime={stringUnlockTime}/>
+          {nftID === null || maxBorrowedUsdc === zero_val ?
+              <>
+                  <InteractionsSetNFTID/>
+                  <InteractionsDepositCollateral contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address}/>
+              </> : 
+              <>
+                  <InteractionsBorrow contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} maxBorrowedUSDC={stringMaxBorrowedUsdc}/>
+                  <InteractionsAddCollateral contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID}/>
+                  <InteractionsRepayDebt contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} borrowedUSDC={stringBorrowedUsdc}/>
+                  <InteractionsWithdraw contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} stakedGNS={stringStakedGns} unlockTime={stringUnlockTime}/>
+              </>
+          }
       </div>
     </div>
   );
