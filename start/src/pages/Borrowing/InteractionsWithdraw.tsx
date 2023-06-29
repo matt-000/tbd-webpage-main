@@ -1,6 +1,7 @@
 import React from 'react'
-import { useState} from 'react'
+import { useState, useContext} from 'react'
 import {Contract, ethers} from 'ethers'
+import { UserAddressContext } from './../../UserAddressContext';
 
 interface InteractionsProps {
 	provider: null | ethers.BrowserProvider;
@@ -11,6 +12,7 @@ interface InteractionsProps {
 	nftID: null | bigint;
 	stakedGNS: null | String;
 	unlockTime: null |String;
+	updateNFTInfo: () => void;
 }
 
 const InteractionsWithdraw: React.FC<InteractionsProps> = (props) => {
@@ -25,8 +27,15 @@ const InteractionsWithdraw: React.FC<InteractionsProps> = (props) => {
     			console.log('Withdrawed Collateral');
 
 				setTransferHash("Transfer confirmation hash: " + txt.hash);
+
+				props.updateNFTInfo();
 			} catch (error) {
 				console.error(`Error in exchange: ${error}`);
+				if (typeof error === 'object' && error !== null && 'reason' in error) {
+					setTransferHash((error as { reason?: string }).reason ?? "An unexpected error occurred.");
+				} else {
+					setTransferHash("An unexpected error occurred.");
+				}
 			}
 	};
 
@@ -45,6 +54,9 @@ const InteractionsWithdraw: React.FC<InteractionsProps> = (props) => {
 						<h3>Time until withdraw</h3>
 						<div className="rate-value">{props.unlockTime}</div>
 					</div>
+				</div>
+				<div>
+					<h3>{transferHash}</h3>
 				</div>
 			</div>
 		)

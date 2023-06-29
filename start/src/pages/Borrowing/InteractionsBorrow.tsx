@@ -36,16 +36,13 @@ const InteractionsBorrow: React.FC<InteractionsProps> = (props) => {
 				setTransferHash("Transfer confirmation hash: " + txt.hash);
 			} catch (error) {
 				console.error(`Error in exchange: ${error}`);
+				if (typeof error === 'object' && error !== null && 'reason' in error) {
+					setTransferHash((error as { reason?: string }).reason ?? "An unexpected error occurred.");
+				} else {
+					setTransferHash("An unexpected error occurred.");
+				}
 			}
 	  };
-
-	  function maxBorrowedLoader() {
-		return (
-		  <div className="rate-value">
-			{props.maxBorrowedUSDC === null || props.maxBorrowedUSDC === undefined ? 'Loading...' : props.maxBorrowedUSDC}
-		  </div>
-		);
-	  }
 
 	return (
 		<div className="container">
@@ -73,6 +70,9 @@ const InteractionsBorrow: React.FC<InteractionsProps> = (props) => {
 					<h3>Maximum amount of DAI to be Borrowed</h3>
 					<div className="rate-value">{props.maxBorrowedUSDC}</div>
 				</div>
+			</div>
+			<div>
+				<h3>{transferHash}</h3>
 			</div>
 		</div>
 		)

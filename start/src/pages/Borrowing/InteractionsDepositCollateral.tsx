@@ -1,6 +1,7 @@
 import React from 'react'
-import { useState} from 'react'
-import {ethers} from 'ethers'
+import { useState, useContext} from 'react'
+import { ethers} from 'ethers'
+import { UserAddressContext } from './../../UserAddressContext';
 
 interface InteractionsProps {
 	provider: null | ethers.BrowserProvider;
@@ -8,11 +9,14 @@ interface InteractionsProps {
 	contract: null | ethers.Contract;
 	user_address: null | String;
 	gns_address: null | String;
+	updateNFTInfo: () => void;
 }
 
 const InteractionsDepositCollateral: React.FC<InteractionsProps> = (props) => {
 	const [inputValue, setInputValue] = useState('');
 	const [outputValue, setOutputValue] = useState('');
+
+	const context = useContext(UserAddressContext);
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setInputValue(event.target.value);
@@ -21,7 +25,6 @@ const InteractionsDepositCollateral: React.FC<InteractionsProps> = (props) => {
 	const [transferHash, setTransferHash] = useState<null | String>(null);
 	
 	const borrowHandler = async () => {
-		console.log("help me")
 		// GNS contract address on Mainnet
 		const gnsAddress = '0xE5417Af564e4bFDA1c483642db72007871397896';
   
@@ -29,12 +32,6 @@ const InteractionsDepositCollateral: React.FC<InteractionsProps> = (props) => {
 		  "function approve(address spender, uint amount)",
 		  "function allowance(address owner, address spender) view returns (uint)"
 		];
-
-		if (window.ethereum && window.ethereum.selectedAddress) {
-			console.log("were okay")
-		  } else {
-			console.log("were fucked")
-		  }
 	  
 		const gnsContract = new ethers.Contract(gnsAddress, gnsAbi, props.signer);
 
@@ -58,10 +55,43 @@ const InteractionsDepositCollateral: React.FC<InteractionsProps> = (props) => {
     			console.log('Deposited Collateral');
 
 				setTransferHash("Transfer confirmation hash: " + txt.hash);
+				
+				let token_id = await getNftIdFromTransaction(txt.hash)
+				console.log(token_id)
+				context!.updateNFTIDGNSPool(token_id);
 			} catch (error) {
 				console.error(`Error in exchange: ${error}`);
+				if (typeof error === 'object' && error !== null && 'reason' in error) {
+					setTransferHash((error as { reason?: string }).reason ?? "An unexpected error occurred.");
+				} else {
+					setTransferHash("An unexpected error occurred.");
+				}
 			}
 	  };
+
+	  const getNftIdFromTransaction = async (txHash: string) => {
+		const receipt = await props.provider!.getTransactionReceipt(txHash);
+		console.log(receipt!.logs);
+		for (let i = 0; i < receipt!.logs.length; i++) {
+			const log = receipt!.logs[i];
+			const logCopy = { ...log, topics: [...log.topics] };
+			if (log.address === props.gns_address) {
+				try {
+					// Parse the log
+					const parsedLog = props.contract!.interface.parseLog(logCopy);
+					// If this log is a Transfer event, return the token ID
+					if (parsedLog && parsedLog.name === 'Transfer') {
+						const { tokenId } = parsedLog!.args;
+						return tokenId.toString();
+					}
+				} catch (e) {
+					console.error("Failed to parse log", e);
+				}
+			}
+		}
+		throw new Error("NFT ID not found in transaction");
+	  };
+	  
 
 	return (
 		<div className="container">
@@ -85,6 +115,10 @@ const InteractionsDepositCollateral: React.FC<InteractionsProps> = (props) => {
 					Deposit
 				</button>
 			</div>
+		</div>
+		<div>
+			<h3>Remember to add FET/GNS Pool NFT to your wallet (Contract Address): {props.gns_address}</h3>
+			<h3>{transferHash}</h3>
 		</div>
 	</div>
 		)

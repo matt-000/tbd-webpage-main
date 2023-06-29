@@ -3,8 +3,11 @@ import { useState, useContext} from 'react'
 import {ethers} from 'ethers'
 import { UserAddressContext } from './../../UserAddressContext'
 
+interface InteractionsProps {
+	maxBorrowedUsdc: null | bigint;
+}
 
-const InteractionsSetNFTID = () => {
+const InteractionsSetNFTID: React.FC<InteractionsProps> = (props) => {
 	const [inputValue, setInputValue] = useState('');
 	const context = useContext(UserAddressContext);
 
@@ -15,6 +18,8 @@ const InteractionsSetNFTID = () => {
 	const borrowHandler = async () => { 
 		context!.updateNFTIDGNSPool(inputValue)
 	  };
+
+	  const zero_val = ethers.parseUnits("0", 0);
 
 	return (
 		<div className="container">
@@ -35,6 +40,7 @@ const InteractionsSetNFTID = () => {
 					</button>
 				</div>
 			</div>
+			{props!.maxBorrowedUsdc === zero_val && <p>Error: NFT ID {context!.nftIDGNSPool} is not valid.</p>}
 		</div>
 		)
 }

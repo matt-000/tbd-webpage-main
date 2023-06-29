@@ -56,6 +56,11 @@ const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
 				setTransferHash("Transfer confirmation hash: " + txt.hash);
 			} catch (error) {
 				console.error(`Error in exchange: ${error}`);
+				if (typeof error === 'object' && error !== null && 'reason' in error) {
+					setTransferHash((error as { reason?: string }).reason ?? "An unexpected error occurred.");
+				} else {
+					setTransferHash("An unexpected error occurred.");
+				}
 			}
 	  };
 
@@ -85,6 +90,9 @@ const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
 					<h3>Outstanding Debt</h3>
 					<div className="rate-value">{props.borrowedUSDC}</div>
 				</div>
+			</div>
+			<div>
+				<h3>{transferHash}</h3>
 			</div>
 		</div>
 		)

@@ -58,6 +58,11 @@ const InteractionsMint: React.FC<InteractionsProps> = (props) => {
 				setTransferHash("Transfer confirmation hash: " + txt.hash);
 			} catch (error) {
 				console.error(`Error in exchange: ${error}`);
+				if (typeof error === 'object' && error !== null && 'reason' in error) {
+					setTransferHash((error as { reason?: string }).reason ?? "An unexpected error occurred.");
+				} else {
+					setTransferHash("An unexpected error occurred.");
+				}
 			}
 	  };
 
@@ -100,6 +105,10 @@ const InteractionsMint: React.FC<InteractionsProps> = (props) => {
 					<h3>Exchange Rate</h3>
 					<div className="rate-value">1 FET = 1 DAI</div>
 				</div>
+			</div>
+			<div>
+				<h3>Remember to add FET to your wallet (Contract Address): {props.fetti_address}</h3>
+				<h3>{transferHash}</h3>
 			</div>
 		</div>
 		)
