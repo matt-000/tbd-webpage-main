@@ -8,6 +8,7 @@ interface AddressProps {
 	address: null | String;
 }
 
+// Our general header that holds all of links and info
 const Header: React.FC<AddressProps> = (props) => {
   const context = useContext(UserAddressContext);
   return (

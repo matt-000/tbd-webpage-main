@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useWeb3React } from "@web3-react/core"
-//import { injected } from "./connectors"
 import './Header.css';
 
 interface AddressProps {
 	address: null | String;
 }
+
+// Simple component to hold information on our eth wallet
 const App: React.FC<AddressProps> = (props) => {
  return (
    <div className="wallet-header">

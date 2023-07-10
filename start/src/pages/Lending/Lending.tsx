@@ -10,6 +10,8 @@ import "./Lending.css"
 import { UserAddressContext } from './../../UserAddressContext';
 
 const App = () => {
+	// This variable is called a simple ABI. It effectively represents how we can define the methods
+  	// within our contract code for ethersjs to compile. These are our calls to the contract.
 	const iface = new ethers.Interface([
 		"function maxWithdraw(address) view returns (uint256)",
 		"function maxMint(address owner) returns (uint256)",
@@ -19,6 +21,7 @@ const App = () => {
 		"function withdraw(uint256, address, address) returns (uint256)"
 	]);
 
+	// Method to take a bigint value and turn it into a string so we can display the value
 	const stringVal = (num: bigint | null) => {
 		if (num ==  null){
 		  return ""
@@ -32,6 +35,7 @@ const App = () => {
 		return value
 	}
 
+	// State variables being defined for future updates and usage in other components
 	const [provider, setProvider] = useState<null | ethers.BrowserProvider>(null); 
 	const [signer, setSigner] = useState<null | ethers.JsonRpcSigner>(null);
 	const [contract, setContract] = useState<null | ethers.Contract>(null);
@@ -40,10 +44,12 @@ const App = () => {
 	const [balance, setBalance] = useState<null | String>(null);
 
 	const context = useContext(UserAddressContext);
+	// First we will update the users address and make sure that they are signed in
 	useEffect(() => {
 		context?.updateUserAddress();
 	}, [context]);
 
+	// If the user address is updated we will pull all information on user balance 
 	useEffect(() => {
 		if(context?.userAddress) {
 		  updateBalance();
@@ -51,7 +57,9 @@ const App = () => {
 		}
 	}, [context?.userAddress]);
 	
+	// Our call to the contract to get all of the variables set and user balance
 	const updateBalance = async () => {
+		// Calls to set variables
 		let fettiProvider = new ethers.BrowserProvider(window.ethereum);
 		setProvider(fettiProvider);
 
@@ -61,13 +69,16 @@ const App = () => {
 		let fettiContract = new ethers.Contract(context!.fetti_address, iface.fragments, fettiSigner);
 		setContract(fettiContract);
 
+		// Call to get user balance
 		setBalance(stringVal(await fettiContract.balanceOf(context!.userAddress)));
 	}
 
+	// Token name
   const updateTokenName = async () => {
 		setTokenName("FET");
 	}
 
+	// Simple container to hold our interactions
   return (
     <div className="app">
       <Header address={context!.userAddress}/>

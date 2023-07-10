@@ -1,5 +1,14 @@
 # MetaMask Test Dapp
+The liquifi frontend
 
-The liquifi fronted
+This page utilizes Typescript, CSS, ethersjs, and React.
 
-Use of npm
+To start the page:
+    Go into the start folder
+    Then run npm start in your terminal
+
+After the page is started, then you should be ready to interactively edit.
+
+In addition:
+    Use eslint is applied to this project, so there could be a chance of some file formatting issues
+    The contracts used are involved the FET token, FET/GNS Loan Protocol

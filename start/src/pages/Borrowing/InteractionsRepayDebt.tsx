@@ -13,6 +13,7 @@ interface InteractionsProps {
 }
 
 const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
+	// Input values and output values
 	const [inputValue, setInputValue] = useState('');
 	const [outputValue, setOutputValue] = useState('');
 
@@ -22,21 +23,26 @@ const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
 	};
 	const [transferHash, setTransferHash] = useState<null | String>(null);
 	
+	// Our call to the contract for borrowing
 	const borrowHandler = async () => {
 		// DAI contract address on Mainnet
 		const daiAddress = '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063';
   
+		// Simple ABI for DAI functions were using
 		const daiAbi = [
 		  "function approve(address spender, uint amount)",
 		  "function allowance(address owner, address spender) view returns (uint)"
 		];
 	  
+		// Initialized contract
 		const daiContract = new ethers.Contract(daiAddress, daiAbi, props.signer);
 
+		// Input from user being converted
 		  const burnInput = ethers.parseUnits(inputValue, 18)
 		  console.log(burnInput)
 		  console.log(props.nftID)
 			try{
+				// Approval from DAI
 				const approvalTx = await daiContract.approve(props.gns_address, burnInput);
 				await props.provider!.waitForTransaction(approvalTx.hash);
     			console.log('Approval confirmed');	
@@ -44,10 +50,12 @@ const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
 				console.log('Dai Pool address:', props.gns_address);
 				console.log('Props address:', props.user_address);
 
+				// Check to see what the allowance is
 				const allowance = await daiContract.allowance(props.user_address, props.gns_address);
 				console.log(`Allowance: ${ethers.formatUnits(allowance, 18)} DAI`);
 				console.log(`Allowance: ${allowance}`);
 
+				// Call to our contract
 				let txt = await props.contract!.repayLoan(props.nftID, burnInput);
 				console.log(txt);
 				await props.provider!.waitForTransaction(txt.hash);
@@ -64,6 +72,7 @@ const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
 			}
 	  };
 
+	  // Containers for input and use of on click events
 	return (
 		<div className="container">
 			<div className="swap-container">

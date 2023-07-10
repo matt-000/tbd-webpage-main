@@ -8,6 +8,7 @@ interface InteractionsProps {
 }
 
 const InteractionsSetNFTID: React.FC<InteractionsProps> = (props) => {
+	// Input value holders from our containers
 	const [inputValue, setInputValue] = useState('');
 	const context = useContext(UserAddressContext);
 
@@ -15,12 +16,14 @@ const InteractionsSetNFTID: React.FC<InteractionsProps> = (props) => {
 		setInputValue(event.target.value);
 	};
 	
-	const borrowHandler = async () => { 
+	// Calls the context to update our alue
+	const updateHandler = async () => { 
 		context!.updateNFTIDGNSPool(inputValue)
 	  };
 
 	  const zero_val = ethers.parseUnits("0", 0);
 
+	  // Containers for input and use of on click events
 	return (
 		<div className="container">
 			<div className="swap-container">
@@ -35,7 +38,7 @@ const InteractionsSetNFTID: React.FC<InteractionsProps> = (props) => {
 						onChange={handleInputChange}
 						/>
 					</div>
-					<button className="swap-button" value={inputValue} onClick={borrowHandler}>
+					<button className="swap-button" value={inputValue} onClick={updateHandler}>
 						Set
 					</button>
 				</div>

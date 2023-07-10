@@ -29,6 +29,8 @@ The `piggybankContract` is compiled from:
       }
   }
 */
+
+// Practice work something else
 import MetaMaskOnboarding from '@metamask/onboarding'
 
 const forwarderOrigin = 'http://localhost:9010';

@@ -18,26 +18,32 @@ const InteractionsDepositCollateral: React.FC<InteractionsProps> = (props) => {
 
 	const context = useContext(UserAddressContext);
 
+	// Handling the input change
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setInputValue(event.target.value);
 		setOutputValue(String(Number(inputValue) * 2));
 	};
 	const [transferHash, setTransferHash] = useState<null | String>(null);
 	
+	// Our call to the contract
 	const borrowHandler = async () => {
-		// GNS contract address on Mainnet
+		// GNS address for transaction approval
 		const gnsAddress = '0xE5417Af564e4bFDA1c483642db72007871397896';
   
+		// Simple ABI for GNS functions were using
 		const gnsAbi = [
 		  "function approve(address spender, uint amount)",
 		  "function allowance(address owner, address spender) view returns (uint)"
 		];
 	  
+		// Initialized contract
 		const gnsContract = new ethers.Contract(gnsAddress, gnsAbi, props.signer);
 
+		// Input from user being converted
 		  const burnInput = ethers.parseUnits(inputValue, 18)
 		  console.log(burnInput)
 			try{
+				// Approval from GNS
 				const approvalTx = await gnsContract.approve(props.gns_address, burnInput);
 				await props.provider!.waitForTransaction(approvalTx.hash);
     			console.log('Approval confirmed');	
@@ -45,10 +51,12 @@ const InteractionsDepositCollateral: React.FC<InteractionsProps> = (props) => {
 				console.log('GNS Pool address:', props.gns_address);
 				console.log('Props address:', props.user_address);
 
+				// Check to see what the allowance is
 				const allowance = await gnsContract.allowance(props.user_address, props.gns_address);
 				console.log(`Allowance: ${ethers.formatUnits(allowance, 18)} GNS`);
 				console.log(`Allowance: ${allowance}`);
 
+				// Call to our contract
 				let txt = await props.contract!.depositColateral(props.user_address, burnInput);
 				console.log(txt);
 				await props.provider!.waitForTransaction(txt.hash);
@@ -56,6 +64,7 @@ const InteractionsDepositCollateral: React.FC<InteractionsProps> = (props) => {
 
 				setTransferHash("Transfer confirmation hash: " + txt.hash);
 				
+				// 
 				let token_id = await getNftIdFromTransaction(txt.hash)
 				console.log(token_id)
 				context!.updateNFTIDGNSPool(token_id);
@@ -108,7 +117,6 @@ const InteractionsDepositCollateral: React.FC<InteractionsProps> = (props) => {
 					/>
 					<select className="select-field">
 					<option value="dai">GNS</option>
-					{/* Add more options here */}
 					</select>
 				</div>
 				<button className="swap-button" value={inputValue} onClick={borrowHandler}>

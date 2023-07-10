@@ -14,53 +14,45 @@ import { UserAddressContext } from './../../UserAddressContext';
 import InteractionsSetNFTID from './InteractionsSetNFTID';
 
 const App = () => {
+  // State variables being defined for future updates and usage in other components
   const [provider, setProvider] = useState<null | ethers.BrowserProvider>(null); 
 	const [signer, setSigner] = useState<null | ethers.JsonRpcSigner>(null);
 	const [contract, setContract] = useState<null | ethers.Contract>(null);
 
-	const [tokenName, setTokenName] = useState("Token");
-
   const [nftID, setNFTID] = useState<null | bigint>(null);
+  const [currGns, setCurrGns] = useState<null | bigint>(null);
   const [stakedGns, setStakedGns] = useState<null | bigint>(null);
   const [borrowedUsdc, setBorrowedUsdc] = useState<null | bigint>(null);
   const [unlockTime, setUnlockTime] = useState<null | bigint>(null);
   const [maxBorrowedUsdc, setMaxBorrowedUsdc] = useState<null | bigint>(null);
 
+  const [stringCurrGns, setStringCurrGns] = useState<null | String>(null);
   const [stringStakedGns, setStringStakedGns] = useState<null | String>(null);
   const [stringBorrowedUsdc, setStringBorrowedUsdc] = useState<null | String>(null);
   const [stringUnlockTime, setStringUnlockTime] = useState<null | String>(null);
   const [stringMaxBorrowedUsdc, setStringMaxBorrowedUsdc] = useState<null | String>(null);
 
+  // First we will update the users address and make sure that they are signed in
   const context = useContext(UserAddressContext);
 	useEffect(() => {
 		context?.updateUserAddress();
 	}, [context]);
 
-	/*useEffect(() => {
-		if(context?.userAddress) {
-		  getNFTID();
-		}
-	}, [context?.userAddress]);*/
-
-  useEffect(() => {
+  // If the user address is updated we will pull all information on the nft id and contract info
+	useEffect(() => {
     if (context?.userAddress) {
       updateEthers();
     }
   }, [context?.userAddress]);
 
+  // Once the NFT is updated, we will do the same process as a above
   useEffect(() => {
     if (context?.nftIDGNSPool) {
       updateEthers();
     }
   }, [context?.nftIDGNSPool]);
-/*
-  useEffect(() => {
-    if (contract) {
-      updateNFTInfo();
-      console.log("balls")
-    }
-  }, [contract]);*/
 
+  // Method to take a bigint value and turn it into a string so we can display the value
   const stringVal = (num: bigint | null) => {
     if (num ==  null){
       return ""
@@ -74,6 +66,8 @@ const App = () => {
     return value
   }
 
+  // This variable is called a simple ABI. It effectively represents how we can define the methods
+  // within our contract code for ethersjs to compile. These are our calls to the contract.
   const gnsIFace = new ethers.Interface([
     "function depositColateral(address, uint256) returns (uint256)",
     "function addColateral(uint256, uint256) returns (uint256)",
@@ -83,39 +77,20 @@ const App = () => {
     "function _outstandingLoans(uint256) view returns (uint256, uint256, uint256, uint256, uint256, uint256, uint256, uint256, uint256, uint256, uint256)",
     "function balanceOf(address owner) view returns (uint256)",
     "function totalSupply() view returns (uint256)",
-    "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)"
+    "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
+    "function currGnsPrice() view returns (uint256)"
   ]);
 
   console.log(gnsIFace.fragments);
 
-  /*const getNFTID = async () => {
-    let gnsProvider = new ethers.BrowserProvider(window.ethereum);
-    let gnsSigner = await gnsProvider.getSigner();
-    let gnsContract = new ethers.Contract(context!.gnsPool_address, gnsIFace.fragments, gnsSigner);
-
-    const tokenBalance = await gnsContract.balanceOf(context!.userAddress);
-    console.log(context!.userAddress)
-    console.log(tokenBalance)
-    let highestTokenId = ethers.parseUnits("0", 0);
-    let loanData;
-    console.log("hi")
-    let totalLoans = await gnsContract.totalSupply();
-    console.log("hi")
-    for(let i = 0; i < totalLoans; i++){
-      let owner = await gnsContract.ownerOf(i);
-      let isOwner = owner === context!.userAddress;
-      if(isOwner) {
-          loanData = await gnsContract._outstandingLoans(i);
-          console.log(loanData)
-      }
-    }
-    setNFTID(ethers.parseUnits("2", 0));
-  }*/
-
+  // This method calls a method to our smart contract with the nftID in our system
+  // It gets all of the information on the loan NFT
   const updateNFTInfo = async () => {
+    // This if statement is just for error checking
     if (context && context.nftIDGNSPool) {
       let nftID_ = ethers.parseUnits(context.nftIDGNSPool, 0);
 
+      // Method call to the contract
       let loanData = await contract!._outstandingLoans(nftID_);
       setStakedGns(loanData[1]);
       setBorrowedUsdc(loanData[2]);
@@ -132,7 +107,10 @@ const App = () => {
     }
 	}
 
+  // Effectively the upgraded version of updateNFT
+  // Does the same as update NFT, but also gets info on the contract
   const updateEthers = async () => {
+    // These three methods  are how we are able to communicate with the blockchain (you will see these in other parts of the code, if you haven't already)
     let gnsProvider = new ethers.BrowserProvider(window.ethereum);
     let gnsSigner = await gnsProvider.getSigner();
     let gnsContract = new ethers.Contract(context!.gnsPool_address, gnsIFace.fragments, gnsSigner);
@@ -158,8 +136,12 @@ const App = () => {
     }
 };
 
+// Constant for checking in html
 const zero_val = ethers.parseUnits("0", 0);
 
+// Below, there is a little bit of logic that hides NFT and Deposit containers
+// when the user has inputted a valid NFT token ID
+// The invalid NFTs or ones that the user doesn't own are blocked out as 0 values
   return (
     <div className="app">
       <div className="header-div">

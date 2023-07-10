@@ -9,22 +9,20 @@ import Header from './../Header/Header';
 import { UserAddressContext } from './../../UserAddressContext';
 
 const BorrowingPage: React.FC = () => {
+  // Calling metamask again
   const context = useContext(UserAddressContext);
 	useEffect(() => {
 		context?.updateUserAddress();
 	}, [context]);
 
-  const handleVote = (option: string) => {
-    // Perform voting logic here
-  };
-// define an interface for the props
+  // The card that displays when a user enters our options page
 interface CardProps {
   image: string;
   name: string;
   onManage: () => void;
 }
 
-// Card Component
+// Just for one loan now, but it will be more in the future
 const Card: React.FC<CardProps> = ({ image, name, onManage }) => {
   return (
       <div className="card">
@@ -34,16 +32,17 @@ const Card: React.FC<CardProps> = ({ image, name, onManage }) => {
       </div>
   )
 }
-  // Example data
+
+// The list we will import into the listed out page
 const data = [
   { image: '/images/gnsfet.png', name: 'GNS/FET Pool' },
 ];
 
   const handleManageGNSPool = (name: String) => {
-    // Add your redirection logic here
     console.log(`Managing ${name}`);
   }
 
+  // Simple little bit of HTML
   return (
     <div className="app">
       <Header address={context!.userAddress}/>

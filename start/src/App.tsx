@@ -7,6 +7,7 @@ import BorrowGNSFET from './pages/Borrowing/Borrowing';
 import Lend from './pages/Lending/Lending';
 import Burn from './pages/Lending/Burn';
 
+// Creating the context variables
 type UserAddressContextType = {
   userAddress: String | null;
   updateUserAddress: () => void;
@@ -19,7 +20,9 @@ type UserAddressContextType = {
   gnsPool_address: string;
 };
 
+// We do most of our heavy lifting of this project in this app
 function App () {
+  // Connecting to metamask 
   const connectWalletHandler = () => {
 		if (window.ethereum && window.ethereum.isMetaMask) {
 
@@ -37,16 +40,19 @@ function App () {
 		}
 	}
 
+  // State variables for the users
   const [userAddress, setUserAddress] = useState<string | null>(null);
   const updateUserAddress = useCallback(async () => {
     await connectWalletHandler();
   }, []);
 
+  // State variables for the NFT
   const [nftIDGNSPool, setNFTIDGNSPool] = useState<string | null>(null);
   const updateNFTIDGNSPool = useCallback(async (nft_id: string) => {
     await setNFTIDGNSPool(nft_id);
   }, []);
 
+  // Initializing the values in our project
   const value: UserAddressContextType = {
     userAddress,
     updateUserAddress,
@@ -59,6 +65,7 @@ function App () {
     gnsPool_address : '0xA1c88cf230A71031E853F63eab98EDeD7c42D344'
   };
 
+  // Rendering routes in our project
   return (
     <UserAddressContext.Provider value={value}>
       <Router>

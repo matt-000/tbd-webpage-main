@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import "./Lending.css"
 
+// Just a holder to navigate through the page
 const Box = () => {
   const location = useLocation();
 

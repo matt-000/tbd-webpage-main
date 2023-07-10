@@ -20,6 +20,7 @@ interface AddressProps {
 	stringLiqToBurn: null | String;
 }
 
+// Just a holder to show where to burn the tokens and info
 const App: React.FC<AddressProps> = (props) => {
   return (
     <div>

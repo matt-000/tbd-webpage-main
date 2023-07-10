@@ -13,6 +13,7 @@ interface InteractionsProps {
 }
 
 const InteractionsBurnRequest: React.FC<InteractionsProps> = (props) => {
+	// Input values and output values
 	const [inputValue, setInputValue] = useState('');
 	const [outputValue, setOutputValue] = useState('');
 
@@ -23,8 +24,8 @@ const InteractionsBurnRequest: React.FC<InteractionsProps> = (props) => {
 
 	const [transferHash, setTransferHash] = useState<null | String>(null);
 
-
-	const transferHandler = async () => {
+	// Our call to the contract for requesting a burn on our values
+	const requestHandler = async () => {
 		  const burnInput = ethers.parseUnits(inputValue, 18)
 		  console.log(burnInput)
 			try{
@@ -33,6 +34,7 @@ const InteractionsBurnRequest: React.FC<InteractionsProps> = (props) => {
 				await props.provider!.waitForTransaction(approvalTx.hash);
     			console.log('Approval confirmed');
 
+				// Call to our contract
 				let txt = await props.contract!.requestWidthdraw(burnInput, props.user_address);
 				console.log(txt);
 				await props.provider!.waitForTransaction(txt.hash);
@@ -49,6 +51,7 @@ const InteractionsBurnRequest: React.FC<InteractionsProps> = (props) => {
 			}
 	  };
 
+	  // Input and output handlers for user input
 	return (
 			<div className="container">
 				<div className="swap-container">
@@ -67,7 +70,7 @@ const InteractionsBurnRequest: React.FC<InteractionsProps> = (props) => {
 							{/* Add more options here */}
 							</select>
 						</div>
-						<button className="swap-button" value={inputValue} onClick={transferHandler}>
+						<button className="swap-button" value={inputValue} onClick={requestHandler}>
 							Request
 						</button>
 					</div>

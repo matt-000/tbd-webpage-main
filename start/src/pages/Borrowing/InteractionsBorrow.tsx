@@ -13,21 +13,27 @@ interface InteractionsProps {
 }
 
 const InteractionsBorrow: React.FC<InteractionsProps> = (props) => {
+	// State variables for input
 	const [inputValue, setInputValue] = useState('');
 	const [outputValue, setOutputValue] = useState('');
 
+	// Handling the input change
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setInputValue(event.target.value);
 		setOutputValue(String(Number(inputValue) * 2));
 	};
+
+	// State variables for transaction hash variables
 	const [transferHash, setTransferHash] = useState<null | String>(null);
 	
+	// Our call to the contract
 	const borrowHandler = async () => {
 		  const burnInput = ethers.parseUnits(inputValue, 18)
 		  console.log(burnInput)
 		  console.log(props.nftID)
 
 			try{
+				// Call to our contract
 				let txt = await props.contract!.borrow(props.nftID, burnInput, props.user_address);
 				console.log(txt);
 				await props.provider!.waitForTransaction(txt.hash);
@@ -44,6 +50,7 @@ const InteractionsBorrow: React.FC<InteractionsProps> = (props) => {
 			}
 	  };
 
+	  // Containers for input and use of on click events
 	return (
 		<div className="container">
 			<div className="swap-container">
@@ -59,7 +66,6 @@ const InteractionsBorrow: React.FC<InteractionsProps> = (props) => {
 						/>
 						<select className="select-field">
 						<option value="dai">DAI</option>
-						{/* Add more options here */}
 						</select>
 					</div>
 					<button className="swap-button" value={inputValue} onClick={borrowHandler}>

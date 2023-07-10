@@ -1,7 +1,6 @@
 import React from 'react'
-import { useState, useContext} from 'react'
-import {Contract, ethers} from 'ethers'
-import { UserAddressContext } from './../../UserAddressContext';
+import { useState } from 'react'
+import { ethers } from 'ethers'
 
 interface InteractionsProps {
 	provider: null | ethers.BrowserProvider;
@@ -16,9 +15,11 @@ interface InteractionsProps {
 }
 
 const InteractionsWithdraw: React.FC<InteractionsProps> = (props) => {
+	// State variables for transaction hash variables
 	const [transferHash, setTransferHash] = useState<null | String>(null);
 	
-	const borrowHandler = async () => {
+	// Our call to the contract to withdraw loan collateral
+	const withdrawHandler = async () => {
 		  console.log(props.nftID)
 			try{
 				let txt = await props.contract!.widthdrawColateral(props.user_address, props.nftID);
@@ -39,12 +40,13 @@ const InteractionsWithdraw: React.FC<InteractionsProps> = (props) => {
 			}
 	};
 
+	// Containers holding contract info and on click events
 	return (
 		<div className="container">
 				<div className="swap-container">
 					<div className="form-container">
 						<h2>Withdraw Collateral</h2>
-						<button className="swap-button" onClick={borrowHandler}>
+						<button className="swap-button" onClick={withdrawHandler}>
 							Withdraw
 						</button>
 					</div>

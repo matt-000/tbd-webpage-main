@@ -16,6 +16,7 @@ interface InteractionsProps {
 }
 
 const InteractionsBurn: React.FC<InteractionsProps> = (props) => {
+	// Input values and output values
 	const [inputValue, setInputValue] = useState('');
 	const [outputValue, setOutputValue] = useState('');
 
@@ -27,10 +28,12 @@ const InteractionsBurn: React.FC<InteractionsProps> = (props) => {
 	const [transferHash, setTransferHash] = useState<null | String>(null);
 
 
-	const transferHandler = async () => {
+	// Our call to the contract for claiming a burn request
+	const claimHandler = async () => {
 		  const burnInput = ethers.parseUnits(inputValue, 18)
 		  console.log(burnInput)
 			try{
+				// Call to our contract
 				let txt = await props.contract!.withdraw(burnInput, props.user_address, props.user_address);
 				console.log(txt);
 				await props.provider!.waitForTransaction(txt.hash);
@@ -47,6 +50,7 @@ const InteractionsBurn: React.FC<InteractionsProps> = (props) => {
 			}
 	  };
 
+	  // Input and output handlers for user input
 	return (
 			<div className="container">
 				<div className="swap-container">
@@ -65,7 +69,7 @@ const InteractionsBurn: React.FC<InteractionsProps> = (props) => {
 							{/* Add more options here */}
 							</select>
 						</div>
-						<button className="swap-button" value={inputValue} onClick={transferHandler}>
+						<button className="swap-button" value={inputValue} onClick={claimHandler}>
 							Claim
 						</button>
 					</div>

@@ -16,6 +16,7 @@ interface AddressProps {
 	balance: null | String;
 }
 
+// Just a holder to show where to mint the tokens and info
 const App: React.FC<AddressProps> = (props) => {
   return (
     <div>

@@ -12,6 +12,7 @@ interface InteractionsProps {
 }
 
 const InteractionsAddCollateral: React.FC<InteractionsProps> = (props) => {
+	// Values for saving user input for their nft
 	const [inputValue, setInputValue] = useState('');
 	const [outputValue, setOutputValue] = useState('');
 
@@ -21,27 +22,26 @@ const InteractionsAddCollateral: React.FC<InteractionsProps> = (props) => {
 	};
 	const [transferHash, setTransferHash] = useState<null | String>(null);
 	
+	// Our call to the contract
 	const borrowHandler = async () => {
-		// GNS contract address on Mainnet
+		// GNS address for transaction approval
 		const gnsAddress = '0xE5417Af564e4bFDA1c483642db72007871397896';
   
+		// Simple ABI for GNS functions were using
 		const gnsAbi = [
 		  "function approve(address spender, uint amount)",
 		  "function allowance(address owner, address spender) view returns (uint)"
 		];
-
-		if (window.ethereum && window.ethereum.selectedAddress) {
-			console.log("were okay")
-		  } else {
-			console.log("were fucked")
-		  }
 	  
+		// Initialized contract
 		const gnsContract = new ethers.Contract(gnsAddress, gnsAbi, props.signer);
 
+		// Input from user being converted
 		  const burnInput = ethers.parseUnits(inputValue, 18)
 		  console.log(burnInput)
 		  console.log(props.nftID)
 			try{
+				// Approval from GNS
 				const approvalTx = await gnsContract.approve(props.gns_address, burnInput);
 				await props.provider!.waitForTransaction(approvalTx.hash);
     			console.log('Approval confirmed');	
@@ -49,10 +49,12 @@ const InteractionsAddCollateral: React.FC<InteractionsProps> = (props) => {
 				console.log('GNS Pool address:', props.gns_address);
 				console.log('Props address:', props.user_address);
 
+				// Check to see what the allowance is
 				const allowance = await gnsContract.allowance(props.user_address, props.gns_address);
 				console.log(`Allowance: ${ethers.formatUnits(allowance, 18)} GNS`);
 				console.log(`Allowance: ${allowance}`);
 
+				// Call to our contract
 				let txt = await props.contract!.addColateral(props.nftID, burnInput);
 				console.log(txt);
 				await props.provider!.waitForTransaction(txt.hash);
@@ -69,6 +71,7 @@ const InteractionsAddCollateral: React.FC<InteractionsProps> = (props) => {
 			}
 	  };
 
+	  // Containers for input and use of on click events
 	return (
 		<div className="container">
 			<div className="swap-container">
@@ -84,7 +87,6 @@ const InteractionsAddCollateral: React.FC<InteractionsProps> = (props) => {
 						/>
 						<select className="select-field">
 						<option value="dai">GNS</option>
-						{/* Add more options here */}
 						</select>
 					</div>
 					<button className="swap-button" value={inputValue} onClick={borrowHandler}>
