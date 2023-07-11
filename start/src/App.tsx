@@ -6,6 +6,9 @@ import BorrowPage from './pages/Borrowing/BorrowingPage';
 import BorrowGNSFET from './pages/Borrowing/Borrowing';
 import Lend from './pages/Lending/Lending';
 import Burn from './pages/Lending/Burn';
+import About from './pages/Misc/About';
+import Contact from './pages/Misc/Contact';
+import WhitePaper from './pages/Misc/WhitePaper';
 
 // Creating the context variables
 type UserAddressContextType = {
@@ -74,6 +77,9 @@ function App () {
           <Route path="/Burn" element={<Burn />} />
           <Route path="/Borrowing" element={<BorrowPage />} />
           <Route path="/Borrowing/GNSFetti" element={<BorrowGNSFET />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact-us" element={<Contact />} />
+          <Route path="/white-paper" element={<WhitePaper />} />
         </Routes>
       </Router>
     </UserAddressContext.Provider>

@@ -1,5 +1,6 @@
 import React from 'react';
-import {useContext, useState, useEffect} from 'react'
+import {useContext} from 'react'
+import { Link } from 'react-router-dom';
 import Connect from './ConnectWallet';
 import './Header.css';
 import { UserAddressContext } from './../../UserAddressContext';
@@ -19,12 +20,14 @@ const Header: React.FC<AddressProps> = (props) => {
           onClick={context?.updateUserAddress} 
           className="metamask" 
         />
-        <div className="logo">Liquifi</div>
+        <Link to="/">
+          <div className="logo">Liquifi</div>
+        </Link>
         <nav className="navbar">
           <ul className="nav-links">
-            <li className="nav-link">About</li>
-            <li className="nav-link">Contact Us</li>
-            <li className="nav-link">White Paper</li>
+          <li className="nav-link"><Link to="/about">About</Link></li>
+          <li className="nav-link"><Link to="/contact-us">Contact Us</Link></li>
+          <li className="nav-link"><Link to="/white-paper">White Paper</Link></li>
           </ul>
           <div className="cta">
             <Connect address={props.address}/>

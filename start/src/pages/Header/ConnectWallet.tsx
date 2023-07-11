@@ -12,7 +12,7 @@ const App: React.FC<AddressProps> = (props) => {
       <div className="cta-image-container">
         <img src="/images/logo.png" alt="logo" />
         <p>
-         ETH wallet connected as: {props.address}
+         MetaMask wallet connected as: {props.address}
        </p>
        </div>
    </div>

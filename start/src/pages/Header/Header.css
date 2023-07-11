@@ -3,6 +3,7 @@
   color: #fff;
   align-items: top;
   padding: 0;
+  text-decoration: none;
   position: fixed;
     top: 0;
     left: 0;
@@ -21,6 +22,12 @@
   text-align: center;
   font-size: 5.2em;
   font-weight: bold;
+  text-decoration: none;
+  color: white;
+}
+
+a {
+  text-decoration: none;
 }
 
 .cta-image-container {
@@ -54,7 +61,8 @@
 }
 
 .nav-link {
-  cursor: pointer;
+  color: inherit; /* Use the same color as the parent */
+  text-decoration: none; /* Remove underline */
 }
 
 .cta {
@@ -88,4 +96,14 @@
   height: 100px;
   cursor: pointer;
   z-index: 999;
+}
+
+p {
+  color: #00FF00; /* lighter green color */
+  font-family: Arial, sans-serif;
+  font-size: 14px; /* slightly smaller font size */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding-top: 10px;
+  padding-right: 15px;
 }
