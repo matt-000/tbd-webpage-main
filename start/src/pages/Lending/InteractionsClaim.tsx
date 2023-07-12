@@ -13,6 +13,7 @@ interface InteractionsProps {
 	stringEpocPlaced: null | String;
 	stringDaiToSend: null | String;
 	stringLiqToBurn: null | String;
+	updateBalance: () => void;
 }
 
 const InteractionsBurn: React.FC<InteractionsProps> = (props) => {
@@ -40,6 +41,7 @@ const InteractionsBurn: React.FC<InteractionsProps> = (props) => {
     			console.log('Exchange confirmed');
 
 				setTransferHash("Transfer confirmation hash: " + txt.hash);
+				props.updateBalance();
 			} catch (error) {
 				console.error(`Error in exchange: ${error}`);
 				if (typeof error === 'object' && error !== null && 'reason' in error) {
@@ -74,7 +76,7 @@ const InteractionsBurn: React.FC<InteractionsProps> = (props) => {
 						</button>
 					</div>
 					<div className="rate-container">
-						<h3>Time until claim</h3>
+						<h3>Time of claim</h3>
 						<div className="rate-value">{props.stringEpocPlaced}</div>
 						<h3>Dai to be sent</h3>
 						<div className="rate-value">{props.stringDaiToSend}</div>
@@ -83,7 +85,7 @@ const InteractionsBurn: React.FC<InteractionsProps> = (props) => {
 					</div>
 				</div>
 				<div>
-					<h3>{transferHash}</h3>
+					<h4>{transferHash}</h4>
 				</div>
 			</div>
 		)

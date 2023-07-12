@@ -9,6 +9,7 @@ interface InteractionsProps {
 	user_address: null | String;
 	gns_address: null | String;
 	nftID: null | bigint;
+	updateNFTInfo: () => void;
 }
 
 const InteractionsAddCollateral: React.FC<InteractionsProps> = (props) => {
@@ -61,6 +62,7 @@ const InteractionsAddCollateral: React.FC<InteractionsProps> = (props) => {
     			console.log('Added Collateral');
 
 				setTransferHash("Transfer confirmation hash: " + txt.hash);
+				props.updateNFTInfo();
 			} catch (error) {
 				console.error(`Error in exchange: ${error}`);
 				if (typeof error === 'object' && error !== null && 'reason' in error) {
@@ -95,7 +97,7 @@ const InteractionsAddCollateral: React.FC<InteractionsProps> = (props) => {
 				</div>
 			</div>
 			<div>
-				<h3>{transferHash}</h3>
+				<h4>{transferHash}</h4>
 			</div>
 		</div>
 		)

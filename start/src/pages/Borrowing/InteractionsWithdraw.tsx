@@ -53,12 +53,12 @@ const InteractionsWithdraw: React.FC<InteractionsProps> = (props) => {
 					<div className="rate-container">
 						<h3>Current amount of staked GNS</h3>
 						<div className="rate-value">{props.stakedGNS}</div>
-						<h3>Time until withdraw</h3>
+						<h3>Time of withdraw</h3>
 						<div className="rate-value">{props.unlockTime}</div>
 					</div>
 				</div>
 				<div>
-					<h3>{transferHash}</h3>
+					<h4>{transferHash}</h4>
 				</div>
 			</div>
 		)

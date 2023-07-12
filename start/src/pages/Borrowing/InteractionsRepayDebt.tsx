@@ -10,6 +10,7 @@ interface InteractionsProps {
 	gns_address: null | String;
 	nftID: null | bigint;
 	borrowedUSDC: null | String;
+	updateNFTInfo: () => void;
 }
 
 const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
@@ -62,6 +63,7 @@ const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
     			console.log('Debts Paid');
 
 				setTransferHash("Transfer confirmation hash: " + txt.hash);
+				props.updateNFTInfo();
 			} catch (error) {
 				console.error(`Error in exchange: ${error}`);
 				if (typeof error === 'object' && error !== null && 'reason' in error) {
@@ -101,7 +103,7 @@ const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
 				</div>
 			</div>
 			<div>
-				<h3>{transferHash}</h3>
+				<h4>{transferHash}</h4>
 			</div>
 		</div>
 		)

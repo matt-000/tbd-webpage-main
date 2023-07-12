@@ -40,11 +40,11 @@ nav ul li a.active {
 }
 
 .lending-box{
-  padding-top: 10vh;
+  padding-top: 18vh;
 }
 
 .lending-box2{
-  padding-top: 39vh;
+  padding-top: 46vh;
 }
 
 /* ConversionBox.css */
@@ -139,4 +139,12 @@ h3 {
   text-align: center;
 }
 
-
+h4 {
+  color: #00FF00; /* lighter green color */
+  font-family: Arial, sans-serif;
+  font-size: 16px; /* slightly smaller font size */
+  /*text-transform: uppercase;*/
+  letter-spacing: 0.5px;
+  padding-bottom: 5px;
+  text-align: center;
+}

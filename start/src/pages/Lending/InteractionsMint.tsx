@@ -10,6 +10,7 @@ interface InteractionsProps {
 	contract: null | ethers.Contract;
 	user_address: null | String;
 	fetti_address: null | String;
+	updateBalance: () => void;
 }
 
 const InteractionsMint: React.FC<InteractionsProps> = (props) => {
@@ -62,6 +63,7 @@ const InteractionsMint: React.FC<InteractionsProps> = (props) => {
     			console.log('Exchange confirmed');
 
 				setTransferHash("Transfer confirmation hash: " + txt.hash);
+				props.updateBalance();
 			} catch (error) {
 				console.error(`Error in exchange: ${error}`);
 				if (typeof error === 'object' && error !== null && 'reason' in error) {
@@ -115,7 +117,7 @@ const InteractionsMint: React.FC<InteractionsProps> = (props) => {
 			</div>
 			<div>
 				<h3>Remember to add FET to your wallet (Contract Address): {props.fetti_address}</h3>
-				<h3>{transferHash}</h3>
+				<h4>{transferHash}</h4>
 			</div>
 		</div>
 		)

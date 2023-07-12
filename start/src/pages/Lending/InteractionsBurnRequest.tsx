@@ -10,6 +10,7 @@ interface InteractionsProps {
 	contract: null | ethers.Contract;
 	user_address: null | String;
 	fetti_address: null | String;
+	updateBalance: () => void;
 }
 
 const InteractionsBurnRequest: React.FC<InteractionsProps> = (props) => {
@@ -41,6 +42,7 @@ const InteractionsBurnRequest: React.FC<InteractionsProps> = (props) => {
     			console.log('Exchange confirmed');
 
 				setTransferHash("Transfer confirmation hash: " + txt.hash);
+				props.updateBalance();
 			} catch (error) {
 				console.error(`Error in exchange: ${error}`);
 				if (typeof error === 'object' && error !== null && 'reason' in error) {
@@ -80,7 +82,7 @@ const InteractionsBurnRequest: React.FC<InteractionsProps> = (props) => {
 					</div>
 				</div>
 				<div>
-					<h3>{transferHash}</h3>
+					<h4>{transferHash}</h4>
 				</div>
 			</div>
 		)

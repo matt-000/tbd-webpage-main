@@ -21,6 +21,10 @@ const App = () => {
 		"function withdraw(uint256, address, address) returns (uint256)"
 	]);
 
+	const ifaceDAI = new ethers.Interface([
+		"function balanceOf(address owner) view returns (uint256)"
+	]);
+
 	// Method to take a bigint value and turn it into a string so we can display the value
 	const stringVal = (num: bigint | null) => {
 		if (num ==  null){
@@ -40,8 +44,13 @@ const App = () => {
 	const [signer, setSigner] = useState<null | ethers.JsonRpcSigner>(null);
 	const [contract, setContract] = useState<null | ethers.Contract>(null);
 
+	// Token for minting
 	const [tokenName, setTokenName] = useState("Token");
 	const [balance, setBalance] = useState<null | String>(null);
+
+	// Stablecoin for trade
+	const [tokenNameSC, setTokenNameSC] = useState("Token");
+	const [balanceSC, setBalanceSC] = useState<null | String>(null);
 
 	const context = useContext(UserAddressContext);
 	// First we will update the users address and make sure that they are signed in
@@ -69,13 +78,18 @@ const App = () => {
 		let fettiContract = new ethers.Contract(context!.fetti_address, iface.fragments, fettiSigner);
 		setContract(fettiContract);
 
+		let dai_address = "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063"
+		let daiContract = new ethers.Contract(dai_address, ifaceDAI.fragments, fettiSigner);
+
 		// Call to get user balance
 		setBalance(stringVal(await fettiContract.balanceOf(context!.userAddress)));
+		setBalanceSC(stringVal(await daiContract.balanceOf(context!.userAddress)));
 	}
 
 	// Token name
   const updateTokenName = async () => {
 		setTokenName("FET");
+		setTokenNameSC("DAI");
 	}
 
 	// Simple container to hold our interactions
@@ -86,7 +100,7 @@ const App = () => {
         <LendingBorrowing />
       </div>
       <MintBurn />
-      <Minty user_address={context!.userAddress} fetti_address={context!.fetti_address} provider={provider} signer={signer} contract={contract} tokenName={tokenName} balance={balance}/>
+      <Minty user_address={context!.userAddress} fetti_address={context!.fetti_address} provider={provider} signer={signer} contract={contract} tokenName={tokenName} tokenNameSC={tokenNameSC} balance={balance} balanceSC={balanceSC} updateBalance={updateBalance}/>
     </div>
   );
 };

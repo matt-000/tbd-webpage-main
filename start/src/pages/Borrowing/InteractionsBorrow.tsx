@@ -10,6 +10,7 @@ interface InteractionsProps {
 	gns_address: null | String;
 	nftID: null | bigint;
 	maxBorrowedUSDC: null | String;
+	updateNFTInfo: () => void;
 }
 
 const InteractionsBorrow: React.FC<InteractionsProps> = (props) => {
@@ -40,6 +41,7 @@ const InteractionsBorrow: React.FC<InteractionsProps> = (props) => {
     			console.log('Borrowed Against Collateral');
 
 				setTransferHash("Transfer confirmation hash: " + txt.hash);
+				props.updateNFTInfo();
 			} catch (error) {
 				console.error(`Error in exchange: ${error}`);
 				if (typeof error === 'object' && error !== null && 'reason' in error) {
@@ -78,7 +80,7 @@ const InteractionsBorrow: React.FC<InteractionsProps> = (props) => {
 				</div>
 			</div>
 			<div>
-				<h3>{transferHash}</h3>
+				<h4>{transferHash}</h4>
 			</div>
 		</div>
 		)

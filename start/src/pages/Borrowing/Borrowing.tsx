@@ -21,16 +21,18 @@ const App = () => {
 
   const [nftID, setNFTID] = useState<null | bigint>(null);
   const [currGns, setCurrGns] = useState<null | bigint>(null);
+  const [maxBorrowedUSDC, setMaxBorrowedUSDC] = useState<null | bigint>(null);
   const [stakedGns, setStakedGns] = useState<null | bigint>(null);
   const [borrowedUsdc, setBorrowedUsdc] = useState<null | bigint>(null);
   const [unlockTime, setUnlockTime] = useState<null | bigint>(null);
-  const [maxBorrowedUsdc, setMaxBorrowedUsdc] = useState<null | bigint>(null);
+  const [maxBorrowedRatio, setMaxBorrowedRatio] = useState<null | bigint>(null);
 
   const [stringCurrGns, setStringCurrGns] = useState<null | String>(null);
+  const [stringMaxBorrowedUSDC, setStringMaxBorrowedUSDC] = useState<null | String>(null);
   const [stringStakedGns, setStringStakedGns] = useState<null | String>(null);
   const [stringBorrowedUsdc, setStringBorrowedUsdc] = useState<null | String>(null);
   const [stringUnlockTime, setStringUnlockTime] = useState<null | String>(null);
-  const [stringMaxBorrowedUsdc, setStringMaxBorrowedUsdc] = useState<null | String>(null);
+  const [stringMaxBorrowedUsdcRatio, setStringMaxBorrowedRatio] = useState<null | String>(null);
 
   // First we will update the users address and make sure that they are signed in
   const context = useContext(UserAddressContext);
@@ -66,6 +68,30 @@ const App = () => {
     return value
   }
 
+  // Special case arithmetic
+  const stringValSpec = (num: bigint | null, pad: number) => {
+    if (num ==  null){
+      return ""
+    }
+    const denominator = BigInt("1000000000000000000"); // 10^18 for 18 decimals
+    const quotient = num / denominator;
+    const remainder = num % denominator;
+
+    const value = quotient.toString() + "." + remainder.toString().padStart(pad, '0');
+
+    return value
+  }
+
+  // For multiplying our values that are in bigint
+  const multiplyStrings = (str1: String, str2: String) => {
+      return (Number(str1) * Number(str2)).toFixed(18); // 18 decimals of precision
+  }
+
+  // For subtracting our values that are in bigint
+  const subtractStrings = (str1: String, str2: String) => {
+    return (Number(str1) - Number(str2)).toFixed(18); // 18 decimals of precision
+  }
+
   // This variable is called a simple ABI. It effectively represents how we can define the methods
   // within our contract code for ethersjs to compile. These are our calls to the contract.
   const gnsIFace = new ethers.Interface([
@@ -88,20 +114,30 @@ const App = () => {
   const updateNFTInfo = async () => {
     // This if statement is just for error checking
     if (context && context.nftIDGNSPool) {
-      let nftID_ = ethers.parseUnits(context.nftIDGNSPool, 0);
-
       // Method call to the contract
-      let loanData = await contract!._outstandingLoans(nftID_);
+      let loanData = await contract!._outstandingLoans(ethers.parseUnits(context.nftIDGNSPool, 0));
       setStakedGns(loanData[1]);
       setBorrowedUsdc(loanData[2]);
       setUnlockTime(loanData[3]);
-      setMaxBorrowedUsdc(loanData[4]);
+      setMaxBorrowedRatio(loanData[4]);
 
-      setNFTID(nftID_);
-      setStringStakedGns(stringVal(stakedGns));
-      setStringBorrowedUsdc(stringVal(borrowedUsdc));
-      setStringUnlockTime(stringVal(unlockTime));
-      setStringMaxBorrowedUsdc(stringVal(maxBorrowedUsdc));
+      setNFTID(ethers.parseUnits(context.nftIDGNSPool, 0));
+      setStringStakedGns(stringVal(loanData[1]));
+      setStringBorrowedUsdc(stringVal(loanData[2]));
+      setStringMaxBorrowedRatio(stringVal(loanData[4]));
+
+      // Unlock Time: Convert to a number (BigInt can be safely converted to a number in this case)
+      let unlockTimeNumber = Number(loanData[3]) * 1000;
+      // Create date object
+      let unlockDate = new Date(unlockTimeNumber);
+      setStringUnlockTime(unlockDate.toString());
+
+      let _currGns = await contract!.currGnsPrice();
+      setCurrGns(_currGns);
+      setStringCurrGns(stringValSpec(_currGns, 5));
+
+      // Calculation to give user exact amount of left over amount to borrow
+      setStringMaxBorrowedUSDC(String(subtractStrings(multiplyStrings(multiplyStrings(stringVal(loanData[1]), stringVal(loanData[4])), stringValSpec(_currGns, 5)), stringVal(loanData[2]))))
     } else {
       console.log("whoopsy")
     }
@@ -124,13 +160,25 @@ const App = () => {
       setStakedGns(loanData[1]);
       setBorrowedUsdc(loanData[2]);
       setUnlockTime(loanData[3]);
-      setMaxBorrowedUsdc(loanData[4]);
+      setMaxBorrowedRatio(loanData[4]);
 
       setNFTID(ethers.parseUnits(context.nftIDGNSPool, 0));
       setStringStakedGns(stringVal(loanData[1]));
       setStringBorrowedUsdc(stringVal(loanData[2]));
-      setStringUnlockTime(stringVal(loanData[3]));
-      setStringMaxBorrowedUsdc(stringVal(loanData[4]));
+      setStringMaxBorrowedRatio(stringVal(loanData[4]));
+
+      // Unlock Time: Convert to a number (BigInt can be safely converted to a number in this case)
+      let unlockTimeNumber = Number(loanData[3]) * 1000;
+      // Create date object
+      let unlockDate = new Date(unlockTimeNumber);
+      setStringUnlockTime(unlockDate.toString());
+
+      let _currGns = await gnsContract.currGnsPrice();
+      setCurrGns(_currGns);
+      setStringCurrGns(stringValSpec(_currGns, 5));
+
+      // Calculation to give user exact amount of left over amount to borrow
+      setStringMaxBorrowedUSDC(String(subtractStrings(multiplyStrings(multiplyStrings(stringVal(loanData[1]), stringVal(loanData[4])), stringValSpec(_currGns, 5)), stringVal(loanData[2]))))
     } else {
       console.log("whoopsy")
     }
@@ -147,14 +195,14 @@ const zero_val = ethers.parseUnits("0", 0);
       <div className="header-div">
         <Header address={context!.userAddress}/>
       </div>
-          {nftID === null || maxBorrowedUsdc === zero_val ?
+          {nftID === null || maxBorrowedRatio === zero_val ?
               <>
                 <LendingBorrowing />
                 <div className="button-box">
                   <Link to="/Borrowing" className="back-button">Back</Link>
                 </div>
                 <div className="main-content">
-                    <InteractionsSetNFTID maxBorrowedUsdc={maxBorrowedUsdc}/>
+                    <InteractionsSetNFTID maxBorrowedUsdc={maxBorrowedRatio}/>
                     <InteractionsDepositCollateral contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} updateNFTInfo={updateNFTInfo}/>
                 </div>
               </> : 
@@ -169,11 +217,11 @@ const zero_val = ethers.parseUnits("0", 0);
                 <div className="main-content">
                     <div className="container">
                       <h2>NFT Token ID: {context!.nftIDGNSPool}</h2>
-                      <h2>Save your NFT to Metamask(Contract Address): {context!.gnsPool_address}</h2>
+                      <h2>Save your NFT to Metamask (Contract Address): {context!.gnsPool_address}</h2>
                     </div>
-                    <InteractionsBorrow contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} maxBorrowedUSDC={stringMaxBorrowedUsdc}/>
-                    <InteractionsAddCollateral contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID}/>
-                    <InteractionsRepayDebt contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} borrowedUSDC={stringBorrowedUsdc}/>
+                    <InteractionsBorrow contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} maxBorrowedUSDC={stringMaxBorrowedUSDC} updateNFTInfo={updateNFTInfo}/>
+                    <InteractionsAddCollateral contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} updateNFTInfo={updateNFTInfo}/>
+                    <InteractionsRepayDebt contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} borrowedUSDC={stringBorrowedUsdc} updateNFTInfo={updateNFTInfo}/>
                     <InteractionsWithdraw contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} stakedGNS={stringStakedGns} unlockTime={stringUnlockTime} updateNFTInfo={updateNFTInfo}/>
               </div>
               </>

@@ -15,8 +15,13 @@ const App = () => {
 	const [signer, setSigner] = useState<null | ethers.JsonRpcSigner>(null);
 	const [contract, setContract] = useState<null | ethers.Contract>(null);
 
+	// Token for minting
 	const [tokenName, setTokenName] = useState("Token");
 	const [balance, setBalance] = useState<null | String>(null);
+
+	// Stablecoin for trade
+	const [tokenNameSC, setTokenNameSC] = useState("Token");
+	const [balanceSC, setBalanceSC] = useState<null | String>(null);
 
   const [stringEpocPlaced, setStringEpocPlaced] = useState<null | String>(null);
   const [stringDaiToSend, setStringDaiToSend] = useState<null | String>(null);
@@ -52,6 +57,10 @@ const App = () => {
     "function _requestedWidthdraws(address) view returns (uint256, uint256, uint256, address)"
 	]);
 
+  const ifaceDAI = new ethers.Interface([
+		"function balanceOf(address owner) view returns (uint256)"
+	]);
+
   // Method to take a bigint value and turn it into a string so we can display the value
   const stringVal = (num: bigint | null) => {
     if (num ==  null){
@@ -78,18 +87,35 @@ const App = () => {
 		let fettiContract = new ethers.Contract(context!.fetti_address, iface.fragments, fettiSigner);
 		setContract(fettiContract);
 
-    // Call to get user balance
+    let dai_address = "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063"
+		let daiContract = new ethers.Contract(dai_address, ifaceDAI.fragments, fettiSigner);
+
+		// Call to get user balance
 		setBalance(stringVal(await fettiContract.balanceOf(context!.userAddress)));
+		setBalanceSC(stringVal(await daiContract.balanceOf(context!.userAddress)));
 
     let burnData = await fettiContract._requestedWidthdraws(context!.userAddress);
-    setStringEpocPlaced(stringVal(burnData[0]));
     setStringDaiToSend(stringVal(burnData[1]));
     setStringLiqToBurn(stringVal(burnData[2]));
+    
+    // Constant for checking in html
+    const zero_val = ethers.parseUnits("0", 0);
+    if(burnData[0] !== zero_val){
+      console.log(burnData[0])
+      // Unlock Time: Convert to a number (BigInt can be safely converted to a number in this case)
+      let unlockTimeNumber = Number(burnData[0]) * 1000;
+      // Create date object
+      let unlockDate = new Date(unlockTimeNumber);
+      setStringEpocPlaced(unlockDate.toString());
+    }else{
+      setStringEpocPlaced("No request placed");
+    }
 	}
 
   // Token name
   const updateTokenName = async () => {
 		setTokenName("FET");
+		setTokenNameSC("DAI");
 	}
 
   // Simple container to hold our interactions
@@ -100,7 +126,7 @@ const App = () => {
         <LendingBorrowing />
       </div>
       <MintBurn />
-      <Burny user_address={context!.userAddress} fetti_address={context!.fetti_address} provider={provider} signer={signer} contract={contract} tokenName={tokenName} balance={balance} stringEpocPlaced={stringEpocPlaced} stringDaiToSend={stringDaiToSend} stringLiqToBurn={stringLiqToBurn}/>
+      <Burny user_address={context!.userAddress} fetti_address={context!.fetti_address} provider={provider} signer={signer} contract={contract} tokenName={tokenName} tokenNameSC={tokenNameSC} balance={balance} balanceSC={balanceSC} stringEpocPlaced={stringEpocPlaced} stringDaiToSend={stringDaiToSend} stringLiqToBurn={stringLiqToBurn} updateBalance={updateBalance}/>
     </div>
   );
 };
