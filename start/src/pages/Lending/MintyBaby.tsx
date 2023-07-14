@@ -17,6 +17,7 @@ interface AddressProps {
 	balance: null | String;
 	balanceSC: null | String;
 	updateBalance: () => void;
+	stringConversionRate: null | String;
 }
 
 // Just a holder to show where to mint the tokens and info
@@ -34,7 +35,7 @@ const App: React.FC<AddressProps> = (props) => {
 				<h3>{props.tokenNameSC} Balance: {props.balanceSC}</h3>
 			</div>
 		</div>
-		<InteractionsMint contract={props.contract} user_address={props.user_address} provider={props.provider} signer={props.signer} fetti_address={props.fetti_address} updateBalance={props.updateBalance}/>
+		<InteractionsMint contract={props.contract} user_address={props.user_address} provider={props.provider} signer={props.signer} fetti_address={props.fetti_address} updateBalance={props.updateBalance} stringConversionRate={props.stringConversionRate}/>
 	</div>
   );
 };

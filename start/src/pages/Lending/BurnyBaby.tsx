@@ -18,9 +18,12 @@ interface AddressProps {
 	balance: null | String;
 	balanceSC: null | String;
 	stringEpocPlaced: null | String;
+	stringWaitTime: null | String;
+	stringTotalEpoc: null | String;
 	stringDaiToSend: null | String;
 	stringLiqToBurn: null | String;
 	updateBalance: () => void;
+	stringConversionRate: null | String;
 }
 
 // Just a holder to show where to burn the tokens and info
@@ -38,8 +41,8 @@ const App: React.FC<AddressProps> = (props) => {
 				<h3>{props.tokenNameSC} Balance: {props.balanceSC}</h3>
 			</div>
 		</div>
-		<InteractionsBurnRequest contract={props.contract} user_address={props.user_address} provider={props.provider} signer={props.signer} fetti_address={props.fetti_address} updateBalance={props.updateBalance}/>
-		<InteractionsClaim contract={props.contract} user_address={props.user_address} provider={props.provider} signer={props.signer} fetti_address={props.fetti_address} stringEpocPlaced={props.stringEpocPlaced} stringDaiToSend={props.stringDaiToSend} stringLiqToBurn={props.stringLiqToBurn} updateBalance={props.updateBalance}/>
+		<InteractionsBurnRequest contract={props.contract} user_address={props.user_address} provider={props.provider} signer={props.signer} fetti_address={props.fetti_address} updateBalance={props.updateBalance} stringConversionRate={props.stringConversionRate}/>
+		<InteractionsClaim contract={props.contract} user_address={props.user_address} provider={props.provider} signer={props.signer} fetti_address={props.fetti_address} stringEpocPlaced={props.stringEpocPlaced} stringWaitTime={props.stringWaitTime} stringTotalEpoc={props.stringTotalEpoc} stringDaiToSend={props.stringDaiToSend} stringLiqToBurn={props.stringLiqToBurn} updateBalance={props.updateBalance}/>
 	</div>
   );
 };

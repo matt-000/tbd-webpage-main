@@ -24,8 +24,11 @@ const App = () => {
 	const [balanceSC, setBalanceSC] = useState<null | String>(null);
 
   const [stringEpocPlaced, setStringEpocPlaced] = useState<null | String>(null);
+  const [stringWaitTime, setStringWaitTime] = useState<null | String>(null);
+  const [stringTotalEpoc, setStringTotalEpoc] = useState<null | String>(null);
   const [stringDaiToSend, setStringDaiToSend] = useState<null | String>(null);
   const [stringLiqToBurn, setStringLiqToBurn] = useState<null | String>(null);
+  const [stringConversionRate, setStringConversionRate] = useState<null | String>(null);
 
   const context = useContext(UserAddressContext);
 
@@ -54,12 +57,25 @@ const App = () => {
     "function requestWidthdraw(uint256 amount_, address sendTo_) returns ()",
     "function approve(address spender, uint amount)",
 		"function allowance(address owner, address spender) view returns (uint)",
-    "function _requestedWidthdraws(address) view returns (uint256, uint256, uint256, address)"
+    "function _requestedWidthdraws(address) view returns (uint256, uint256, uint256, address)",
+    "function _epocWidthdrawWait() view returns (uint256)",
+    "function totalAssets() view returns (uint256)",
+    "function totalSupply() view returns (uint256)"
 	]);
 
   const ifaceDAI = new ethers.Interface([
 		"function balanceOf(address owner) view returns (uint256)"
 	]);
+
+  // For adding our values that are in bigint
+  const addStrings = (str1: String, str2: String) => {
+    return String(Number(str1) + Number(str2)); // 18 decimals of precision
+  }
+
+  // For dividing our values that are in bigint
+  const divideStrings = (str1: String, str2: String) => {
+      return (Number(str1) / Number(str2)).toFixed(18); // 18 decimals of precision
+  }
 
   // Method to take a bigint value and turn it into a string so we can display the value
   const stringVal = (num: bigint | null) => {
@@ -98,18 +114,22 @@ const App = () => {
     setStringDaiToSend(stringVal(burnData[1]));
     setStringLiqToBurn(stringVal(burnData[2]));
     
-    // Constant for checking in html
+    let waitTime = await fettiContract._epocWidthdrawWait();
+
+    // Wait time for user
     const zero_val = ethers.parseUnits("0", 0);
     if(burnData[0] !== zero_val){
-      console.log(burnData[0])
-      // Unlock Time: Convert to a number (BigInt can be safely converted to a number in this case)
-      let unlockTimeNumber = Number(burnData[0]) * 1000;
-      // Create date object
-      let unlockDate = new Date(unlockTimeNumber);
-      setStringEpocPlaced(unlockDate.toString());
+      setStringEpocPlaced(burnData[0].toString());
+      setStringWaitTime(waitTime.toString())
+      setStringTotalEpoc(addStrings(waitTime.toString(), burnData[0].toString()))
     }else{
       setStringEpocPlaced("No request placed");
     }
+
+    // Conversion Rate
+    let assets = await fettiContract.totalAssets();
+    let supply = await fettiContract.totalSupply();
+    setStringConversionRate(divideStrings(assets, supply));
 	}
 
   // Token name
@@ -126,7 +146,7 @@ const App = () => {
         <LendingBorrowing />
       </div>
       <MintBurn />
-      <Burny user_address={context!.userAddress} fetti_address={context!.fetti_address} provider={provider} signer={signer} contract={contract} tokenName={tokenName} tokenNameSC={tokenNameSC} balance={balance} balanceSC={balanceSC} stringEpocPlaced={stringEpocPlaced} stringDaiToSend={stringDaiToSend} stringLiqToBurn={stringLiqToBurn} updateBalance={updateBalance}/>
+      <Burny user_address={context!.userAddress} fetti_address={context!.fetti_address} provider={provider} signer={signer} contract={contract} tokenName={tokenName} tokenNameSC={tokenNameSC} balance={balance} balanceSC={balanceSC} stringEpocPlaced={stringEpocPlaced} stringWaitTime={stringWaitTime} stringTotalEpoc={stringTotalEpoc} stringDaiToSend={stringDaiToSend} stringLiqToBurn={stringLiqToBurn} updateBalance={updateBalance} stringConversionRate={stringConversionRate}/>
     </div>
   );
 };

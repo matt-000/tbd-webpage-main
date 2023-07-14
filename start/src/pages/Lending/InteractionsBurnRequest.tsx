@@ -11,6 +11,7 @@ interface InteractionsProps {
 	user_address: null | String;
 	fetti_address: null | String;
 	updateBalance: () => void;
+	stringConversionRate: null | String;
 }
 
 const InteractionsBurnRequest: React.FC<InteractionsProps> = (props) => {
@@ -78,7 +79,7 @@ const InteractionsBurnRequest: React.FC<InteractionsProps> = (props) => {
 					</div>
 						<div className="rate-container">
 							<h3>Exchange Rate</h3>
-						<div className="rate-value">1 FET = 1 DAI</div>
+						<div className="rate-value">1 FET = {props.stringConversionRate} DAI</div>
 					</div>
 				</div>
 				<div>

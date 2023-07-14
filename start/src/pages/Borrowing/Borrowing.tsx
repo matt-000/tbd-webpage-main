@@ -12,6 +12,7 @@ import InteractionsRepayDebt from './InteractionsRepayDebt';
 import InteractionsWithdraw from './InteractionsWithdraw';
 import { UserAddressContext } from './../../UserAddressContext';
 import InteractionsSetNFTID from './InteractionsSetNFTID';
+import GNSFettiInfo from './GNSFettiInfo';
 
 const App = () => {
   // State variables being defined for future updates and usage in other components
@@ -197,23 +198,27 @@ const zero_val = ethers.parseUnits("0", 0);
       </div>
           {nftID === null || maxBorrowedRatio === zero_val ?
               <>
+              <div className="lending-box4">
                 <LendingBorrowing />
+              </div>
                 <div className="button-box">
                   <Link to="/Borrowing" className="back-button">Back</Link>
                 </div>
+                <GNSFettiInfo />
                 <div className="main-content">
                     <InteractionsSetNFTID maxBorrowedUsdc={maxBorrowedRatio}/>
                     <InteractionsDepositCollateral contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} updateNFTInfo={updateNFTInfo}/>
                 </div>
               </> : 
               <>
-              <div className="lending-box2">
+              <div className="lending-box3">
                 <LendingBorrowing />
               </div>
               <div className="button-box">
                 <Link to="/Borrowing" className="back-button">Back</Link>
                 <button className="nft-button" onClick={updateNFTInfo}>{"Refresh NFT Info"}</button>
               </div>
+              <GNSFettiInfo />
                 <div className="main-content">
                     <div className="container">
                       <h2>NFT Token ID: {context!.nftIDGNSPool}</h2>

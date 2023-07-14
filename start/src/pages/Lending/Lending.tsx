@@ -18,12 +18,19 @@ const App = () => {
 		"function balanceOf(address owner) view returns (uint256)",
 		"function previewMint(uint256 shares) view returns (uint256)",
 		"function deposit(uint256, address) returns (uint256)",
-		"function withdraw(uint256, address, address) returns (uint256)"
+		"function withdraw(uint256, address, address) returns (uint256)",
+		"function totalAssets() view returns (uint256)",
+		"function totalSupply() view returns (uint256)"
 	]);
 
 	const ifaceDAI = new ethers.Interface([
 		"function balanceOf(address owner) view returns (uint256)"
 	]);
+
+	// For dividing our values that are in bigint
+	const divideStrings = (str1: String, str2: String) => {
+		return (Number(str1) / Number(str2)).toFixed(18); // 18 decimals of precision
+	}  
 
 	// Method to take a bigint value and turn it into a string so we can display the value
 	const stringVal = (num: bigint | null) => {
@@ -51,6 +58,7 @@ const App = () => {
 	// Stablecoin for trade
 	const [tokenNameSC, setTokenNameSC] = useState("Token");
 	const [balanceSC, setBalanceSC] = useState<null | String>(null);
+	const [stringConversionRate, setStringConversionRate] = useState<null | String>(null);
 
 	const context = useContext(UserAddressContext);
 	// First we will update the users address and make sure that they are signed in
@@ -84,6 +92,11 @@ const App = () => {
 		// Call to get user balance
 		setBalance(stringVal(await fettiContract.balanceOf(context!.userAddress)));
 		setBalanceSC(stringVal(await daiContract.balanceOf(context!.userAddress)));
+
+		// Conversion Rate
+		let assets = await fettiContract.totalAssets();
+		let supply = await fettiContract.totalSupply();
+		setStringConversionRate(divideStrings(assets, supply));
 	}
 
 	// Token name
@@ -100,7 +113,7 @@ const App = () => {
         <LendingBorrowing />
       </div>
       <MintBurn />
-      <Minty user_address={context!.userAddress} fetti_address={context!.fetti_address} provider={provider} signer={signer} contract={contract} tokenName={tokenName} tokenNameSC={tokenNameSC} balance={balance} balanceSC={balanceSC} updateBalance={updateBalance}/>
+      <Minty user_address={context!.userAddress} fetti_address={context!.fetti_address} provider={provider} signer={signer} contract={contract} tokenName={tokenName} tokenNameSC={tokenNameSC} balance={balance} balanceSC={balanceSC} updateBalance={updateBalance} stringConversionRate={stringConversionRate}/>
     </div>
   );
 };

@@ -47,6 +47,14 @@ nav ul li a.active {
   padding-top: 46vh;
 }
 
+.lending-box3{
+  padding-top: 97.5vh;
+}
+
+.lending-box4{
+  padding-top: 26vh;
+}
+
 /* ConversionBox.css */
 .conversion-box {
   display: flex;
