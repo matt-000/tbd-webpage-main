@@ -40,6 +40,7 @@ const InteractionsWithdraw: React.FC<InteractionsProps> = (props) => {
 			}
 	};
 
+	let staked = props.stakedGNS ? props.stakedGNS.slice(0, 8) : "";
 	// Containers holding contract info and on click events
 	return (
 		<div className="container">
@@ -52,7 +53,7 @@ const InteractionsWithdraw: React.FC<InteractionsProps> = (props) => {
 					</div>
 					<div className="rate-container">
 						<h3>Current amount of staked GNS</h3>
-						<div className="rate-value">{props.stakedGNS}</div>
+						<div className="rate-value">{staked}</div>
 						<h3>Time of withdraw available</h3>
 						<div className="rate-value">{props.unlockTime}</div>
 					</div>

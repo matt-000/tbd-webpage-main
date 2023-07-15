@@ -118,13 +118,13 @@ const App = () => {
     
     let waitTime = await fettiContract._epocWidthdrawWait();
     let currEpoc = await fettiContract._currEpoc();
+    setStringCurrentEpoch(currEpoc.toString())
     // Wait time for user
     const zero_val = ethers.parseUnits("0", 0);
     if(burnData[0] !== zero_val){
       setStringEpochPlaced(burnData[0].toString());
       setStringWaitTime(waitTime.toString())
       setStringTotalEpoc(addStrings(waitTime.toString(), burnData[0].toString()))
-      setStringCurrentEpoch(currEpoc.toString())
     }else{
       setStringEpochPlaced("No request placed");
     }

@@ -52,6 +52,7 @@ const InteractionsBorrow: React.FC<InteractionsProps> = (props) => {
 			}
 	  };
 
+	  let borrowMax = props.maxBorrowedUSDC ? props.maxBorrowedUSDC.slice(0, 8) : "";
 	  // Containers for input and use of on click events
 	return (
 		<div className="container">
@@ -76,7 +77,7 @@ const InteractionsBorrow: React.FC<InteractionsProps> = (props) => {
 				</div>
 				<div className="rate-container">
 					<h3>Maximum amount of DAI to be Borrowed</h3>
-					<div className="rate-value">{props.maxBorrowedUSDC}</div>
+					<div className="rate-value">{borrowMax}</div>
 				</div>
 			</div>
 			<div>

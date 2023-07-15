@@ -7,7 +7,7 @@ const GNSFettiInfo: React.FC = () => {
     <div className="container">
         <h3>
         Earned interest: (.45% -{'>'} ??) <div/>
-        Max borrow: 50% liquidation threshold: 60% <div/>
+        Max borrow: 50% <div/>
         Liquidation threshold: 60% <div/>
         Liquidation discount: 17.5% <div/>
         Liquidation penalty: 2% <div/>

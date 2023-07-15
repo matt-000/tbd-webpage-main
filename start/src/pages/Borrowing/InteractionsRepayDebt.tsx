@@ -74,6 +74,7 @@ const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
 			}
 	  };
 
+	  let borrowed = props.borrowedUSDC ? props.borrowedUSDC.slice(0, 8) : "";
 	  // Containers for input and use of on click events
 	return (
 		<div className="container">
@@ -99,7 +100,7 @@ const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
 				</div>
 				<div className="rate-container">
 					<h3>Outstanding Debt</h3>
-					<div className="rate-value">{props.borrowedUSDC}</div>
+					<div className="rate-value">{borrowed}</div>
 				</div>
 			</div>
 			<div>
