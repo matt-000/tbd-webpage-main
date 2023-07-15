@@ -30,7 +30,7 @@ const Header: React.FC<AddressProps> = (props) => {
           <li className="nav-link"><Link to="/white-paper">White Paper</Link></li>
           </ul>
           <div className="cta">
-            <Connect address={props.address}/>
+            <Connect address={props.address!.slice(0, 6)}/>
           </div>
         </nav>
       </header>

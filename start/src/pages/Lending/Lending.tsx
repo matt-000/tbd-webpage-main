@@ -29,7 +29,7 @@ const App = () => {
 
 	// For dividing our values that are in bigint
 	const divideStrings = (str1: String, str2: String) => {
-		return (Number(str1) / Number(str2)).toFixed(18); // 18 decimals of precision
+		return (Number(str1) / Number(str2)).toFixed(6); // 18 decimals of precision
 	}  
 
 	// Method to take a bigint value and turn it into a string so we can display the value

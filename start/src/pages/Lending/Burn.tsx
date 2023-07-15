@@ -23,8 +23,9 @@ const App = () => {
 	const [tokenNameSC, setTokenNameSC] = useState("Token");
 	const [balanceSC, setBalanceSC] = useState<null | String>(null);
 
-  const [stringEpocPlaced, setStringEpocPlaced] = useState<null | String>(null);
+  const [stringEpochPlaced, setStringEpochPlaced] = useState<null | String>(null);
   const [stringWaitTime, setStringWaitTime] = useState<null | String>(null);
+  const [stringCurrentEpoch, setStringCurrentEpoch] = useState<null | String>(null);
   const [stringTotalEpoc, setStringTotalEpoc] = useState<null | String>(null);
   const [stringDaiToSend, setStringDaiToSend] = useState<null | String>(null);
   const [stringLiqToBurn, setStringLiqToBurn] = useState<null | String>(null);
@@ -59,6 +60,7 @@ const App = () => {
 		"function allowance(address owner, address spender) view returns (uint)",
     "function _requestedWidthdraws(address) view returns (uint256, uint256, uint256, address)",
     "function _epocWidthdrawWait() view returns (uint256)",
+    "function _currEpoc() view returns (uint256)",
     "function totalAssets() view returns (uint256)",
     "function totalSupply() view returns (uint256)"
 	]);
@@ -74,7 +76,7 @@ const App = () => {
 
   // For dividing our values that are in bigint
   const divideStrings = (str1: String, str2: String) => {
-      return (Number(str1) / Number(str2)).toFixed(18); // 18 decimals of precision
+      return (Number(str1) / Number(str2)).toFixed(6); // 18 decimals of precision
   }
 
   // Method to take a bigint value and turn it into a string so we can display the value
@@ -115,15 +117,16 @@ const App = () => {
     setStringLiqToBurn(stringVal(burnData[2]));
     
     let waitTime = await fettiContract._epocWidthdrawWait();
-
+    let currEpoc = await fettiContract._currEpoc();
     // Wait time for user
     const zero_val = ethers.parseUnits("0", 0);
     if(burnData[0] !== zero_val){
-      setStringEpocPlaced(burnData[0].toString());
+      setStringEpochPlaced(burnData[0].toString());
       setStringWaitTime(waitTime.toString())
       setStringTotalEpoc(addStrings(waitTime.toString(), burnData[0].toString()))
+      setStringCurrentEpoch(currEpoc.toString())
     }else{
-      setStringEpocPlaced("No request placed");
+      setStringEpochPlaced("No request placed");
     }
 
     // Conversion Rate
@@ -146,7 +149,7 @@ const App = () => {
         <LendingBorrowing />
       </div>
       <MintBurn />
-      <Burny user_address={context!.userAddress} fetti_address={context!.fetti_address} provider={provider} signer={signer} contract={contract} tokenName={tokenName} tokenNameSC={tokenNameSC} balance={balance} balanceSC={balanceSC} stringEpocPlaced={stringEpocPlaced} stringWaitTime={stringWaitTime} stringTotalEpoc={stringTotalEpoc} stringDaiToSend={stringDaiToSend} stringLiqToBurn={stringLiqToBurn} updateBalance={updateBalance} stringConversionRate={stringConversionRate}/>
+      <Burny user_address={context!.userAddress} fetti_address={context!.fetti_address} provider={provider} signer={signer} contract={contract} tokenName={tokenName} tokenNameSC={tokenNameSC} balance={balance} balanceSC={balanceSC} stringEpochPlaced={stringEpochPlaced} stringCurrentEpoch={stringCurrentEpoch} stringDaiToSend={stringDaiToSend} stringLiqToBurn={stringLiqToBurn} updateBalance={updateBalance} stringConversionRate={stringConversionRate}/>
     </div>
   );
 };

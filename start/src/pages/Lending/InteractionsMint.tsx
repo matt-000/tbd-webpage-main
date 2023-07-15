@@ -117,7 +117,6 @@ const InteractionsMint: React.FC<InteractionsProps> = (props) => {
 				</div>
 			</div>
 			<div>
-				<h3>Remember to add FET to your wallet (Contract Address): {props.fetti_address}</h3>
 				<h4>{transferHash}</h4>
 			</div>
 		</div>

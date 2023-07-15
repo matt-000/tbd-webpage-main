@@ -204,9 +204,9 @@ const zero_val = ethers.parseUnits("0", 0);
                 <div className="button-box">
                   <Link to="/Borrowing" className="back-button">Back</Link>
                 </div>
-                <GNSFettiInfo />
                 <div className="main-content">
                     <InteractionsSetNFTID maxBorrowedUsdc={maxBorrowedRatio}/>
+                    <GNSFettiInfo />
                     <InteractionsDepositCollateral contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} updateNFTInfo={updateNFTInfo}/>
                 </div>
               </> : 
@@ -222,7 +222,6 @@ const zero_val = ethers.parseUnits("0", 0);
                 <div className="main-content">
                     <div className="container">
                       <h2>NFT Token ID: {context!.nftIDGNSPool}</h2>
-                      <h2>Save your NFT to Metamask (Contract Address): {context!.gnsPool_address}</h2>
                     </div>
                     <InteractionsBorrow contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} maxBorrowedUSDC={stringMaxBorrowedUSDC} updateNFTInfo={updateNFTInfo}/>
                     <InteractionsAddCollateral contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} updateNFTInfo={updateNFTInfo}/>

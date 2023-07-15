@@ -5,6 +5,22 @@ const GNSFettiInfo: React.FC = () => {
   // Simple little bit of HTML
   return (
     <div className="container">
+        <h3>
+        Earned interest: (.45% -{'>'} ??) <div/>
+        Max borrow: 50% liquidation threshold: 60% <div/>
+        Liquidation threshold: 60% <div/>
+        Liquidation discount: 17.5% <div/>
+        Liquidation penalty: 2% <div/>
+        </h3>
+			</div>
+  );
+};
+
+// Prior Version - for reference
+/*const GNSFettiInfo: React.FC = () => {
+  // Simple little bit of HTML
+  return (
+    <div className="container">
         <h4>
           Terms of loan: <div></div>
           You must deposit their collateral into the system to obtain a loan using this contract. 
@@ -28,6 +44,6 @@ const GNSFettiInfo: React.FC = () => {
         </h3>
 			</div>
   );
-};
+};*/
 
 export default GNSFettiInfo;

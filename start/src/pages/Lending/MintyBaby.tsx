@@ -24,7 +24,16 @@ interface AddressProps {
 const App: React.FC<AddressProps> = (props) => {
   return (
     <div>
-		<div className = "walletCard">
+		<InteractionsMint contract={props.contract} user_address={props.user_address} provider={props.provider} signer={props.signer} fetti_address={props.fetti_address} updateBalance={props.updateBalance} stringConversionRate={props.stringConversionRate}/>
+	</div>
+  );
+};
+
+export default App;
+
+// Prior work
+/*
+<div className = "walletCard">
 			<div>
 				<h3>Address: {props.user_address}</h3>
 			</div>
@@ -34,10 +43,4 @@ const App: React.FC<AddressProps> = (props) => {
 			<div>
 				<h3>{props.tokenNameSC} Balance: {props.balanceSC}</h3>
 			</div>
-		</div>
-		<InteractionsMint contract={props.contract} user_address={props.user_address} provider={props.provider} signer={props.signer} fetti_address={props.fetti_address} updateBalance={props.updateBalance} stringConversionRate={props.stringConversionRate}/>
-	</div>
-  );
-};
-
-export default App;
+		</div>*/

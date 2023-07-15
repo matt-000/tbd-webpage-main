@@ -125,7 +125,6 @@ const InteractionsDepositCollateral: React.FC<InteractionsProps> = (props) => {
 			</div>
 		</div>
 		<div>
-			<h3>Remember to add FET/GNS Pool NFT to your wallet (Contract Address): {props.gns_address}</h3>
 			<h4>{transferHash}</h4>
 		</div>
 	</div>

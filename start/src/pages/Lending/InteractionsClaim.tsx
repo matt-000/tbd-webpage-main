@@ -10,9 +10,8 @@ interface InteractionsProps {
 	contract: null | ethers.Contract;
 	user_address: null | String;
 	fetti_address: null | String;
-	stringEpocPlaced: null | String;
-	stringWaitTime: null | String;
-	stringTotalEpoc: null | String;
+	stringEpochPlaced: null | String;
+	stringCurrentEpoch: null | String;
 	stringDaiToSend: null | String;
 	stringLiqToBurn: null | String;
 	updateBalance: () => void;
@@ -78,13 +77,12 @@ const InteractionsBurn: React.FC<InteractionsProps> = (props) => {
 						</button>
 					</div>
 					<div className="rate-container">
-						<h3>Claim Wait (Epoc Time): </h3>
-						<h4>Your Epoc + Wait Time = Total Wait </h4>
-						<div className="rate-value">{props.stringEpocPlaced} + {props.stringWaitTime} = {props.stringTotalEpoc}</div>
-						<h3>Dai to be sent</h3>
+						<h4>Current Epoch:</h4>
+						<div className="rate-value">{props.stringCurrentEpoch}</div>
+						<h4>Claim Epoch:</h4>
+						<div className="rate-value">{props.stringEpochPlaced}</div>
+						<h3>Amount Claimable:</h3>
 						<div className="rate-value">{props.stringDaiToSend}</div>
-						<h3>Fet to be burned</h3>
-						<div className="rate-value">{props.stringLiqToBurn}</div>
 					</div>
 				</div>
 				<div>
