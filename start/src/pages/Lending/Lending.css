@@ -1,6 +1,4 @@
-
 nav {
-  background-color: #333;
   color: white;
   display: flex;
   justify-content: space-between;
@@ -39,19 +37,20 @@ nav ul li a.active {
   cursor: pointer;
 }
 
-.lending-box{
+.lending-box {
   padding-top: 6vh;
+  border: 2px solid yellow;
 }
 
-.lending-box2{
+.lending-box2 {
   padding-top: 26vh;
 }
 
-.lending-box3{
+.lending-box3 {
   padding-top: 65.5vh;
 }
 
-.lending-box4{
+.lending-box4 {
   padding-top: 0.5vh;
 }
 
@@ -104,7 +103,7 @@ nav ul li a.active {
 
 .box-item-lending:hover {
   opacity: 0.3;
-  color:#20bf33;
+  color: #20bf33;
 }
 
 .box-mint {
@@ -134,11 +133,11 @@ nav ul li a.active {
 
 .box-item-mint:hover {
   opacity: 0.3;
-  color:#20bf33;
+  color: #20bf33;
 }
 
 h3 {
-  color: #00FF00; /* lighter green color */
+  color: #00ff00; /* lighter green color */
   font-family: Arial, sans-serif;
   font-size: 24px; /* slightly smaller font size */
   /*text-transform: uppercase;*/
@@ -148,7 +147,7 @@ h3 {
 }
 
 h4 {
-  color: #00FF00; /* lighter green color */
+  color: #00ff00; /* lighter green color */
   font-family: Arial, sans-serif;
   font-size: 16px; /* slightly smaller font size */
   /*text-transform: uppercase;*/
