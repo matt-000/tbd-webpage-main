@@ -18,7 +18,9 @@ const InteractionsSetNFTID: React.FC<InteractionsProps> = (props) => {
 	
 	// Calls the context to update our alue
 	const updateHandler = async () => { 
-		context!.updateNFTIDGNSPool(inputValue)
+		if(context!.chainID === "0x89"){
+			context!.updateNFTIDGNSPool(inputValue)
+		}
 	  };
 
 	  const zero_val = ethers.parseUnits("0", 0);

@@ -29,7 +29,8 @@ const InteractionsBurnRequest: React.FC<InteractionsProps> = (props) => {
 	// Our call to the contract for requesting a burn on our values
 	const requestHandler = async () => {
 		  const burnInput = ethers.parseUnits(inputValue, 18)
-		  console.log(burnInput)
+
+		  if(props.contract){
 			try{
 				// Approve the contract to spend the LGNS
 				const approvalTx = await props.contract!.approve(props.fetti_address, burnInput);
@@ -52,6 +53,7 @@ const InteractionsBurnRequest: React.FC<InteractionsProps> = (props) => {
 					setTransferHash("An unexpected error occurred.");
 				}
 			}
+		}
 	  };
 
 	  // Input and output handlers for user input

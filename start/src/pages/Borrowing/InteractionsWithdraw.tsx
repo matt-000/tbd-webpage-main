@@ -20,7 +20,7 @@ const InteractionsWithdraw: React.FC<InteractionsProps> = (props) => {
 	
 	// Our call to the contract to withdraw loan collateral
 	const withdrawHandler = async () => {
-		  console.log(props.nftID)
+		if(props.contract){
 			try{
 				let txt = await props.contract!.widthdrawColateral(props.user_address, props.nftID);
 				console.log(txt);
@@ -38,6 +38,7 @@ const InteractionsWithdraw: React.FC<InteractionsProps> = (props) => {
 					setTransferHash("An unexpected error occurred.");
 				}
 			}
+		}
 	};
 
 	let staked = props.stakedGNS ? props.stakedGNS.slice(0, 8) : "";

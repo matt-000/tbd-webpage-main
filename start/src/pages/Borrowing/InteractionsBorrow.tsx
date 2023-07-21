@@ -33,6 +33,7 @@ const InteractionsBorrow: React.FC<InteractionsProps> = (props) => {
 		  console.log(burnInput)
 		  console.log(props.nftID)
 
+		  if(props.contract){
 			try{
 				// Call to our contract
 				let txt = await props.contract!.borrow(props.nftID, burnInput, props.user_address);
@@ -50,6 +51,7 @@ const InteractionsBorrow: React.FC<InteractionsProps> = (props) => {
 					setTransferHash("An unexpected error occurred.");
 				}
 			}
+		}
 	  };
 
 	  let borrowMax = props.maxBorrowedUSDC ? props.maxBorrowedUSDC.slice(0, 8) : "";

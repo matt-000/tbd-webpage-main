@@ -33,7 +33,7 @@ const InteractionsBurn: React.FC<InteractionsProps> = (props) => {
 	// Our call to the contract for claiming a burn request
 	const claimHandler = async () => {
 		  const burnInput = ethers.parseUnits(inputValue, 18)
-		  console.log(burnInput)
+		  if(props.contract){
 			try{
 				// Call to our contract
 				let txt = await props.contract!.withdraw(burnInput, props.user_address, props.user_address);
@@ -51,8 +51,10 @@ const InteractionsBurn: React.FC<InteractionsProps> = (props) => {
 					setTransferHash("An unexpected error occurred.");
 				}
 			}
+		}
 	  };
 
+	  let claim = props.stringDaiToSend ? props.stringDaiToSend.slice(0, 8) : "";
 	  // Input and output handlers for user input
 	return (
 			<div className="container">
@@ -82,7 +84,7 @@ const InteractionsBurn: React.FC<InteractionsProps> = (props) => {
 						<h4>Claim Epoch:</h4>
 						<div className="rate-value">{props.stringEpochPlaced}</div>
 						<h3>Amount Claimable:</h3>
-						<div className="rate-value">{props.stringDaiToSend}</div>
+						<div className="rate-value">{claim}</div>
 					</div>
 				</div>
 				<div>

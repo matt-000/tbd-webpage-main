@@ -40,11 +40,19 @@ const App = () => {
 
   // If the user address is updated we will pull all information on user balance 
   useEffect(() => {
-    if (context?.userAddress) {
+    if (context?.userAddress && context!.chainID === "0x89") {
       updateBalance();
 		  updateTokenName();
     }
   }, [context?.userAddress]);
+
+  // If the chain ID changes then we will update information if its on polygon
+  useEffect(() => {
+    if (context?.chainID && context!.chainID === "0x89") {
+      updateBalance();
+		  updateTokenName();
+    }
+  }, [context?.chainID]);
 
   // This variable is called a simple ABI. It effectively represents how we can define the methods
   // within our contract code for ethersjs to compile. These are our calls to the contract.

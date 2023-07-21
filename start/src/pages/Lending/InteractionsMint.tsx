@@ -21,7 +21,7 @@ const InteractionsMint: React.FC<InteractionsProps> = (props) => {
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setInputValue(event.target.value);
-		setOutputValue(String(Number(inputValue) * 2));
+		setOutputValue(String(Number(event.target.value) * (1 / Number(props.stringConversionRate))).slice(0,8));
 	};
 
 	const [transferHash, setTransferHash] = useState<null | String>(null);
@@ -38,6 +38,8 @@ const InteractionsMint: React.FC<InteractionsProps> = (props) => {
 		  "function allowance(address owner, address spender) view returns (uint)"
 		];
 	  
+		if(props.contract){
+
 		// Initialized contract
 		const daiContract = new ethers.Contract(daiAddress, daiAbi, props.signer);
 	  
@@ -73,6 +75,7 @@ const InteractionsMint: React.FC<InteractionsProps> = (props) => {
 					setTransferHash("An unexpected error occurred.");
 				}
 			}
+		}
 	  };
 
 	  // Input and output handlers for user input

@@ -3,6 +3,7 @@ import React from 'react';
 type UserAddressContextType = {
   userAddress: String | null;
   updateUserAddress: () => void;
+  chainID: string | null;
   nftIDGNSPool: string | null;
   updateNFTIDGNSPool: (nft_id: string) => Promise<void>
   fetti_address: string;

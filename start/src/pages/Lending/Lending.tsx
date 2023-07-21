@@ -68,11 +68,19 @@ const App = () => {
 
 	// If the user address is updated we will pull all information on user balance 
 	useEffect(() => {
-		if(context?.userAddress) {
+		if (context?.userAddress && context!.chainID === "0x89") {
 		  updateBalance();
-		  updateTokenName();
+			  updateTokenName();
 		}
-	}, [context?.userAddress]);
+	  }, [context?.userAddress]);
+	
+	  // If the chain ID changes then we will update information if its on polygon
+	  useEffect(() => {
+		if (context?.chainID && context!.chainID === "0x89") {
+		  updateBalance();
+			  updateTokenName();
+		}
+	  }, [context?.chainID]);
 	
 	// Our call to the contract to get all of the variables set and user balance
 	const updateBalance = async () => {

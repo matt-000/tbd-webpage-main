@@ -43,14 +43,21 @@ const App = () => {
 
   // If the user address is updated we will pull all information on the nft id and contract info
 	useEffect(() => {
-    if (context?.userAddress) {
+    if (context?.userAddress && context!.chainID === "0x89") {
       updateEthers();
     }
   }, [context?.userAddress]);
 
+  // If the chain ID changes then we will update information if its on polygon
+  useEffect(() => {
+		if (context?.chainID && context!.chainID === "0x89") {
+		  updateEthers();
+		}
+	  }, [context?.chainID]);
+
   // Once the NFT is updated, we will do the same process as a above
   useEffect(() => {
-    if (context?.nftIDGNSPool) {
+    if (context?.nftIDGNSPool && context!.chainID === "0x89") {
       updateEthers();
     }
   }, [context?.nftIDGNSPool]);
@@ -114,7 +121,7 @@ const App = () => {
   // It gets all of the information on the loan NFT
   const updateNFTInfo = async () => {
     // This if statement is just for error checking
-    if (context && context.nftIDGNSPool) {
+    if (context && context.nftIDGNSPool && context!.chainID === "0x89") {
       // Method call to the contract
       let loanData = await contract!._outstandingLoans(ethers.parseUnits(context.nftIDGNSPool, 0));
       setStakedGns(loanData[1]);
@@ -156,7 +163,7 @@ const App = () => {
     setSigner(gnsSigner);
     setContract(gnsContract);
 
-    if (context && context.nftIDGNSPool) {
+    if (context && context.nftIDGNSPool && context!.chainID === "0x89") {
       let loanData = await gnsContract._outstandingLoans(ethers.parseUnits(context.nftIDGNSPool, 0));
       setStakedGns(loanData[1]);
       setBorrowedUsdc(loanData[2]);

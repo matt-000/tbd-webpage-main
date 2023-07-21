@@ -23,7 +23,6 @@ const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
 		setOutputValue(String(Number(inputValue) * 2));
 	};
 	const [transferHash, setTransferHash] = useState<null | String>(null);
-	
 	// Our call to the contract for borrowing
 	const borrowHandler = async () => {
 		// DAI contract address on Mainnet
@@ -34,6 +33,7 @@ const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
 		  "function approve(address spender, uint amount)",
 		  "function allowance(address owner, address spender) view returns (uint)"
 		];
+	if(props.contract){
 	  
 		// Initialized contract
 		const daiContract = new ethers.Contract(daiAddress, daiAbi, props.signer);
@@ -72,6 +72,7 @@ const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
 					setTransferHash("An unexpected error occurred.");
 				}
 			}
+		}
 	  };
 
 	  let borrowed = props.borrowedUSDC ? props.borrowedUSDC.slice(0, 8) : "";

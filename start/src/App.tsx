@@ -14,6 +14,7 @@ import WhitePaper from './pages/Misc/WhitePaper';
 type UserAddressContextType = {
   userAddress: String | null;
   updateUserAddress: () => void;
+  chainID: string | null;
   nftIDGNSPool: string | null;
   updateNFTIDGNSPool: (nft_id: string) => Promise<void>;
   fetti_address: string;
@@ -25,23 +26,48 @@ type UserAddressContextType = {
 
 // We do most of our heavy lifting of this project in this app
 function App () {
+  // Chain ID
+  const [chainID, setChainId] = useState<string | null>(null);
+
+  // Used to make sure the chain is correct
+  React.useEffect(() => {
+    if (window.ethereum) {
+      setChainId(window.ethereum.chainId); // Set the initial chainId
+
+      window.ethereum.on('chainChanged', (newChainId: string) => {
+        setChainId(newChainId);
+      });
+    }
+  }, []);
+
   // Connecting to metamask 
-  const connectWalletHandler = () => {
-		if (window.ethereum && window.ethereum.isMetaMask) {
-
-			window.ethereum.request({ method: 'eth_requestAccounts'})
-			.then((result: string[]) => {
-				setUserAddress(result[0]);
-			})
-			.catch((error: Error) => {
-				console.log(error.message);
-			});
-
-		} else {
-			console.log('Need to install MetaMask');
-			console.log('Please install MetaMask browser extension to interact');
-		}
-	}
+  const connectWalletHandler = async () => {
+    if (window.ethereum && window.ethereum.isMetaMask) {
+      try {
+        await window.ethereum.request({ method: 'eth_requestAccounts'});
+        const networkId = await window.ethereum.request({ method: 'net_version' });
+  
+        if (networkId !== "137") {
+          try {
+            await window.ethereum.request({
+              method: 'wallet_switchEthereumChain',
+              params: [{ chainId: '0x89' }], // 0x89 is the hexadecimal equivalent of 137
+            });
+          } catch (switchError) {
+            console.error(switchError);
+          }
+        }
+        
+        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+        setUserAddress(accounts[0]);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      console.log('Need to install MetaMask');
+      console.log('Please install MetaMask browser extension to interact');
+    }
+  }  
 
   // State variables for the users
   const [userAddress, setUserAddress] = useState<string | null>(null);
@@ -59,6 +85,7 @@ function App () {
   const value: UserAddressContextType = {
     userAddress,
     updateUserAddress,
+    chainID,
     nftIDGNSPool,
     updateNFTIDGNSPool,
     fetti_address : '0x64648c7199658dB6D5fF1903b608fFfa015A81aa',

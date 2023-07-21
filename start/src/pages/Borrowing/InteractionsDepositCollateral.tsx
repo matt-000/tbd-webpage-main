@@ -36,6 +36,7 @@ const InteractionsDepositCollateral: React.FC<InteractionsProps> = (props) => {
 		  "function allowance(address owner, address spender) view returns (uint)"
 		];
 	  
+		if(props.contract){
 		// Initialized contract
 		const gnsContract = new ethers.Contract(gnsAddress, gnsAbi, props.signer);
 
@@ -76,6 +77,7 @@ const InteractionsDepositCollateral: React.FC<InteractionsProps> = (props) => {
 					setTransferHash("An unexpected error occurred.");
 				}
 			}
+		}
 	  };
 
 	  const getNftIdFromTransaction = async (txHash: string) => {

@@ -34,6 +34,7 @@ const InteractionsAddCollateral: React.FC<InteractionsProps> = (props) => {
 		  "function allowance(address owner, address spender) view returns (uint)"
 		];
 	  
+		if(props.contract){
 		// Initialized contract
 		const gnsContract = new ethers.Contract(gnsAddress, gnsAbi, props.signer);
 
@@ -71,6 +72,7 @@ const InteractionsAddCollateral: React.FC<InteractionsProps> = (props) => {
 					setTransferHash("An unexpected error occurred.");
 				}
 			}
+		}
 	  };
 
 	  // Containers for input and use of on click events
