@@ -1,64 +1,100 @@
-body {
-  min-height: 100vh;
-  padding-bottom: 200px; 
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  /* background-color: #1d1d1d; */
+  border-radius: 14px;
+  border: 2px solid #43434359;
+  color: var(--main-font-color) !important;
+  background-color: #090909c6;
 }
 
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    background-color: #2d2c2c;
-  }
-  
-  .swap-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .form-container {
-    flex: 1;
-    margin-right: 20px;
-  }
-  
-  .input-group {
-    display: flex;
-    margin-bottom: 10px;
-  }
-  
-  .input-field {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .select-field {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-left: 10px;
-  }
-  
-  .swap-button {
-    background-color: #1aff00;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .rate-container {
-    flex: 1;
-    text-align: center;
-  }
-  
-  .rate-value {
-    font-weight: bold;
-    margin-top: 10px;
-  }
-  
-  /* Add more styles as needed */
-  
+.swap-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 50px 100px 100px 100px;
+}
+
+.form-container {
+  /* margin: 100px; */
+  display: inline-block;
+  text-align: center;
+}
+
+.input-group {
+  display: flex;
+  /* margin-bottom: 10px; */
+}
+
+.input-field {
+  flex: 1;
+  padding: 10px;
+  /* border: 1px solid #ccc; */
+  border-radius: 4px;
+  border: 2px solid rgba(78, 78, 78, 0.32);
+  background-color: #3e3e3e3d;
+  color: var(--main-font-color);
+}
+
+.select-field {
+  padding: 10px;
+  background-color: #3e3e3e3d;
+  /* border: 1px solid #ccc; */
+  color: var(--main-font-color);
+  border-radius: 4px;
+  border: 0px;
+  margin-left: 10px;
+}
+
+.swap-button {
+  padding: 10px 23px;
+  margin: 15px;
+}
+
+.rate-container {
+  text-align: center;
+}
+
+.rate-value {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* margin-top: 10px; */
+}
+
+.dai-logo {
+  margin-left: 7px;
+  padding-top: 4px;
+}
+
+.liquify-logo-exchange {
+  margin-left: 2px;
+  margin-right: 2px;
+  padding-top: 4px;
+}
+
+.heading {
+  font-size: 25px;
+  color: white;
+  font-weight: 600;
+}
+
+/* .custom-shape-divider-top-1690495814 {
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.custom-shape-divider-top-1690495814 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 106px;
+  transform: rotateY(180deg);
+}
+
+.custom-shape-divider-top-1690495814 .shape-fill {
+  fill: #000000; 
+}*/
+/* Add more styles as needed */

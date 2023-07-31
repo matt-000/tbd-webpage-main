@@ -2,6 +2,22 @@
   font-family: "Inter", sans-serif;
 }
 
+:root {
+  --main-gradient: linear-gradient(to left, #114911, #46ad48);
+  --logo-text-gradient: linear-gradient(
+    to bottom left,
+    rgb(229, 247, 236),
+    #46ad48
+  );
+  --bg-color: rgb(22, 22, 22);
+  --bg-card-color: rgb(35, 35, 35);
+  --main-font-color: #ffffffbd;
+  --small-font-size: 13.333333333333px;
+  --medium-font-size: 15px;
+  --accent-color-dark: #114911;
+  --accent-color-light: #46ad48;
+}
+
 nav {
   color: white;
   display: flex;
@@ -28,10 +44,35 @@ nav ul li a.active {
 
 .app {
   height: 100vh;
-  background-color: rgb(22, 22, 22);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
+
+
+  background-image: radial-gradient(
+    100% 225% at 100% 0%,
+    #004400 0%,
+    #232323 100%
+  ),
+  linear-gradient(235deg, #003300 0%, #232323 100%),
+  linear-gradient(
+    20deg,
+    #232323 0%,
+    #232323 30%,
+    #232323 calc(30% + 1px),
+    #004400 35%,
+    #005500 calc(35% + 1px),
+    #006600 50%,
+    #007700 calc(50% + 1px),
+    #008800 100%
+  ),
+  linear-gradient(
+    120deg,
+    #232323 0%,
+    #232323 40%,
+    #232323 calc(40% + 1px),
+    #006600 60%,
+    #008800 calc(60% + 1px),
+    #00aa00 70%,
+    #00cc00 calc(70% + 1px),
+    #232323 100%
+  );
+background-blend-mode: overlay, hard-light, overlay, normal;
 }

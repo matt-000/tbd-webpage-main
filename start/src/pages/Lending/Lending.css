@@ -1,46 +1,11 @@
-nav {
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-}
-
-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-}
-
-nav ul li a {
-  color: white;
-  text-decoration: none;
-  padding: 10px;
-}
-
-nav ul li a.active {
-  font-weight: bold;
-}
-
-/* LendingBorrowing.css and MintBurn.css */
-.box {
-  display: flex;
-  justify-content: space-between;
-  width: 200px;
-  margin-bottom: 20px;
-  border: 1px solid #fff;
-  border-radius: 5px;
-}
-
-.box-item {
+/* .box-item {
   padding: 10px;
   cursor: pointer;
 }
 
-.lending-box {
-  padding-top: 6vh;
-  border: 2px solid yellow;
-}
+.lending-box { */
+/* border: 2px solid yellow; */
+/* }
 
 .lending-box2 {
   padding-top: 26vh;
@@ -52,14 +17,13 @@ nav ul li a.active {
 
 .lending-box4 {
   padding-top: 0.5vh;
-}
+} */
 
 /* ConversionBox.css */
-.conversion-box {
+/* .conversion-box {
   display: flex;
   justify-content: space-between;
   width: 200px;
-  border: 1px solid #fff;
   border-radius: 5px;
 }
 
@@ -78,9 +42,9 @@ nav ul li a.active {
 
 .box-lending {
   display: flex;
-}
+} */
 
-.box-item-lending {
+/* .box-item-lending {
   flex: 1;
   padding: 20px;
   text-align: center;
@@ -93,7 +57,7 @@ nav ul li a.active {
 }
 
 .box-item-lending.active {
-  background-color: #07ff24;
+  background: var(--main-gradient);
   color: white;
 }
 
@@ -104,9 +68,9 @@ nav ul li a.active {
 .box-item-lending:hover {
   opacity: 0.3;
   color: #20bf33;
-}
+} */
 
-.box-mint {
+/* .box-mint {
   display: flex;
 }
 
@@ -134,24 +98,57 @@ nav ul li a.active {
 .box-item-mint:hover {
   opacity: 0.3;
   color: #20bf33;
+} */
+
+.lending-borrowing-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-h3 {
-  color: #00ff00; /* lighter green color */
-  font-family: Arial, sans-serif;
-  font-size: 24px; /* slightly smaller font size */
-  /*text-transform: uppercase;*/
-  letter-spacing: 0.5px;
-  padding-bottom: 5px;
-  text-align: center;
+.lending-borrowing-buttons {
+  display: flex;
+  justify-content: center;
 }
 
-h4 {
-  color: #00ff00; /* lighter green color */
-  font-family: Arial, sans-serif;
-  font-size: 16px; /* slightly smaller font size */
-  /*text-transform: uppercase;*/
-  letter-spacing: 0.5px;
-  padding-bottom: 5px;
+.tabs_wrap {
+  /* padding: 20px; */
+  border-bottom: 1px solid #ebedec;
+}
+
+.tabs_wrap .lending-borrowing-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.box-item-lending {
+  width: 75px;
   text-align: center;
+  background: var(--bg-card-color);
+  color: var(--main-font-color);
+  font-size: var(--medium-font-size);
+  border-right: 1px solid #c1c4c9;
+  padding: 13px 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.box-item-lending:first-child {
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+}
+
+.box-item-lending:last-child {
+  border-right: 0px;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+
+.box-item-lending:hover,
+.box-item-lending.active {
+  background: var(--accent-color-light);
+  color: white;
+}
+
+.mint-box {
+  padding: 10px 0 30px 0;
 }
