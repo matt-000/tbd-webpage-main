@@ -75,31 +75,35 @@ const InteractionsAddCollateral: React.FC<InteractionsProps> = (props) => {
 
 	  // Containers for input and use of on click events
 	return (
-		<div className="container">
-			<div className="swap-container">
-				<div className="form-container">
-					<h2>Add Collateral</h2>
-					<div className="input-group">
-						<input
-						type="text"
-						placeholder="0"
-						className="input-field"
-						value={inputValue}
-						onChange={handleInputChange}
-						/>
-						<select className="select-field">
-						<option value="dai">GNS</option>
-						</select>
-					</div>
-					<button className="swap-button" value={inputValue} onClick={borrowHandler}>
-						Add
-					</button>
-				</div>
+	<div className="container">
+		<div className="swap-container">
+		<div className="form-container">
+			<p className="heading">Add Collateral</p>
+			<div className="input-group">
+			<input
+				type="text"
+				placeholder="0"
+				className="input-field"
+				value={inputValue}
+				onChange={handleInputChange}
+			/>
+			<select className="select-field">
+				<option value="gns">GNS</option>
+				{/* Add more options here */}
+			</select>
 			</div>
-			<div>
-				<h4>{transferHash}</h4>
-			</div>
+			<button
+			className="refresh-button swap-button"
+			onClick={borrowHandler}
+			>
+			Add
+			</button>
 		</div>
+		</div>
+		<div>
+		<p className="heading">{transferHash}</p>
+		</div>
+	</div>
 		)
 }
 

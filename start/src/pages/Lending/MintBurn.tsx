@@ -10,17 +10,17 @@ const Box = () => {
     <div className="lending-borrowing-container mint-box">
       <div className="lending-borrowing-buttons">
         <NavLink
-          to="/"
+          to="/lend/LGNS"
           className={`box-item-lending ${
-            location.pathname === "/" ? "active" : ""
+            location.pathname === "/lend/LGNS" ? "active" : ""
           }`}
         >
           Mint
         </NavLink>
         <NavLink
-          to="/burn"
+          to="/burn/LGNS"
           className={`box-item-lending ${
-            location.pathname === "/burn" ? "active" : ""
+            location.pathname === "/burn/LGNS" ? "active" : ""
           }`}
         >
           Burn

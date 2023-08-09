@@ -57,34 +57,40 @@ const InteractionsBorrow: React.FC<InteractionsProps> = (props) => {
 	return (
 		<div className="container">
 			<div className="swap-container">
-				<div className="form-container">
-					<h2>Borrow DAI</h2>
-					<div className="input-group">
-						<input
-						type="text"
-						placeholder="0"
-						className="input-field"
-						value={inputValue}
-						onChange={handleInputChange}
-						/>
-						<select className="select-field">
-						<option value="dai">DAI</option>
-						</select>
-					</div>
-					<button className="swap-button" value={inputValue} onClick={borrowHandler}>
-						Borrow
-					</button>
+			<div className="form-container">
+				<p className="heading">Borrow DAI</p>
+				<div className="input-group">
+				<input
+					type="text"
+					placeholder="0"
+					className="input-field"
+					value={inputValue}
+					onChange={handleInputChange}
+				/>
+				<select className="select-field">
+					<option value="dai">DAI</option>
+					{/* Add more options here */}
+				</select>
 				</div>
-				<div className="rate-container">
-					<h3>Maximum amount of DAI to be Borrowed</h3>
-					<div className="rate-value">{borrowMax}</div>
+				<button
+				className="refresh-button swap-button"
+				onClick={borrowHandler}
+				>
+				Borrow
+				</button>
+			</div>
+			<div className="rate-container">
+				<p className="heading">Maximum amount of DAI to be Borrowed</p>
+				<div className="rate-value">
+					{borrowMax}
 				</div>
+			</div>
 			</div>
 			<div>
-				<h4>{transferHash}</h4>
+			<p className="heading">{transferHash}</p>
 			</div>
 		</div>
-		)
+	)
 }
 
 export default InteractionsBorrow;

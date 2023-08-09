@@ -5,6 +5,7 @@ import { UserAddressContext } from './../../UserAddressContext'
 
 interface InteractionsProps {
 	maxBorrowedUsdc: null | bigint;
+	changeOrSet: string;
 }
 
 const InteractionsSetNFTID: React.FC<InteractionsProps> = (props) => {
@@ -25,27 +26,32 @@ const InteractionsSetNFTID: React.FC<InteractionsProps> = (props) => {
 
 	  // Containers for input and use of on click events
 	return (
-		<div className="container">
-			<div className="swap-container">
-				<div className="form-container">
-					<h2>Set NFT ID</h2>
-					<div className="input-group">
-						<input
-						type="text"
-						placeholder="0"
-						className="input-field"
-						value={inputValue}
-						onChange={handleInputChange}
-						/>
-					</div>
-					<button className="swap-button" value={inputValue} onClick={updateHandler}>
-						Set
-					</button>
-				</div>
+	<div className="container">
+		<div className="swap-container">
+		<div className="form-container">
+			<p className="heading">{props.changeOrSet} NFT ID</p>
+			<div className="input-group">
+			<input
+				type="text"
+				placeholder="0"
+				className="input-field"
+				value={inputValue}
+				onChange={handleInputChange}
+			/>
 			</div>
-			{props!.maxBorrowedUsdc === zero_val && <p>Error: NFT ID {context!.nftIDGNSPool} is not valid.</p>}
+			<button
+			className="refresh-button swap-button"
+			onClick={updateHandler}
+			>
+			{props.changeOrSet}
+			</button>
 		</div>
-		)
+		</div>
+		<div>
+		{props!.maxBorrowedUsdc === zero_val && <p className="heading">Error: NFT ID {context!.nftIDGNSPool} is not valid.</p>}
+		</div>
+	</div>
+	)
 }
 
 export default InteractionsSetNFTID;

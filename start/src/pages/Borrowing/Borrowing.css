@@ -8,10 +8,6 @@
   border-radius: 5px;
 }
 
-.header-div {
-  padding-top: 39vh;
-}
-
 .main-content {
   align-content: center;
 }
@@ -83,4 +79,44 @@
 
 .back-button:hover {
   background-color: #337436;
+}
+
+.lending-box-distance {
+  padding-bottom: 20px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.button-container {
+  padding: 10px;
+}
+
+.refresh-nft-button {
+  position: relative;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  background: var(--main-gradient);
+  overflow: hidden;
+  z-index: 1;
+}
+
+.refresh-nft-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to left, #439d44, #092009);
+  opacity: 0;
+  transition: opacity 0.32s ease-in;
+  z-index: -1;
+}
+
+.refresh-nft-button:hover::before {
+  opacity: 1;
 }

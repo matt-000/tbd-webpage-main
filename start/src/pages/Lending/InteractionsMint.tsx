@@ -150,11 +150,11 @@ const InteractionsMint: React.FC<InteractionsProps> = (props) => {
           <div className="rate-value">
             1 FET{" "}
             <div className="liquify-logo-exchange">
-              <img src="images/logo.png" width="30px" />{" "}
+              <img src="/images/logo.png" width="30px" />{" "}
             </div>
             = {props.stringConversionRate} DAI{" "}
             <div className="dai-logo">
-              <img src="images/dai-logo.png" width="20px" />
+              <img src="/images/dai-logo.png" width="20px" />
             </div>
           </div>
         </div>

@@ -77,38 +77,42 @@ const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
 	  let borrowed = props.borrowedUSDC ? props.borrowedUSDC.slice(0, 8) : "";
 	  // Containers for input and use of on click events
 	return (
-		<div className="container">
-			<div className="swap-container">
-				<div className="form-container">
-					<h2>Repay Debt</h2>
-					<div className="input-group">
-						<input
-						type="text"
-						placeholder="0"
-						className="input-field"
-						value={inputValue}
-						onChange={handleInputChange}
-						/>
-						<select className="select-field">
-						<option value="dai">DAI</option>
-						{/* Add more options here */}
-						</select>
-					</div>
-					<button className="swap-button" value={inputValue} onClick={borrowHandler}>
-						Repay
-					</button>
-				</div>
-				<div className="rate-container">
-					<h3>Outstanding Debt</h3>
-					<div className="rate-value">{borrowed}</div>
-				</div>
+	<div className="container">
+		<div className="swap-container">
+		<div className="form-container">
+			<p className="heading">Repay Debt</p>
+			<div className="input-group">
+			<input
+				type="text"
+				placeholder="0"
+				className="input-field"
+				value={inputValue}
+				onChange={handleInputChange}
+			/>
+			<select className="select-field">
+				<option value="dai">DAI</option>
+				{/* Add more options here */}
+			</select>
 			</div>
-			<div>
-				<h4>{transferHash}</h4>
+			<button
+			className="refresh-button swap-button"
+			onClick={borrowHandler}
+			>
+			Repay
+			</button>
+		</div>
+		<div className="rate-container">
+			<p className="heading">Outstanding Debt</p>
+			<div className="rate-value">
+				{borrowed}
 			</div>
 		</div>
-		)
-	
+		</div>
+		<div>
+		<p className="heading">{transferHash}</p>
+		</div>
+	</div>
+ )	
 }
 
 export default InteractionsRepayDebt;

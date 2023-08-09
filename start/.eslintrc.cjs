@@ -76,6 +76,7 @@ module.exports={
     "no-eq-null":"off",
     "no-undef":"off",
     "linebreak-style": "off",
+    "arrow-parens":"off",
     'import/extensions':['error', 'ignorePackages',{
       'js':'never',
       'jsx':'never',

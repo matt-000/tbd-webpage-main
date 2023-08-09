@@ -1,17 +1,17 @@
 import React from 'react';
-import './BorrowingPage.css';
+import './Borrowing.css';
 
 const GNSFettiInfo: React.FC = () => {
   // Simple little bit of HTML
   return (
     <div className="container">
-        <h3>
+        <p className="heading">
         Earned interest: (.45% -{'>'} ??) <div/>
         Max borrow: 50% <div/>
         Liquidation threshold: 60% <div/>
         Liquidation discount: 17.5% <div/>
         Liquidation penalty: 2% <div/>
-        </h3>
+        </p>
 			</div>
   );
 };

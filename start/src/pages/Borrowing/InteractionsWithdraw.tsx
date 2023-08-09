@@ -43,26 +43,33 @@ const InteractionsWithdraw: React.FC<InteractionsProps> = (props) => {
 	let staked = props.stakedGNS ? props.stakedGNS.slice(0, 8) : "";
 	// Containers holding contract info and on click events
 	return (
-		<div className="container">
-				<div className="swap-container">
-					<div className="form-container">
-						<h2>Withdraw Collateral</h2>
-						<button className="swap-button" onClick={withdrawHandler}>
-							Withdraw
-						</button>
-					</div>
-					<div className="rate-container">
-						<h3>Current amount of staked GNS</h3>
-						<div className="rate-value">{staked}</div>
-						<h3>Time of withdraw available</h3>
-						<div className="rate-value">{props.unlockTime}</div>
-					</div>
-				</div>
-				<div>
-					<h4>{transferHash}</h4>
-				</div>
+	<div className="container">
+		<div className="swap-container">
+		<div className="form-container">
+			<p className="heading">Withdraw Collateral</p>
+			<button
+			className="refresh-button swap-button"
+			onClick={withdrawHandler}
+			>
+			Withdraw
+			</button>
+		</div>
+		<div className="rate-container">
+			<p className="heading">Current amount of staked GNS</p>
+			<div className="rate-value">
+				{staked}
 			</div>
-		)
+			<p className="heading">Claim Epoch</p>
+			<div className="rate-value">
+				{props.unlockTime}
+			</div>
+		</div>
+		</div>
+		<div>
+		<p className="heading">{transferHash}</p>
+		</div>
+	</div>
+)
 	
 }
 

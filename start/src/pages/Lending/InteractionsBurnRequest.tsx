@@ -56,36 +56,48 @@ const InteractionsBurnRequest: React.FC<InteractionsProps> = (props) => {
 
 	  // Input and output handlers for user input
 	return (
-			<div className="container">
-				<div className="swap-container">
-					<div className="form-container">
-						<h2>Request</h2>
-						<div className="input-group">
-							<input
-							type="text"
-							placeholder="0"
-							className="input-field"
-							value={inputValue}
-							onChange={handleInputChange}
-							/>
-							<select className="select-field">
-							<option value="fet">FET</option>
-							{/* Add more options here */}
-							</select>
-						</div>
-						<button className="swap-button" value={inputValue} onClick={requestHandler}>
-							Request
-						</button>
-					</div>
-						<div className="rate-container">
-							<h3>Exchange Rate</h3>
-						<div className="rate-value">1 FET = {props.stringConversionRate} DAI</div>
-					</div>
-				</div>
-				<div>
-					<h4>{transferHash}</h4>
-				</div>
+		<div className="container">
+		<div className="swap-container">
+		  <div className="form-container">
+			<p className="heading">Request</p>
+			<div className="input-group">
+			  <input
+				type="text"
+				placeholder="0"
+				className="input-field"
+				value={inputValue}
+				onChange={handleInputChange}
+			  />
+			  <select className="select-field">
+				<option value="fet">FET</option>
+				{/* Add more options here */}
+			  </select>
 			</div>
+			<button
+			  className="refresh-button swap-button"
+			  onClick={requestHandler}
+			>
+			  Request
+			</button>
+		  </div>
+		  <div className="rate-container">
+			<p className="heading">Exchange Rate</p>
+			<div className="rate-value">
+			  1 FET{" "}
+			  <div className="liquify-logo-exchange">
+				<img src="/images/logo.png" width="30px" />{" "}
+			  </div>
+			  = {props.stringConversionRate} DAI{" "}
+			  <div className="dai-logo">
+				<img src="/images/dai-logo.png" width="20px" />
+			  </div>
+			</div>
+		  </div>
+		</div>
+		<div>
+		  <p className="heading">{transferHash}</p>
+		</div>
+	  </div>
 		)
 	
 }

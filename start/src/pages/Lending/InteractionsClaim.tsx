@@ -53,43 +53,53 @@ const InteractionsBurn: React.FC<InteractionsProps> = (props) => {
 			}
 	  };
 
+	  let daiToSend = props.stringDaiToSend ? props.stringDaiToSend.slice(0, 8) : "";
 	  // Input and output handlers for user input
 	return (
-			<div className="container">
-				<div className="swap-container">
-					<div className="form-container">
-						<h2>Claim</h2>
-						<div className="input-group">
-							<input
-							type="text"
-							placeholder="0"
-							className="input-field"
-							value={inputValue}
-							onChange={handleInputChange}
-							/>
-							<select className="select-field">
-							<option value="fet">FET</option>
-							{/* Add more options here */}
-							</select>
-						</div>
-						<button className="swap-button" value={inputValue} onClick={claimHandler}>
-							Claim
-						</button>
-					</div>
-					<div className="rate-container">
-						<h4>Current Epoch:</h4>
-						<div className="rate-value">{props.stringCurrentEpoch}</div>
-						<h4>Claim Epoch:</h4>
-						<div className="rate-value">{props.stringEpochPlaced}</div>
-						<h3>Amount Claimable:</h3>
-						<div className="rate-value">{props.stringDaiToSend}</div>
-					</div>
-				</div>
-				<div>
-					<h4>{transferHash}</h4>
-				</div>
+	<div className="container">
+		<div className="swap-container">
+		<div className="form-container">
+			<p className="heading">Claim</p>
+			<div className="input-group">
+			<input
+				type="text"
+				placeholder="0"
+				className="input-field"
+				value={inputValue}
+				onChange={handleInputChange}
+			/>
+			<select className="select-field">
+				<option value="fet">FET</option>
+				{/* Add more options here */}
+			</select>
 			</div>
-		)
+			<button
+			className="refresh-button swap-button"
+			onClick={claimHandler}
+			>
+			Claim
+			</button>
+		</div>
+		<div className="rate-container">
+			<p className="heading">Current Epoch</p>
+			<div className="rate-value">
+				{props.stringCurrentEpoch}
+			</div>
+			<p className="heading">Claim Epoch</p>
+			<div className="rate-value">
+				{props.stringEpochPlaced}
+			</div>
+			<p className="heading">Amount Claimable</p>
+			<div className="rate-value">
+				{daiToSend}
+			</div>
+		</div>
+		</div>
+		<div>
+		<p className="heading">{transferHash}</p>
+		</div>
+	</div>
+	)
 	
 }
 

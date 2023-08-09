@@ -105,31 +105,34 @@ const InteractionsDepositCollateral: React.FC<InteractionsProps> = (props) => {
 	return (
 		<div className="container">
 		<div className="swap-container">
-			<div className="form-container">
-				<h2>Deposit Collateral</h2>
-				<div className="input-group">
-					<input
-					type="text"
-					placeholder="0"
-					className="input-field"
-					value={inputValue}
-					onChange={handleInputChange}
-					/>
-					<select className="select-field">
-					<option value="dai">GNS</option>
-					</select>
-				</div>
-				<button className="swap-button" value={inputValue} onClick={borrowHandler}>
-					Deposit
-				</button>
+		<div className="form-container">
+			<p className="heading">Deposit Collateral</p>
+			<div className="input-group">
+			<input
+				type="text"
+				placeholder="0"
+				className="input-field"
+				value={inputValue}
+				onChange={handleInputChange}
+			/>
+			<select className="select-field">
+				<option value="gns">GNS</option>
+				{/* Add more options here */}
+			</select>
 			</div>
+			<button
+			className="refresh-button swap-button"
+			onClick={borrowHandler}
+			>
+			Deposit
+			</button>
+		</div>
 		</div>
 		<div>
-			<h4>{transferHash}</h4>
+		<p className="heading">{transferHash}</p>
 		</div>
-	</div>
-		)
-	
+		</div>
+	)
 }
 
 export default InteractionsDepositCollateral;

@@ -53,12 +53,14 @@
     "react-icons": "^4.6.0",
     "react-router-dom": "^6.11.1",
     "react-scripts": "5.0.1",
+    "react-table": "^7.8.0",
     "sinon": "^14.0.2",
     "web-vitals": "^2.1.4",
     "web3": "^1.10.0"
   },
   "devDependencies": {
     "@metamask/eslint-config": "^2.0.0",
+    "@types/react-table": "^7.7.14",
     "chai": "^4.3.6",
     "eslint": "^6.8.0",
     "eslint-plugin-import": "^2.20.1",
