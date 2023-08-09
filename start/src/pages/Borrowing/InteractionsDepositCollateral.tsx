@@ -103,11 +103,9 @@ const InteractionsDepositCollateral: React.FC<InteractionsProps> = (props) => {
 	  
 
 	return (
-		<div className="container">
-		<div className="swap-container">
-		<div className="form-container">
-			<p className="heading">Deposit Collateral</p>
-			<div className="input-group">
+		<div className="form-container-borrow">
+			<p className="heading">Deposit Collateral:</p>
+			<div className="input-group-borrow">
 			<input
 				type="text"
 				placeholder="0"
@@ -126,9 +124,7 @@ const InteractionsDepositCollateral: React.FC<InteractionsProps> = (props) => {
 			>
 			Deposit
 			</button>
-		</div>
-		</div>
-		<div>
+			<div>
 		<p className="heading">{transferHash}</p>
 		</div>
 		</div>

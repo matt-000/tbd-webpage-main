@@ -55,11 +55,9 @@ const InteractionsBorrow: React.FC<InteractionsProps> = (props) => {
 	  let borrowMax = props.maxBorrowedUSDC ? props.maxBorrowedUSDC.slice(0, 8) : "";
 	  // Containers for input and use of on click events
 	return (
-		<div className="container">
-			<div className="swap-container">
-			<div className="form-container">
-				<p className="heading">Borrow DAI</p>
-				<div className="input-group">
+		<div className="form-container-borrow">
+				<p className="heading">Borrow DAI:</p>
+				<div className="input-group-borrow">
 				<input
 					type="text"
 					placeholder="0"
@@ -78,17 +76,9 @@ const InteractionsBorrow: React.FC<InteractionsProps> = (props) => {
 				>
 				Borrow
 				</button>
-			</div>
-			<div className="rate-container">
-				<p className="heading">Maximum amount of DAI to be Borrowed</p>
-				<div className="rate-value">
-					{borrowMax}
-				</div>
-			</div>
-			</div>
-			<div>
-			<p className="heading">{transferHash}</p>
-			</div>
+				<div>
+		<p className="heading">{transferHash}</p>
+		</div>
 		</div>
 	)
 }

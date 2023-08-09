@@ -1,4 +1,96 @@
-/* LendingBorrowing.css and MintBurn.css */
+.container-top-info {
+  width: 80%;
+  margin: 0 auto;
+  /* background-color: #1d1d1d; */
+  border-radius: 14px;
+  border: 2px solid #43434359;
+  color: var(--main-font-color) !important;
+  background-color: #090909c6;
+  flex-grow: 1; 
+  flex-direction: column;
+}
+
+.container-top-info-terms {
+  width: 80%;
+  margin: 0 auto;
+  /* background-color: #1d1d1d; */
+  border-radius: 14px;
+  border: 2px solid #43434359;
+  color: var(--main-font-color) !important;
+  background-color: #090909c6;
+  flex-grow: 1; 
+  flex-direction: column;
+  text-align: center;
+}
+
+/* New structure look */
+.container-borrow {
+  width: 100%;
+  margin: 0 auto;
+  /* background-color: #1d1d1d; */
+  border-radius: 14px;
+  border: 2px solid #43434359;
+  color: var(--main-font-color) !important;
+  background-color: #090909c6;
+  flex-grow: 1; 
+  flex-direction: column;
+}
+
+/* Ensure the content within container-borrow fills the entire space */
+.container-borrow > * {
+  flex-grow: 1;           /* Let each child element of container-borrow also grow */
+}
+
+.container-borrow .row {
+  display: flex;
+  align-items: center;
+}
+
+.container .row .item {
+  /* Style for individual items, if needed */
+}
+
+/*for our interactions*/
+
+.form-container-borrow {
+  /* margin: 100px; */
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
+
+.input-group-borrow {
+  display: flex;
+  padding-left: 10px;
+  /* margin-bottom: 10px; */
+}
+
+.input-field {
+  flex: 1;
+  padding: 10px;
+  /* border: 1px solid #ccc; */
+  border-radius: 4px;
+  border: 2px solid rgba(78, 78, 78, 0.32);
+  background-color: #3e3e3e3d;
+  color: var(--main-font-color);
+}
+
+.select-field {
+  padding: 10px;
+  background-color: #3e3e3e3d;
+  /* border: 1px solid #ccc; */
+  color: var(--main-font-color);
+  border-radius: 4px;
+  border: 0px;
+  margin-left: 10px;
+}
+
+.swap-button {
+  padding: 10px 23px;
+  margin: 15px;
+}
+/*for our interactions*/
+
 .box1 {
   display: flex;
   justify-content: space-between;
@@ -9,7 +101,28 @@
 }
 
 .main-content {
-  align-content: center;
+  display: flex;
+  width: 80%;
+  justify-content: center; /* This centers the child components horizontally */
+  align-items: stretch;
+  margin: auto;
+}
+
+.main-content .actions-container {
+  flex: 6.5; /* 65% */
+  box-sizing: border-box;
+  flex-direction: column;
+  flex: 1 0 0;
+  display: flex;
+}
+
+.main-content .information-container {
+  flex: 3.5; /* 35% */
+  border-left: none; /* This ensures the left border of the right container isn't shown. */
+  box-sizing: border-box;
+  flex-direction: column;
+  display: flex;
+  flex: 1 0 0;
 }
 
 .box-item {

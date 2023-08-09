@@ -26,11 +26,9 @@ const InteractionsSetNFTID: React.FC<InteractionsProps> = (props) => {
 
 	  // Containers for input and use of on click events
 	return (
-	<div className="container">
-		<div className="swap-container">
-		<div className="form-container">
-			<p className="heading">{props.changeOrSet} NFT ID</p>
-			<div className="input-group">
+	<div className="form-container-borrow">
+			<p className="heading">{props.changeOrSet} NFT ID:</p>
+			<div className="input-group-borrow">
 			<input
 				type="text"
 				placeholder="0"
@@ -45,10 +43,8 @@ const InteractionsSetNFTID: React.FC<InteractionsProps> = (props) => {
 			>
 			{props.changeOrSet}
 			</button>
-		</div>
-		</div>
-		<div>
-		{props!.maxBorrowedUsdc === zero_val && <p className="heading">Error: NFT ID {context!.nftIDGNSPool} is not valid.</p>}
+			<div>
+			{props!.maxBorrowedUsdc === zero_val && <p className="heading">Error: NFT ID {context!.nftIDGNSPool} is not valid.</p>}
 		</div>
 	</div>
 	)

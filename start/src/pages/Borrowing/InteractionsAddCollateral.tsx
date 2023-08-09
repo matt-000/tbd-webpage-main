@@ -75,11 +75,9 @@ const InteractionsAddCollateral: React.FC<InteractionsProps> = (props) => {
 
 	  // Containers for input and use of on click events
 	return (
-	<div className="container">
-		<div className="swap-container">
-		<div className="form-container">
-			<p className="heading">Add Collateral</p>
-			<div className="input-group">
+		<div className="form-container-borrow">
+			<p className="heading">Add Collateral:</p>
+			<div className="input-group-borrow">
 			<input
 				type="text"
 				placeholder="0"
@@ -98,13 +96,11 @@ const InteractionsAddCollateral: React.FC<InteractionsProps> = (props) => {
 			>
 			Add
 			</button>
-		</div>
-		</div>
-		<div>
+			<div>
 		<p className="heading">{transferHash}</p>
 		</div>
-	</div>
-		)
+		</div>
+	)
 }
 
 export default InteractionsAddCollateral;

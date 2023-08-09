@@ -196,18 +196,6 @@ const zero_val = ethers.parseUnits("0", 0);
       <div className="header-div">
         <Header address={context!.userAddress}/>
       </div>
-          {nftID === null || maxBorrowedRatio === zero_val ?
-              <>
-              <div className="lending-box-distance">
-                <LendingBorrowing />
-              </div>
-                <div className="main-content">
-                    <InteractionsSetNFTID maxBorrowedUsdc={maxBorrowedRatio} changeOrSet={"Set"}/>
-                    <GNSFettiInfo />
-                    <InteractionsDepositCollateral contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} updateNFTInfo={updateNFTInfo}/>
-                </div>
-              </> : 
-              <>
               <div className="lending-box-distance">
                 <LendingBorrowing />
                 <div className="button-container">
@@ -216,17 +204,51 @@ const zero_val = ethers.parseUnits("0", 0);
               </div>
               <GNSFettiInfo />
                 <div className="main-content">
-                    <div className="container">
-                      <p className="heading">NFT Token ID: {context!.nftIDGNSPool}</p>
+                  <div className="actions-container">
+                      <div className="container-borrow">
+                        <div className="row">
+                          <InteractionsSetNFTID maxBorrowedUsdc={maxBorrowedRatio} changeOrSet={"Set"}/>
+                        </div>
+                        <div className="row">
+                          <InteractionsDepositCollateral contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} updateNFTInfo={updateNFTInfo}/>
+                        </div>
+                        <div className="row">
+                          <InteractionsBorrow contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} maxBorrowedUSDC={stringMaxBorrowedUSDC} updateNFTInfo={updateNFTInfo}/>
+                        </div>
+                        <div className="row">
+                          <InteractionsAddCollateral contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} updateNFTInfo={updateNFTInfo}/>
+                        </div>
+                        <div className="row">
+                          <InteractionsRepayDebt contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} borrowedUSDC={stringBorrowedUsdc} updateNFTInfo={updateNFTInfo}/>
+                        </div>
+                        <div className="row">
+                          <InteractionsWithdraw contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} stakedGNS={stringStakedGns} unlockTime={stringUnlockTime} updateNFTInfo={updateNFTInfo}/>
+                        </div>
+                      </div>
                     </div>
-                    <InteractionsSetNFTID maxBorrowedUsdc={maxBorrowedRatio} changeOrSet={"Change"}/>
-                    <InteractionsBorrow contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} maxBorrowedUSDC={stringMaxBorrowedUSDC} updateNFTInfo={updateNFTInfo}/>
-                    <InteractionsAddCollateral contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} updateNFTInfo={updateNFTInfo}/>
-                    <InteractionsRepayDebt contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} borrowedUSDC={stringBorrowedUsdc} updateNFTInfo={updateNFTInfo}/>
-                    <InteractionsWithdraw contract={contract} user_address={context!.userAddress} provider={provider} signer={signer} gns_address={context!.gnsPool_address} nftID={nftID} stakedGNS={stringStakedGns} unlockTime={stringUnlockTime} updateNFTInfo={updateNFTInfo}/>
+                    <div className="information-container">
+                      <div className="container-borrow">
+                        <div className="row">
+                          <p className="heading">Total Collateral: {stringStakedGns}</p>
+                        </div>
+                        <div className="row">
+                          <p className="heading">Total Debt: {stringBorrowedUsdc}</p>
+                        </div>
+                        <div className="row">
+                          <p className="heading">LTV: NA</p>
+                        </div>
+                        <div className="row">
+                          <p className="heading">Liquidation Threshold: NA</p>
+                        </div>
+                        <div className="row">
+                          <p className="heading">Max Borrow: {stringMaxBorrowedUsdcRatio}</p>
+                        </div>
+                        <div className="row">
+                          <p className="heading">Withdrawal Time: {stringUnlockTime}</p>
+                        </div>
+                      </div>
+                    </div>
               </div>
-              </>
-          }
     </div>
   );
 };

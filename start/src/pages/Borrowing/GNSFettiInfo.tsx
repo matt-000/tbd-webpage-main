@@ -1,16 +1,27 @@
 import React from 'react';
 import './Borrowing.css';
+import {useContext} from 'react'
+import { UserAddressContext } from './../../UserAddressContext';
+
+interface InteractionsProps {
+	totalBorrowed: null | String;
+}
 
 const GNSFettiInfo: React.FC = () => {
+  const context = useContext(UserAddressContext);
   // Simple little bit of HTML
   return (
-    <div className="container">
+    <div className="container-top-info-terms">
         <p className="heading">
-        Earned interest: (.45% -{'>'} ??) <div/>
-        Max borrow: 50% <div/>
-        Liquidation threshold: 60% <div/>
-        Liquidation discount: 17.5% <div/>
-        Liquidation penalty: 2% <div/>
+        Earned interest: (.45% -{'>'} ??) &emsp;
+        Max borrow: 50% &emsp;
+        Liquidation threshold: 60% &emsp;
+        Liquidation discount: 17.5% &emsp;
+        Liquidation penalty: 2% &emsp;
+        NFT ID: {context!.nftIDGNSPool} &emsp;
+        Total Assets: NA &emsp;
+        Total Borrowed: NA &emsp;
+        Utilization: NA
         </p>
 			</div>
   );

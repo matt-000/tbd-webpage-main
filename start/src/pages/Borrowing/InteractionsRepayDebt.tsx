@@ -77,11 +77,9 @@ const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
 	  let borrowed = props.borrowedUSDC ? props.borrowedUSDC.slice(0, 8) : "";
 	  // Containers for input and use of on click events
 	return (
-	<div className="container">
-		<div className="swap-container">
-		<div className="form-container">
-			<p className="heading">Repay Debt</p>
-			<div className="input-group">
+	<div className="form-container-borrow">
+			<p className="heading">Repay Debt:</p>
+			<div className="input-group-borrow">
 			<input
 				type="text"
 				placeholder="0"
@@ -100,18 +98,10 @@ const InteractionsRepayDebt: React.FC<InteractionsProps> = (props) => {
 			>
 			Repay
 			</button>
-		</div>
-		<div className="rate-container">
-			<p className="heading">Outstanding Debt</p>
-			<div className="rate-value">
-				{borrowed}
-			</div>
-		</div>
-		</div>
-		<div>
+			<div>
 		<p className="heading">{transferHash}</p>
 		</div>
-	</div>
+		</div>
  )	
 }
 
