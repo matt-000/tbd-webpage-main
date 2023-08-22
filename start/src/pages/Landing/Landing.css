@@ -1,0 +1,164 @@
+.table-landing {
+  /* margin: 20px 15% 20px 15%; */
+  border-radius: 10px !important;
+}
+
+.table-container {
+  margin: 20px 10% 20px 10%;
+}
+
+.table-header {
+  color: var(--main-font-color);
+}
+
+.table-header:nth-child(1) {
+  width: 20%;
+}
+.table-header:nth-child(2),
+.table-header:nth-child(3),
+.table-header:nth-child(5),
+.table-header:nth-child(4) {
+  width: 14.5%;
+}
+.table-header:nth-child(6) {
+  width: 20%;
+}
+
+.table-data {
+  color: var(--main-font-color);
+}
+
+#tr-thead {
+  border-radius: 10px;
+}
+
+.table-landing {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* Ensures that columns take the widths you set, not based on content */
+  background-color: var(--bg-card-color);
+}
+
+.table-head-landing,
+#tbody {
+  width: 100%;
+}
+
+/* .table-head-landing {
+  height: 50%;
+} */
+
+.table-header,
+.table-data {
+  text-align: center;
+  padding: 25px 8px;
+  /* border: 1px solid #ddd; Just for visualization */
+}
+
+.table-header {
+  padding: 10px 8px !important;
+  font-size: var(--small-font-size);
+  background-color: rgb(42, 42, 42);
+}
+
+.table-header.markets,
+.table-data.markets {
+  text-align: left !important;
+  padding-left: 25px !important;
+}
+
+.row-data:hover {
+  background-color: rgb(45, 45, 45);
+}
+
+.row-data {
+  transition: all 0.25s ease;
+  border-bottom: 2px solid rgba(140, 140, 140, 0.05);
+}
+
+.table-button {
+  background-color: transparent;
+  color: var(--accent-color-light);
+  border: 1px solid var(--accent-color-light);
+  margin: 0 5px;
+  position: relative; /* Position relative for the pseudo-element */
+  outline: none; /* Optional: remove the default outline */
+  padding: 7px;
+  font-weight: bold;
+  transition: all 0.32s ease;
+  cursor: pointer;
+}
+
+#borrow {
+  color: #006600 !important;
+  border: 1px solid #006600 !important;
+}
+
+#borrow:hover,
+.table-button:hover {
+  color: var(--main-font-color) !important;
+  border: 1px solid var(--main-font-color) !important;
+}
+
+.heading-landing {
+  background-color: var(--bg-card-color) !important;
+  font-size: x-large;
+  font-weight: bold;
+  background-color: rgb(42, 42, 42);
+  color: var(--main-font-color);
+  padding: 25px 25px;
+  border-radius: 10px !important;
+}
+
+.base-img {
+  width: 24px;
+  margin-right: 10px;
+}
+
+.quote-img {
+  width: 24px;
+  margin-left: 10px;
+}
+
+.markets-flex {
+  display: flex;
+  align-items: center;
+  margin-top: 3px;
+}
+
+/* Styling the search container and elements within */
+.search-container {
+  position: relative; /* Setting position to relative to make internal absolute positioning relative to this container */
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  padding: 5px;
+  margin-left: 10px;
+  flex-grow: 1; /* Allow the search container to take the available space */
+}
+
+.search-input {
+  background-color: rgb(29, 29, 29);
+  border: none;
+  padding: 5px 10px;
+  flex-grow: 1;
+  color: var(--main-font-color);
+  border-radius: 4px;
+  outline: rgb(82, 81, 81) solid 1px;
+  padding-left: 35px; /* To ensure that the input text doesn't overlap with the SVG */
+  margin-right: 35px; /* To ensure that the input text doesn't overlap with the SVG */
+}
+
+.svg-container {
+  position: absolute; /* Set SVG to be absolutely positioned */
+  left: 12px; /* Adjust this value as needed to position the SVG icon appropriately over the search input */
+  top: 55%;
+  transform: translateY(-50%); /* Center align the SVG vertically */
+  z-index: 1; /* Set z-index to make it appear above the input box */
+}
+
+.markets.heading-landing {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Pushes content to the edges */
+}

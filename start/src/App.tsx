@@ -9,6 +9,8 @@ import Burn from "./pages/Lending/Burn";
 import About from "./pages/Misc/About";
 import Contact from "./pages/Misc/Contact";
 import WhitePaper from "./pages/Misc/WhitePaper";
+import Landing from "./pages/Landing/Landing";
+import Borrow from "./pages/Borrow/Borrow";
 
 // Creating the context variables
 type UserAddressContextType = {
@@ -72,9 +74,11 @@ function App() {
     <UserAddressContext.Provider value={value}>
       <Router>
         <Routes>
-          <Route path="/" element={<Lend />} />
+          {/* <Route path="/" element={<Lend />} /> */}
+          <Route path="/" element={<Landing />} />
           <Route path="/Burn" element={<Burn />} />
           <Route path="/Borrowing" element={<BorrowPage />} />
+          <Route path="/Borrow" element={<Borrow />} />
           <Route path="/Borrowing/GNSFetti" element={<BorrowGNSFET />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact-us" element={<Contact />} />
